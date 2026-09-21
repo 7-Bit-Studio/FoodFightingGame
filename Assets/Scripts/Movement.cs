@@ -76,7 +76,6 @@ public class Movement : MonoBehaviour
         // Multiplying by deltaTime to make framerate not affect speed
         
         playerVel = dt * currentVel;
-        
     }
 
     // Updating the player's acceleration
