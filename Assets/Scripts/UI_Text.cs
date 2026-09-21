@@ -3,6 +3,8 @@
 //  System
 using System;
 using System.IO;
+using System.Reflection;
+using System.ComponentModel;
 
 // Unity
 using Unity;
@@ -11,17 +13,17 @@ using Unity;
 using UnityEngine;
 using UnityEngine.UI;
 
-// Global Functions
+// Custom Datatypes
+using Assets.Scripts;
 using Assets.GlobalFuncs;
 
-[RequireComponent(typeof(Movement))]
 public class UIText : MonoBehaviour
 {
+
     [SerializeField] private Text FPSTextElement;
     [SerializeField] private Text SpeedElement;
 
-    private Movement movement;
-    // Start is called before the first frame update
+    private PlayerData movement;
     private Functions functions;
     private float fpsLow;
     private float currFPS;
@@ -38,9 +40,8 @@ public class UIText : MonoBehaviour
     void InitializeVars()
     {
         Loginit_();
+        movement = new PlayerData();
         functions = new Functions();
-        movement = new Movement();
-        playerVel = movement.PlayerVel;
         fpsLow = float.PositiveInfinity;
     }
 
@@ -52,12 +53,12 @@ public class UIText : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        playerVel = functions.Round(movement.PlayerVel, 2);
+        playerVel = movement.playerVel;
         deltaTime = Time.deltaTime;
         FPS();
         FPSFileWrite();
         SetText(FPSTextElement,$"{currFPS}fps\n{fpsLow}fps min");
-        SetText(SpeedElement, $"{playerVel.x}, {playerVel.y}, {playerVel.z}");
+        SetText(SpeedElement, $"{playerVel.x}, {playerVel.y}");
 	}
 
     void SetText(Text textElement, string text)
@@ -78,6 +79,4 @@ public class UIText : MonoBehaviour
     {
         File.AppendAllText(Path.Combine(docPath, docName), $"{currFPS},\t{Time.time}\n");
     }
-
-    
 }
