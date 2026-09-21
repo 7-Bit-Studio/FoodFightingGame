@@ -305,9 +305,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 273335219}
+  - component: {fileID: 430895887}
   - component: {fileID: 430895889}
   - component: {fileID: 430895888}
-  - component: {fileID: 430895887}
+  - component: {fileID: 430895890}
   m_Layer: 0
   m_Name: Square
   m_TagString: Untagged
@@ -337,7 +338,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Movement
   moveActionReference: {fileID: -1680190386980627800, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   playerVel: 0.5
-  textElement: {fileID: 390711398}
 --- !u!212 &430895889
 SpriteRenderer:
   serializedVersion: 3
@@ -398,6 +398,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
+--- !u!114 &430895890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 430895885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0117d4cafa0b63647baf124bc45a3a01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIText
+  textElement: {fileID: 390711398}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -479,7 +492,7 @@ Camera:
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 2
+  m_ClearFlags: 1
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
