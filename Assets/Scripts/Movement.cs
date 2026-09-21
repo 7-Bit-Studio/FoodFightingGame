@@ -11,50 +11,92 @@ public class Movement : MonoBehaviour
 {
     [SerializeField] private InputActionReference moveActionReference;
 
+	[SerializeField] private float maxSpeed = 5f;
 	[SerializeField] private float playerAcc = 5f;
+    [SerializeField] private float frictionCoefficient = 0.001f;
+    [SerializeField] private bool useAcceleration = true;
 	private Vector3 playerVel;
-	private float maxSpeed;
     private InputAction moveAction;
 	private Transform playerPos;
+    private float dt;
+
+    private Vector2 moveInputVector2;
+    private Vector3 moveInput;
     // Start is called before the first frame update
     void Start()
-	{
-		playerPos = GetComponent<Transform>();
+    {
+        // preliminary checks
+        if (moveActionReference == null)
+        {
+            Debug.LogError("no InputActionReference");
+            return;
+        }
+
+        // initialize values
+        moveInputVector2 = Vector2.zero;
+        moveInput = Vector3.zero;
+        playerVel = Vector3.zero;
+
+        playerPos = GetComponent<Transform>();
     }
 
 	// Update is called once per frame
 	void Update()
     {
-        float dt = Time.deltaTime;
+        dt = Time.deltaTime;
+        moveAction = moveActionReference.action;
 
-        if (moveActionReference == null)
-		{
-			Debug.LogError("no InputActionReference");
-			return;
-		}
+        // Move Input Vector
 
-		moveAction = moveActionReference.action;
+        moveInputVector2 = moveAction != null ? moveAction.ReadValue<Vector2>() : Vector2.zero;
+        moveInput = ((Vector3)moveInputVector2).normalized;
 
-		if(moveAction == null)
-		{
-			Debug.LogError("no InputAction");
-			return;
-		}
+        if (useAcceleration)
+        {
+            AccelerationMovement();
+        }
+        else
+        {
+            VelocityMovement();
+        }
+        UpdatePosition();
 
-		Vector3 moveInput = moveAction != null ? moveAction.ReadValue<Vector3>() : Vector2.zero;
 
-		if(moveInput == null)
-		{
-			Debug.LogError("no MoveInput provided");
-			return;
-		}
-		playerVel += dt * playerAcc * moveInput;
-		if (playerVel.sqrMagnitude > maxSpeed * maxSpeed)
-		{
-			playerVel = playerVel.normalized * maxSpeed;
-		}
+        Debug.Log($"{playerVel.x} {playerVel.y} {playerVel.z}");
+    }
+
+    // Updateing the player's velocity
+    void VelocityMovement()
+    {
+        // Movement in metres per second
+
+        Vector3 currentVel = maxSpeed * moveInput;
+
+
+        // Multiplying by deltaTime to make framerate not affect speed
+        
+        playerVel = dt * currentVel;
+        
+    }
+
+    // Updating the player's acceleration
+	void AccelerationMovement()
+	{
+        Vector3 currentAcc = playerAcc * moveInput;
+
+        playerVel += dt * currentAcc;
+
+        if (playerVel.sqrMagnitude > maxSpeed * maxSpeed)
+        {
+            playerVel = playerVel.normalized * maxSpeed;
+        }
+
+        playerVel = Friction(playerVel, frictionCoefficient);
+    }
+
+    void UpdatePosition()
+    {
         playerPos.position += dt * playerVel;
-
         /*
 		 * Set the player's position, then rotation
 		 * Can be simplified to the line below
@@ -63,8 +105,11 @@ public class Movement : MonoBehaviour
 		 */
 
         transform.position = playerPos.position;
-		transform.rotation = playerPos.rotation;
+        transform.rotation = playerPos.rotation;
+    }
 
-		//Debug.Log($"Movement\n\t(x,y)\n\t({moveInput.x},{moveInput.y})");
-	}
+    Vector3 Friction(Vector3 vel, float fricCoef)
+    {
+        return vel * (1 - fricCoef);
+    }
 }
