@@ -1,43 +1,75 @@
+
+
 //  System
 using System;
 using System.IO;
 
 // Unity
 using Unity;
-using Unity.VisualScripting;
 
 // Unity Engine
 using UnityEngine;
 using UnityEngine.UI;
 
+// Global Functions
+using Assets.GlobalFuncs;
+
+[RequireComponent(typeof(Movement))]
 public class UIText : MonoBehaviour
 {
-    [SerializeField] private Text textElement;
+    [SerializeField] private Text FPSTextElement;
+    [SerializeField] private Text SpeedElement;
+
+    private Movement movement;
     // Start is called before the first frame update
+    private Functions functions;
     private float fpsLow;
     private float currFPS;
     private string docPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
     private string docName;
-    void Start()
+    private float deltaTime;
+    private Vector3 playerVel;
+    void Loginit_()
     {
         docPath += "\\FPS-Logs";
         docName = $"FPS-{DateTime.Now:dd-MM-yyyy_HH.mm.ss.fff}.csv";
         File.AppendAllText(Path.Combine(docPath, docName), $"FPS,\tTime\n");
+    }
+    void InitializeVars()
+    {
+        Loginit_();
+        functions = new Functions();
+        movement = new Movement();
+        playerVel = movement.PlayerVel;
         fpsLow = float.PositiveInfinity;
     }
 
-	// Update is called once per frame
-	void Update()
-	{
+    void Awake()
+    {
+        InitializeVars();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        playerVel = functions.Round(movement.PlayerVel, 2);
+        deltaTime = Time.deltaTime;
         FPS();
         FPSFileWrite();
-        textElement.text = $"{currFPS}fps\n{fpsLow}fps min";
+        SetText(FPSTextElement,$"{currFPS}fps\n{fpsLow}fps min");
+        SetText(SpeedElement, $"{playerVel.x}, {playerVel.y}, {playerVel.z}");
 	}
+
+    void SetText(Text textElement, string text)
+    {
+        textElement.text = text;
+    }
 
     void FPS()
     {
-        float dt = Time.deltaTime;
-        currFPS = 1 / dt;
+        currFPS = 1 / deltaTime;
+
+        currFPS = functions.Round(currFPS, 2);
 
         fpsLow = Mathf.Min(currFPS, fpsLow);
     }
@@ -46,4 +78,6 @@ public class UIText : MonoBehaviour
     {
         File.AppendAllText(Path.Combine(docPath, docName), $"{currFPS},\t{Time.time}\n");
     }
+
+    
 }

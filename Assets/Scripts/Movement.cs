@@ -9,30 +9,37 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Transform))]
 public class Movement : MonoBehaviour
 {
+    [Header("Movement Settings")]
     [SerializeField] private InputActionReference moveActionReference;
-
 	[SerializeField] private float maxSpeed = 5f;
 	[SerializeField] private float playerAcc = 5f;
     [SerializeField] private float frictionCoefficient = 0.001f;
     [SerializeField] private bool useAcceleration = true;
-	private Vector3 playerVel;
-    private InputAction moveAction;
-	private Transform playerPos;
-    private float dt;
 
+    // Player values
+	private Transform playerPos;
+    private Vector3 playerVel;
+
+    // Movement Values
+    private InputAction moveAction;
     private Vector2 moveInputVector2;
     private Vector3 moveInput;
-    // Start is called before the first frame update
+
+    // DeltaTime
+    private float deltaTime;
+
+    public Vector3 PlayerVel { get => playerVel; set => playerVel = value; }
+
     void Start()
     {
-        // preliminary checks
+        // Preliminary checks
         if (moveActionReference == null)
         {
             Debug.LogError("no InputActionReference");
             return;
         }
 
-        // initialize values
+        // Initializing values
         moveInputVector2 = Vector2.zero;
         moveInput = Vector3.zero;
         playerVel = Vector3.zero;
@@ -43,7 +50,8 @@ public class Movement : MonoBehaviour
 	// Update is called once per frame
 	void Update()
     {
-        dt = Time.deltaTime;
+        // Setting current-frame constants
+        deltaTime = Time.deltaTime;
         moveAction = moveActionReference.action;
 
         // Move Input Vector
@@ -59,8 +67,8 @@ public class Movement : MonoBehaviour
         {
             VelocityMovement();
         }
-        UpdatePosition();
 
+        UpdatePosition();
 
         Debug.Log($"{playerVel.x} {playerVel.y} {playerVel.z}");
     }
@@ -70,12 +78,12 @@ public class Movement : MonoBehaviour
     {
         // Movement in metres per second
 
-        Vector3 currentVel = maxSpeed * moveInput;
+        Vector3 currentVel = maxSpeed * moveInput * 500;
 
 
         // Multiplying by deltaTime to make framerate not affect speed
         
-        playerVel = dt * currentVel;
+        playerVel = deltaTime * currentVel;
     }
 
     // Updating the player's acceleration
@@ -83,7 +91,7 @@ public class Movement : MonoBehaviour
 	{
         Vector3 currentAcc = playerAcc * moveInput;
 
-        playerVel += dt * currentAcc;
+        playerVel += deltaTime * currentAcc;
 
         if (playerVel.sqrMagnitude > maxSpeed * maxSpeed)
         {
@@ -95,7 +103,7 @@ public class Movement : MonoBehaviour
 
     void UpdatePosition()
     {
-        playerPos.position += dt * playerVel;
+        playerPos.position += deltaTime * playerVel;
         /*
 		 * Set the player's position, then rotation
 		 * Can be simplified to the line below
@@ -109,6 +117,6 @@ public class Movement : MonoBehaviour
 
     Vector3 Friction(Vector3 vel, float fricCoef)
     {
-        return vel * (1 - fricCoef);
+        return vel/deltaTime * fricCoef;
     }
 }
