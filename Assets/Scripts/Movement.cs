@@ -11,7 +11,9 @@ public class Movement : MonoBehaviour
 {
     [SerializeField] private InputActionReference moveActionReference;
 
-	[SerializeField] private float playerVel = 0.5f;
+	[SerializeField] private float playerAcc = 5f;
+	private Vector3 playerVel;
+	private float maxSpeed;
     private InputAction moveAction;
 	private Transform playerPos;
     // Start is called before the first frame update
@@ -39,24 +41,28 @@ public class Movement : MonoBehaviour
 			return;
 		}
 
-		Vector3 moveInput = moveAction != null ? moveAction.ReadValue<Vector2>() : Vector3.zero;
+		Vector3 moveInput = moveAction != null ? moveAction.ReadValue<Vector3>() : Vector2.zero;
 
 		if(moveInput == null)
 		{
 			Debug.LogError("no MoveInput provided");
 			return;
 		}
-		
+		playerVel += dt * playerAcc * moveInput;
+		if (playerVel.sqrMagnitude > maxSpeed * maxSpeed)
+		{
+			playerVel = playerVel.normalized * maxSpeed;
+		}
+        playerPos.position += dt * playerVel;
 
-		playerPos.position += dt * playerVel * moveInput;
-
-		/*
+        /*
 		 * Set the player's position, then rotation
 		 * Can be simplified to the line below
 		 * 
 		 * transform.SetPositionAndRotation(playerPos.position, playerPos.rotation);
 		 */
-		transform.position = playerPos.position;
+
+        transform.position = playerPos.position;
 		transform.rotation = playerPos.rotation;
 
 		//Debug.Log($"Movement\n\t(x,y)\n\t({moveInput.x},{moveInput.y})");
