@@ -1,72 +1,114 @@
+// Unity
 using Unity;
 using Unity.Mathematics;
 using Unity.VisualScripting;
+
+// Unity Engine
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
-
 [RequireComponent(typeof(Transform))]
 public class Movement : MonoBehaviour
 {
     [SerializeField] private InputActionReference moveActionReference;
 
-	[SerializeField] private float playerVel = 0.5f;
-	[SerializeField] private Text textElement;
+	[SerializeField] private float maxSpeed = 5f;
+	[SerializeField] private float playerAcc = 5f;
+    [SerializeField] private float frictionCoefficient = 0.001f;
+    [SerializeField] private bool useAcceleration = true;
+	private Vector3 playerVel;
     private InputAction moveAction;
 	private Transform playerPos;
-	private float fpsLow;
+    private float dt;
+
+    private Vector2 moveInputVector2;
+    private Vector3 moveInput;
     // Start is called before the first frame update
     void Start()
-	{
-		playerPos = GetComponent<Transform>();
-		fpsLow = float.PositiveInfinity;
+    {
+        // preliminary checks
+        if (moveActionReference == null)
+        {
+            Debug.LogError("no InputActionReference");
+            return;
+        }
+
+        // initialize values
+        moveInputVector2 = Vector2.zero;
+        moveInput = Vector3.zero;
+        playerVel = Vector3.zero;
+
+        playerPos = GetComponent<Transform>();
     }
 
 	// Update is called once per frame
 	void Update()
+    {
+        dt = Time.deltaTime;
+        moveAction = moveActionReference.action;
+
+        // Move Input Vector
+
+        moveInputVector2 = moveAction != null ? moveAction.ReadValue<Vector2>() : Vector2.zero;
+        moveInput = ((Vector3)moveInputVector2).normalized;
+
+        if (useAcceleration)
+        {
+            AccelerationMovement();
+        }
+        else
+        {
+            VelocityMovement();
+        }
+        UpdatePosition();
+
+
+        Debug.Log($"{playerVel.x} {playerVel.y} {playerVel.z}");
+    }
+
+    // Updateing the player's velocity
+    void VelocityMovement()
+    {
+        // Movement in metres per second
+
+        Vector3 currentVel = maxSpeed * moveInput;
+
+
+        // Multiplying by deltaTime to make framerate not affect speed
+        
+        playerVel = dt * currentVel;
+    }
+
+    // Updating the player's acceleration
+	void AccelerationMovement()
 	{
-		
-		float dt = Time.deltaTime;
-		float fps = 1 / dt;
+        Vector3 currentAcc = playerAcc * moveInput;
 
-		fpsLow = Mathf.Min(fps, fpsLow);
+        playerVel += dt * currentAcc;
 
-		textElement.text = $"{fps}fps\n{fpsLow}fps min";
-		
-		if(moveActionReference == null)
-		{
-			Debug.LogError("no InputActionReference");
-			return;
-		}
+        if (playerVel.sqrMagnitude > maxSpeed * maxSpeed)
+        {
+            playerVel = playerVel.normalized * maxSpeed;
+        }
 
-		moveAction = moveActionReference.action;
+        playerVel = Friction(playerVel, frictionCoefficient);
+    }
 
-		if(moveAction == null)
-		{
-			Debug.LogError("no InputAction");
-			return;
-		}
-
-		Vector3 moveInput = moveAction != null ? moveAction.ReadValue<Vector2>() : Vector3.zero;
-
-		if(moveInput == null)
-		{
-			Debug.LogError("no MoveInput provided");
-			return;
-		}
-		
-
-		playerPos.position += dt * playerVel * moveInput;
-
-		/*
+    void UpdatePosition()
+    {
+        playerPos.position += dt * playerVel;
+        /*
 		 * Set the player's position, then rotation
 		 * Can be simplified to the line below
 		 * 
 		 * transform.SetPositionAndRotation(playerPos.position, playerPos.rotation);
 		 */
-		transform.position = playerPos.position;
-		transform.rotation = playerPos.rotation;
 
-		//Debug.Log($"Movement\n\t(x,y)\n\t({moveInput.x},{moveInput.y})");
-	}
+        transform.position = playerPos.position;
+        transform.rotation = playerPos.rotation;
+    }
+
+    Vector3 Friction(Vector3 vel, float fricCoef)
+    {
+        return vel * (1 - fricCoef);
+    }
 }
