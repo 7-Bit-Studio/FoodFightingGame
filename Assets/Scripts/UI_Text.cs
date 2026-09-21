@@ -16,11 +16,11 @@ public class UIText : MonoBehaviour
     // Start is called before the first frame update
     private float fpsLow;
     private float currFPS;
-    private string docPath = Path.GetFullPath(Environment.CurrentDirectory);
+    private string docPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
     private string docName;
     void Start()
     {
-        docPath += "\\Assets";
+        docPath += "\\FPS-Logs";
         docName = $"FPS-{DateTime.Now:dd-MM-yyyy_HH.mm.ss.fff}.csv";
         Debug.Log(docPath);
         File.AppendAllText(Path.Combine(docPath, docName), $"FPS,\tTime\n");
