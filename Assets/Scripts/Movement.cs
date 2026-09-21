@@ -3,37 +3,26 @@ using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
-
 [RequireComponent(typeof(Transform))]
 public class Movement : MonoBehaviour
 {
     [SerializeField] private InputActionReference moveActionReference;
 
 	[SerializeField] private float playerVel = 0.5f;
-	[SerializeField] private Text textElement;
     private InputAction moveAction;
 	private Transform playerPos;
-	private float fpsLow;
     // Start is called before the first frame update
     void Start()
 	{
 		playerPos = GetComponent<Transform>();
-		fpsLow = float.PositiveInfinity;
     }
 
 	// Update is called once per frame
 	void Update()
-	{
-		
-		float dt = Time.deltaTime;
-		float fps = 1 / dt;
+    {
+        float dt = Time.deltaTime;
 
-		fpsLow = Mathf.Min(fps, fpsLow);
-
-		textElement.text = $"{fps}fps\n{fpsLow}fps min";
-		
-		if(moveActionReference == null)
+        if (moveActionReference == null)
 		{
 			Debug.LogError("no InputActionReference");
 			return;
