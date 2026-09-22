@@ -19,6 +19,14 @@ namespace Assets.GlobalFuncs
 
             return value;
         }
+        public double Round(double value, int precision)
+        {
+            double decPow = Mathf.Pow(10, precision);
+
+            value = Mathf.Round((float)(decPow * value)) / decPow;
+
+            return value;
+        }
 
         /// <summary>
         /// Rounds Vector3 to the number of decimal places provided
