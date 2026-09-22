@@ -52,7 +52,7 @@ namespace Assets.GlobalFuncs
 
             return value;
         }
-        public float AverageOverFrames(float[] data)
+        public float AverageOverFrames(float[] data, int length)
         {
             float average = 0f;
 
@@ -61,24 +61,24 @@ namespace Assets.GlobalFuncs
                 average += item;
             }
 
-            average /= data.Length;
+            average /= length;
 
             return average;
         }
-        public Vector3 AverageOverFrames(Vector3[] data)
+        public Vector3 AverageOverFrames(Vector3[] data, int length)
         {
-            float[] x = new float[data.Length];
-            float[] y = new float[data.Length];
-            float[] z = new float[data.Length];
+            float[] x = new float[length];
+            float[] y = new float[length];
+            float[] z = new float[length];
 
-            for(int i = 0; i < data.Length; i++)
+            for(int i = 0; i < length; i++)
             {
                 x[i] = data[i].x;
                 y[i] = data[i].y;
                 z[i] = data[i].z;
             }
 
-            return new Vector3(AverageOverFrames(x), AverageOverFrames(y), AverageOverFrames(z));
+            return new Vector3(AverageOverFrames(x, length), AverageOverFrames(y, length), AverageOverFrames(z, length));
         }
     }
 }

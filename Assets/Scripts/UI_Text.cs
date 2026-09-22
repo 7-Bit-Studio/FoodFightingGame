@@ -22,7 +22,7 @@ using System.Linq;
 public class UIText : MonoBehaviour
 {
     /// <summary>
-    /// number of frames to average over
+    /// Number of frames to average over
     /// </summary>
     [SerializeField] private uint averageDuration = 5;
     [SerializeField] private Text FPSTextElement;
@@ -31,6 +31,9 @@ public class UIText : MonoBehaviour
     private Movement movement;
     private float fpsLow;
     private float currFPS;
+    private float roundedFPS;
+    private float[] prevFPS1;
+    private float[] prevFPS2;
     private string docPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
     private string docName;
     private float deltaTime;
@@ -53,6 +56,7 @@ public class UIText : MonoBehaviour
         movement = GetComponent<Movement>();
         data = movement.GetData();
         playerVel = data.playerVel;
+        
         prevPlayerVel1 = new Vector3[averageDuration];
         prevPlayerVel2 = new Vector3[averageDuration + 1];
     }
@@ -71,17 +75,20 @@ public class UIText : MonoBehaviour
 
         prevPlayerVel1 = prevPlayerVel2[0..(int)averageDuration];
         prevPlayerVel2[0] = playerVel;
+
         for(int i = 0; i < averageDuration; i++)
         {
             prevPlayerVel2[i + 1] = prevPlayerVel1[i];
         }
 
-        smoothedPlayerVel = functions.AverageOverFrames(prevPlayerVel2);
+        smoothedPlayerVel = functions.AverageOverFrames(prevPlayerVel2, (int)averageDuration);
         smoothedPlayerVel = functions.Round(smoothedPlayerVel, 2);
+        
+        roundedFPS = functions.Round(currFPS, 1);
 
         FPS();
         FPSFileWrite();
-        SetText(FPSTextElement,$"{currFPS}fps\n{fpsLow}fps min");
+        SetText(FPSTextElement,$"{roundedFPS}fps");
         SetText(SpeedElement, $"{smoothedPlayerVel.x}, {smoothedPlayerVel.y}");
         Debug.Log($"{smoothedPlayerVel.x}, {smoothedPlayerVel.y}");
 	}
@@ -94,8 +101,6 @@ public class UIText : MonoBehaviour
     void FPS()
     {
         currFPS = 1 / deltaTime;
-
-        currFPS = functions.Round(currFPS, 2);
 
         fpsLow = Mathf.Min(currFPS, fpsLow);
     }
