@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Assets.GlobalFuncs
@@ -50,6 +51,34 @@ namespace Assets.GlobalFuncs
             value.y = Mathf.Round(decPow * value.y) / decPow;
 
             return value;
+        }
+        public float AverageOverFrames(float[] data)
+        {
+            float average = 0f;
+
+            foreach (float item in data)
+            {
+                average += item;
+            }
+
+            average /= data.Length;
+
+            return average;
+        }
+        public Vector3 AverageOverFrames(Vector3[] data)
+        {
+            float[] x = new float[data.Length];
+            float[] y = new float[data.Length];
+            float[] z = new float[data.Length];
+
+            for(int i = 0; i < data.Length; i++)
+            {
+                x[i] = data[i].x;
+                y[i] = data[i].y;
+                z[i] = data[i].z;
+            }
+
+            return new Vector3(AverageOverFrames(x), AverageOverFrames(y), AverageOverFrames(z));
         }
     }
 }

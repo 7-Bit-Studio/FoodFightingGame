@@ -48,17 +48,14 @@ public class CreateScript: EditorWindow
 	private void CreateNewScript()
 	{
 		// Get the currently selected folder in the Unity Editor
-		string selectedFolder = "Assets/Scripts";
 		Object selectedObject = Selection.activeObject;
 		if (selectedObject != null)
 		{
 			string selectedPath = "Assets/Scripts";
 			if (!string.IsNullOrEmpty(selectedPath))
 			{
-				selectedFolder = selectedPath;
 				if (!System.IO.Directory.Exists(selectedPath))
 				{
-					selectedFolder = System.IO.Path.GetDirectoryName(selectedPath);
 				}
 			}
 		}
