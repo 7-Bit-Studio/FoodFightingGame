@@ -3,11 +3,15 @@
 //  System
 using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
+using System.Diagnostics;
 using System.ComponentModel;
 
 // Unity
 using Unity;
+using Unity.VectorGraphics;
+using Unity.VisualScripting;
 
 // Unity Engine
 using UnityEngine;
@@ -15,11 +19,7 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
 // Custom Datatypes
-using Assets.GlobalFuncs;
-using Unity.VisualScripting;
-using System.Linq;
-using Unity.VectorGraphics;
-using System.Diagnostics;
+using Assets.Globals;
 
 public class UIText : MonoBehaviour
 {
@@ -47,6 +47,8 @@ public class UIText : MonoBehaviour
     private Movement.Data data;
     private int screenWidth;
     private int screenHeight;
+    private bool showDebugInfo;
+
     void Loginit_()
     {
         docPath += "\\FPS-Logs";
@@ -56,14 +58,15 @@ public class UIText : MonoBehaviour
     void InitializeVars()
     {
         Loginit_();
+        movement = GetComponent<Movement>();
         fpsLow = float.PositiveInfinity;
         functions = new Functions();
-        movement = GetComponent<Movement>();
         data = movement.GetData();
         playerVel = data.playerVel;
         
         prevPlayerVel1 = new Vector3[averageDuration];
         prevPlayerVel2 = new Vector3[averageDuration + 1];
+        showDebugInfo = false;
     }
 
     void ScreenInit()
@@ -89,6 +92,24 @@ public class UIText : MonoBehaviour
         if (Keyboard.current.rKey.isPressed)
         {
             ScreenInit();
+        }
+
+        if (Keyboard.current.altKey.wasReleasedThisFrame)
+        {
+            showDebugInfo = !showDebugInfo;
+        }
+
+        if (!showDebugInfo)
+        {
+            PositionElement.gameObject.SetActive(false);
+            FPSTextElement.gameObject.SetActive(false);
+            SpeedElement.gameObject.SetActive(false);
+        }
+        else if (showDebugInfo)
+        {
+            PositionElement.gameObject.SetActive(true);
+            FPSTextElement.gameObject.SetActive(true);
+            SpeedElement.gameObject.SetActive(true);
         }
         data = movement.GetData();
         playerVel = data.playerVel;
