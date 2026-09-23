@@ -7,6 +7,9 @@ using Unity.VisualScripting;
 // Unity Engine
 using UnityEngine;
 using UnityEngine.InputSystem;
+
+// Globals
+using Assets.Globals;
     
 /// <summary>
     /// Data about the player
@@ -20,6 +23,7 @@ public class Movement : MonoBehaviour
         public Vector3 playerVel;
         public Transform playerPos;
     }
+
     [Header("Movement Settings")]
     [SerializeField] private InputActionReference moveActionReference;
     [SerializeField] private float maxSpeed = 5f;
@@ -40,7 +44,9 @@ public class Movement : MonoBehaviour
     
     // DeltaTime
     private float deltaTime;
-    
+
+    private VarTypes.Direction facing;
+    private VarTypes.Direction direction;
     void Awake()
     {
         // Preliminary checks
@@ -72,8 +78,19 @@ public class Movement : MonoBehaviour
     
         moveInputVector2 = moveAction != null ? moveAction.ReadValue<Vector2>() : Vector2.zero;
         moveInput = (Vector3)moveInputVector2;
-    
+
+
+        if (Keyboard.current.ctrlKey.isPressed && Keyboard.current.qKey.wasReleasedThisFrame)
+        {
+            string debugImageName = "Hide-the-pain-Harold-large-meme-8_0";
+            transform.Find(debugImageName).gameObject.SetActive(!transform.Find(debugImageName).gameObject.activeSelf);
+        }
+
+
+
         UpdateMovement();
+
+        UpdatePlayerFacingDirection();
     }
     
     void UpdateMovement()
@@ -90,6 +107,29 @@ public class Movement : MonoBehaviour
         UpdatePosition();
         data.playerVel = playerVel;
         data.playerPos = playerPos;
+
+        if(playerVel.x > 0)
+        {
+            facing = VarTypes.Direction.Left;
+        }
+        else
+        {
+            facing = VarTypes.Direction.Right;
+        }
+    }
+
+    void UpdatePlayerFacingDirection()
+    {
+        if(facing == VarTypes.Direction.Left)
+        {
+            transform.localScale = new Vector3(-1, transform.localScale.y,transform.localScale.z);
+            transform.Find("UI").localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
+        }
+        else
+        {
+            transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
+            transform.Find("UI").localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
+        }
     }
     
     // Updateing the player's velocity
