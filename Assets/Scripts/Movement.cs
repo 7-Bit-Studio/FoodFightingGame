@@ -36,17 +36,16 @@ public class Movement : MonoBehaviour
     private Vector3 playerVel;
     
     // PlayerData Values
-    private InputAction moveAction;
+    private VarTypes.Direction facing;
     private Vector2 moveInputVector2;
+    private InputAction moveAction;
     private Vector3 moveInput;
     private Data data;
     public Data GetData() => data;
-    
+
     // DeltaTime
     private float deltaTime;
 
-    private VarTypes.Direction facing;
-    private VarTypes.Direction direction;
     void Awake()
     {
         // Preliminary checks

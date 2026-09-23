@@ -58,9 +58,9 @@ public class UIText : MonoBehaviour
     void InitializeVars()
     {
         Loginit_();
+        movement = GetComponent<Movement>();
         fpsLow = float.PositiveInfinity;
         functions = new Functions();
-        movement = GetComponent<Movement>();
         data = movement.GetData();
         playerVel = data.playerVel;
         
