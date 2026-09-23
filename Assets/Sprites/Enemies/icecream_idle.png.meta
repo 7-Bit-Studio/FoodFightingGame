@@ -1,11 +1,16 @@
 fileFormatVersion: 2
-
-guid: 4d229ee37ccaacb469ed74aa96557a26
+guid: 131de24f8c2f52d44acfb65bb4f34e0d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4727606938896976845
-    second: Hide-the-pain-Harold-large-meme-8_0
+      213: -3406585728314007061
+    second: icecream_idle_0
+  - first:
+      213: -7453949520606744556
+    second: icecream_idle_1
+  - first:
+      213: 6031807312904615791
+    second: icecream_idle_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -38,7 +43,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -52,7 +57,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 595
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -116,23 +121,67 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Hide-the-pain-Harold-large-meme-8_0
+      name: icecream_idle_0
       rect:
         serializedVersion: 2
-        x: 1334
-        y: 872
-        width: 495
-        height: 646
+        x: 9
+        y: 0
+        width: 44
+        height: 46
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 334bf59798a246eb0800000000000000
-      internalID: -4727606938896976845
+      spriteID: be1ade6345069b0d0800000000000000
+      internalID: -3406585728314007061
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: icecream_idle_1
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 0
+        width: 42
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 410ba8a57604e8890800000000000000
+      internalID: -7453949520606744556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: icecream_idle_2
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 0
+        width: 38
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f67784f0bc845b350800000000000000
+      internalID: 6031807312904615791
       vertices: []
       indices: 
       edges: []
@@ -141,7 +190,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: f49667207955b6d46b4b9ac3fdb0b44e
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -151,7 +200,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Hide-the-pain-Harold-large-meme-8_0: -4727606938896976845
+      icecream_idle_0: -3406585728314007061
+      icecream_idle_1: -7453949520606744556
+      icecream_idle_2: 6031807312904615791
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
