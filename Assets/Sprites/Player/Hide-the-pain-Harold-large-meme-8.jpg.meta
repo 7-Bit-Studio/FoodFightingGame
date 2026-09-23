@@ -1,5 +1,6 @@
 fileFormatVersion: 2
-guid: 7c57951d11dd7e949ad8b425905edd0a
+
+guid: 4d229ee37ccaacb469ed74aa96557a26
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -51,7 +52,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 595
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -118,12 +119,12 @@ TextureImporter:
       name: Hide-the-pain-Harold-large-meme-8_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 2319
-        height: 1546
+        x: 1334
+        y: 872
+        width: 495
+        height: 646
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -140,7 +141,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: f49667207955b6d46b4b9ac3fdb0b44e
     internalID: 0
     vertices: []
     indices: 

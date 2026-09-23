@@ -27,17 +27,17 @@ public class UIText : MonoBehaviour
     [SerializeField] private uint averageDuration = 5;
     [SerializeField] private Text FPSTextElement;
     [SerializeField] private Text SpeedElement;
+    [SerializeField] private Text PositionElement;
     private Functions functions;
     private Movement movement;
     private float fpsLow;
     private float currFPS;
     private float roundedFPS;
-    private float[] prevFPS1;
-    private float[] prevFPS2;
     private string docPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
     private string docName;
     private float deltaTime;
     private Vector3 playerVel;
+    private Vector3 playerPos;
     private Vector3 smoothedPlayerVel;
     private Vector3[] prevPlayerVel1;
     private Vector3[] prevPlayerVel2;
@@ -71,6 +71,7 @@ public class UIText : MonoBehaviour
     {
         data = movement.GetData();
         playerVel = data.playerVel;
+        playerPos = data.playerPos.position;
         deltaTime = Time.deltaTime;
 
         prevPlayerVel1 = prevPlayerVel2[0..(int)averageDuration];
@@ -85,12 +86,13 @@ public class UIText : MonoBehaviour
         smoothedPlayerVel = functions.Round(smoothedPlayerVel, 2);
         
         roundedFPS = functions.Round(currFPS, 1);
+        playerPos = functions.Round(playerPos, 1) * 10;
 
         FPS();
         FPSFileWrite();
         SetText(FPSTextElement,$"{roundedFPS}fps");
         SetText(SpeedElement, $"{smoothedPlayerVel.x}, {smoothedPlayerVel.y}");
-        Debug.Log($"{smoothedPlayerVel.x}, {smoothedPlayerVel.y}");
+        SetText(PositionElement, $"X: {playerPos.x} Y: {playerPos.y}\nT: {functions.Round(Time.timeAsDouble,2)} sec");
 	}
 
     void SetText(Text textElement, string text)
