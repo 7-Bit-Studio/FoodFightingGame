@@ -18,6 +18,8 @@ using UnityEngine.InputSystem;
 using Assets.GlobalFuncs;
 using Unity.VisualScripting;
 using System.Linq;
+using Unity.VectorGraphics;
+using System.Diagnostics;
 
 public class UIText : MonoBehaviour
 {
@@ -28,6 +30,7 @@ public class UIText : MonoBehaviour
     [SerializeField] private Text FPSTextElement;
     [SerializeField] private Text SpeedElement;
     [SerializeField] private Text PositionElement;
+    private Transform TopLeftCorner;
     private Functions functions;
     private Movement movement;
     private float fpsLow;
@@ -42,6 +45,8 @@ public class UIText : MonoBehaviour
     private Vector3[] prevPlayerVel1;
     private Vector3[] prevPlayerVel2;
     private Movement.Data data;
+    private int screenWidth;
+    private int screenHeight;
     void Loginit_()
     {
         docPath += "\\FPS-Logs";
@@ -61,14 +66,30 @@ public class UIText : MonoBehaviour
         prevPlayerVel2 = new Vector3[averageDuration + 1];
     }
 
+    void ScreenInit()
+    {
+        screenWidth = Screen.width;
+        screenHeight = Screen.height;
+        TopLeftCorner = GetComponent<Transform>().Find("UI").GetChild(0).GetChild(0).GetChild(0);
+        float margin = 0.05f;
+        // -screenWidth/2 and screenHeight/2 to align with the top-left corner
+        // 0.95 for a 5% padding margin
+        TopLeftCorner.localPosition = new Vector3(-(screenWidth / 2) * (1 - margin), (1 - margin) * screenHeight / 2);
+    }
+
     void Start()
     {
+        ScreenInit();
         InitializeVars();
     }
 
     // Update is called once per frame
     public void Update()
     {
+        if (Keyboard.current.rKey.isPressed)
+        {
+            ScreenInit();
+        }
         data = movement.GetData();
         playerVel = data.playerVel;
         playerPos = data.playerPos.position;
