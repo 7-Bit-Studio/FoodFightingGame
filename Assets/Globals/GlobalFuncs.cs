@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Assets.GlobalFuncs
+namespace Assets.Globals
 {
     public readonly struct Functions
     {
@@ -87,6 +87,16 @@ namespace Assets.GlobalFuncs
             }
 
             return new Vector3(AverageOverFrames(x, length), AverageOverFrames(y, length), AverageOverFrames(z, length));
+        }
+    }
+    public struct VarTypes
+    {
+        public enum Direction
+        {
+            Left,
+            Right,
+            Up,
+            Down
         }
     }
 }
