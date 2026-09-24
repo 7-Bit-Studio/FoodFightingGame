@@ -88,11 +88,6 @@ namespace Assets.Globals
 
             return new Vector3(AverageOverFrames(x, length), AverageOverFrames(y, length), AverageOverFrames(z, length));
         }
-        
-        public static Sprite ConvertToSprite(Texture2D texture)
-        {
-            return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
-        }
     }
     public struct VarTypes
     {
