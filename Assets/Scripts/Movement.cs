@@ -64,6 +64,8 @@ public class Movement : MonoBehaviour
     
         data.playerVel = playerVel;
         data.playerPos = playerPos;
+
+        transform.Find("Main Camera").position = new Vector3(0, 0, -10);
     }
     
     // Update is called once per frame
