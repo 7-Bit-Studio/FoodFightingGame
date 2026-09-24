@@ -172,7 +172,7 @@ public class Movement : MonoBehaviour
          * Set the player's position, then rotation
          * Can be simplified to the line below
          * 
-         * transform.SetPositionAndRotation(playerPos.position, playerPos.rotation);
+         * transform.SetPositionAndRotation(enemyPos.position, enemyPos.rotation);
          */
 
         transform.position = playerPos.position;
