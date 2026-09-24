@@ -44,7 +44,7 @@ public class UIText : MonoBehaviour
     private Vector3 smoothedPlayerVel;
     private Vector3[] prevPlayerVel1;
     private Vector3[] prevPlayerVel2;
-    private Movement.Data data;
+    private VarTypes.Data data;
     private int screenWidth;
     private int screenHeight;
     private bool showDebugInfo;
@@ -62,7 +62,7 @@ public class UIText : MonoBehaviour
         fpsLow = float.PositiveInfinity;
         functions = new Functions();
         data = movement.GetData();
-        playerVel = data.playerVel;
+        playerVel = data.velocity;
         
         prevPlayerVel1 = new Vector3[averageDuration];
         prevPlayerVel2 = new Vector3[averageDuration + 1];
@@ -111,9 +111,10 @@ public class UIText : MonoBehaviour
             FPSTextElement.gameObject.SetActive(true);
             SpeedElement.gameObject.SetActive(true);
         }
+
         data = movement.GetData();
-        playerVel = data.playerVel;
-        playerPos = data.playerPos.position;
+        playerVel = data.velocity;
+        playerPos = data.position.position;
         deltaTime = Time.deltaTime;
 
         prevPlayerVel1 = prevPlayerVel2[0..(int)averageDuration];

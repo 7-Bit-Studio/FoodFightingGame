@@ -18,11 +18,6 @@ using Assets.Globals;
     
 public class Movement : MonoBehaviour
 {
-    public struct Data
-    {
-        public Vector3 playerVel;
-        public Transform playerPos;
-    }
 
     [Header("Movement Settings")]
     [SerializeField] private InputActionReference moveActionReference;
@@ -40,8 +35,8 @@ public class Movement : MonoBehaviour
     private Vector2 moveInputVector2;
     private InputAction moveAction;
     private Vector3 moveInput;
-    private Data data;
-    public Data GetData() => data;
+    private VarTypes.Data data;
+    public VarTypes.Data GetData() => data;
 
     // DeltaTime
     private float deltaTime;
@@ -62,8 +57,8 @@ public class Movement : MonoBehaviour
     
         playerPos = GetComponent<Transform>();
     
-        data.playerVel = playerVel;
-        data.playerPos = playerPos;
+        data.velocity = playerVel;
+        data.position = playerPos;
 
         transform.Find("Main Camera").position = new Vector3(0, 0, -10);
     }
@@ -106,8 +101,8 @@ public class Movement : MonoBehaviour
         }
     
         UpdatePosition();
-        data.playerVel = playerVel;
-        data.playerPos = playerPos;
+        data.velocity = playerVel;
+        data.position = playerPos;
 
         if(playerVel.x > 0)
         {
@@ -117,6 +112,8 @@ public class Movement : MonoBehaviour
         {
             facing = VarTypes.Direction.Right;
         }
+
+        data.direction = facing;
     }
 
     void UpdatePlayerFacingDirection()
