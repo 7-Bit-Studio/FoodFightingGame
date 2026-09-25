@@ -133,8 +133,9 @@ public class PlayerController : MonoBehaviour
             transform.Find(debugImageName).gameObject.SetActive(!transform.Find(debugImageName).gameObject.activeSelf);
         }
 
-        if (Mouse.current.leftButton.wasPressedThisFrame)
+        if (Mouse.current.leftButton.isPressed)
         {
+            if (enemyDistances.Length == 0) return;
             float minDistance = Mathf.Min(enemyDistances);
 
             if(minDistance > attackRange) return;
