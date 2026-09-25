@@ -32,7 +32,7 @@ public class UIText : MonoBehaviour
     [SerializeField] private Text PositionElement;
     private Transform TopLeftCorner;
     private Functions functions;
-    private Movement movement;
+    private PlayerController movement;
     private float fpsLow;
     private float currFPS;
     private float roundedFPS;
@@ -58,7 +58,7 @@ public class UIText : MonoBehaviour
     void InitializeVars()
     {
         Loginit_();
-        movement = GetComponent<Movement>();
+        movement = GetComponent<PlayerController>();
         fpsLow = float.PositiveInfinity;
         functions = new Functions();
         data = movement.GetData();
@@ -89,15 +89,7 @@ public class UIText : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
-        if (Keyboard.current.rKey.isPressed)
-        {
-            ScreenInit();
-        }
-
-        if (Keyboard.current.altKey.wasReleasedThisFrame)
-        {
-            showDebugInfo = !showDebugInfo;
-        }
+        HandleInputs();
 
         if (!showDebugInfo)
         {
@@ -137,6 +129,19 @@ public class UIText : MonoBehaviour
         SetText(SpeedElement, $"{smoothedPlayerVel.x}, {smoothedPlayerVel.y}");
         SetText(PositionElement, $"X: {playerPos.x} Y: {playerPos.y}\nT: {functions.Round(Time.timeAsDouble,2)} sec");
 	}
+
+    void HandleInputs()
+    {
+        if (Keyboard.current.rKey.isPressed)
+        {
+            ScreenInit();
+        }
+
+        if (Keyboard.current.altKey.wasReleasedThisFrame)
+        {
+            showDebugInfo = !showDebugInfo;
+        }
+    }
 
     void SetText(Text textElement, string text)
     {

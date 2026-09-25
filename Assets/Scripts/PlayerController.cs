@@ -16,7 +16,7 @@ using Assets.Globals;
     /// </summary>
     [RequireComponent(typeof(Transform))]
     
-public class Movement : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
 
     [Header("Movement Settings")]
@@ -25,8 +25,11 @@ public class Movement : MonoBehaviour
     [SerializeField] private float playerAcc = 5f;
     [SerializeField] private float frictionCoefficient = 1.01f;
     [SerializeField] private bool useAcceleration = true;
+    [SerializeField] private int health = 100;
+    [SerializeField] private int defense = 0;
+    [SerializeField] private float attackRange = 2.5f;
     
-    // Player values
+    // PlayerController values
     private Transform playerPos;
     private Vector3 playerVel;
     
@@ -40,6 +43,9 @@ public class Movement : MonoBehaviour
 
     // DeltaTime
     private float deltaTime;
+    private GameObject[] livingEnemies;
+    private float[] enemyDistances;
+    private LineRenderer lineRenderer;
 
     void Awake()
     {
@@ -48,6 +54,13 @@ public class Movement : MonoBehaviour
         {
             Debug.LogError("no InputActionReference");
             return;
+        }
+
+        lineRenderer = GetComponent<LineRenderer>();
+
+        if(lineRenderer == null)
+        {
+            lineRenderer = new GameObject().AddComponent<LineRenderer>();
         }
     
         // Initializing values
@@ -59,6 +72,9 @@ public class Movement : MonoBehaviour
     
         data.velocity = playerVel;
         data.position = playerPos;
+        data.health = health;
+        lineRenderer.startColor = Color.black;
+        lineRenderer.endColor = Color.black;
 
         transform.Find("Main Camera").position = new Vector3(0, 0, -10);
     }
@@ -69,6 +85,9 @@ public class Movement : MonoBehaviour
         // Setting current-frame constants
         deltaTime = Time.deltaTime;
         moveAction = moveActionReference.action;
+
+
+        HandleInputs();
     
         // Move Input Vector
     
@@ -76,19 +95,55 @@ public class Movement : MonoBehaviour
         moveInput = (Vector3)moveInputVector2;
 
 
+
+        UpdateMovement();
+
+        UpdatePlayerFacingDirection();
+        livingEnemies = GetLivingEnemies();
+        DrawCircle(attackRange, transform.position, 0.01f);
+
+    }
+
+    GameObject[] GetLivingEnemies()
+    {
+        EnemyController[] enemies = FindObjectsByType<EnemyController>();
+        GameObject[] livingEnemies = new GameObject[enemies.Length];
+        enemyDistances = new float[enemies.Length];
+
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            EnemyController enemy = enemies[i];
+            livingEnemies[i] = enemy.gameObject;
+            enemyDistances[i] = Vector3.Distance(transform.position, enemy.transform.position);
+        }
+
+        return livingEnemies;
+    }
+    
+    void Attack(GameObject enemy, int damage)
+    {
+        enemy.GetComponent<EnemyController>().OnHit(damage);
+    }
+
+    void HandleInputs()
+    {
         if (Keyboard.current.ctrlKey.isPressed && Keyboard.current.qKey.wasReleasedThisFrame)
         {
             string debugImageName = "Hide-the-pain-Harold-large-meme-8_0";
             transform.Find(debugImageName).gameObject.SetActive(!transform.Find(debugImageName).gameObject.activeSelf);
         }
 
+        if (Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            float minDistance = Mathf.Min(enemyDistances);
 
+            if(minDistance > attackRange) return;
 
-        UpdateMovement();
-
-        UpdatePlayerFacingDirection();
+            int indexOfMinDistance = Array.IndexOf(enemyDistances, minDistance);
+            Attack(livingEnemies[indexOfMinDistance], 10);
+        }
     }
-    
+
     void UpdateMovement()
     {
         if (useAcceleration)
@@ -179,5 +234,30 @@ public class Movement : MonoBehaviour
     Vector3 Friction(Vector3 vel, float fricCoef)
     {
         return vel / fricCoef;
+    }
+
+    public void DrawPolygon(int vertexNumber, float radius, Vector3 centerPos, float startWidth, float endWidth)
+    {
+        lineRenderer.startWidth = startWidth;
+        lineRenderer.endWidth = endWidth;
+        lineRenderer.loop = true;
+        float angle = 2 * Mathf.PI / vertexNumber;
+        lineRenderer.positionCount = vertexNumber;
+
+        for (int i = 0; i < vertexNumber; i++)
+        {
+            Matrix4x4 rotationMatrix = new Matrix4x4(new Vector4(Mathf.Cos(angle * i), Mathf.Sin(angle * i), 0, 0),
+                                                     new Vector4(-1 * Mathf.Sin(angle * i), Mathf.Cos(angle * i), 0, 0),
+                                       new Vector4(0, 0, 1, 0),
+                                       new Vector4(0, 0, 0, 1));
+            Vector3 initialRelativePosition = new Vector3(0, radius, 0);
+            lineRenderer.SetPosition(i, centerPos + rotationMatrix.MultiplyPoint(initialRelativePosition));
+
+        }
+    }
+
+    public void DrawCircle(float radius, Vector3 centerPos, float strokeWidth)
+    {
+        DrawPolygon(100, radius, centerPos, strokeWidth, strokeWidth);
     }
 }
