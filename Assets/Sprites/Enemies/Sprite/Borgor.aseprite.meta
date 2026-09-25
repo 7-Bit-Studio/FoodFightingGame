@@ -129,7 +129,7 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: Frame_0
     originalName: 
-    pivot: {x: 0.4883721, y: -0.56}
+    pivot: {x: 0.4888889, y: -0.4814815}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
@@ -137,8 +137,8 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 43
-      height: 25
+      width: 45
+      height: 27
     spriteID: bd000350a05816c4696e21e0a5cd435c
     spriteBone: []
     spriteOutline: []
@@ -148,6 +148,90 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 4, y: 4}
+  - name: Frame_1
+    originalName: 
+    pivot: {x: 0.4888889, y: -0.4814815}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 39
+      width: 45
+      height: 27
+    spriteID: 68bd8b58c6360694cadce3c286341b79
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 39}
+  - name: Frame_2
+    originalName: 
+    pivot: {x: 0.4888889, y: -0.4814815}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 74
+      width: 45
+      height: 27
+    spriteID: c3e5ebde124f1c442a8822f3a05446a2
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 74}
+  - name: Frame_3
+    originalName: 
+    pivot: {x: 0.4888889, y: -0.4814815}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 57
+      y: 4
+      width: 45
+      height: 27
+    spriteID: 1ecd38ed1cfc180429c3cdbb64ac1e57
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 57, y: 4}
+  - name: Frame_4
+    originalName: 
+    pivot: {x: 0.4888889, y: -0.4814815}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 57
+      y: 39
+      width: 45
+      height: 27
+    spriteID: 2594d603969ee6c498db383595c4dbbb
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 57, y: 39}
   spriteSheetImportData: []
   tileSetImportData: []
   asepriteLayers:
@@ -163,15 +247,51 @@ ScriptedImporter:
     layerType: 0
     blendMode: 0
     cells:
-    - name: Borgor
+    - name: Frame_0
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
-        x: 11
-        y: 14
-        width: 43
-        height: 25
+        x: 10
+        y: 13
+        width: 45
+        height: 27
       spriteId: bd000350a05816c4696e21e0a5cd435c
+    - name: Frame_1
+      frameIndex: 1
+      additiveSortOrder: 0
+      cellRect:
+        x: 10
+        y: 13
+        width: 45
+        height: 27
+      spriteId: 68bd8b58c6360694cadce3c286341b79
+    - name: Frame_2
+      frameIndex: 2
+      additiveSortOrder: 0
+      cellRect:
+        x: 10
+        y: 13
+        width: 45
+        height: 27
+      spriteId: c3e5ebde124f1c442a8822f3a05446a2
+    - name: Frame_3
+      frameIndex: 3
+      additiveSortOrder: 0
+      cellRect:
+        x: 10
+        y: 13
+        width: 45
+        height: 27
+      spriteId: 1ecd38ed1cfc180429c3cdbb64ac1e57
+    - name: Frame_4
+      frameIndex: 4
+      additiveSortOrder: 0
+      cellRect:
+        x: 10
+        y: 13
+        width: 45
+        height: 27
+      spriteId: 2594d603969ee6c498db383595c4dbbb
     linkedCells: []
     tileCells: []
     tileSetIndex: 0
@@ -180,5 +300,5 @@ ScriptedImporter:
   platformSettings: []
   generatePhysicsShape: 0
   secondarySpriteTextures: []
-  previousTextureSize: {x: 64, y: 64}
+  previousTextureSize: {x: 128, y: 128}
   canvasSize: {x: 64, y: 64}
