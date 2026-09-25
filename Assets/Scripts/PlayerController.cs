@@ -220,15 +220,8 @@ public class PlayerController : MonoBehaviour
     void UpdatePosition()
     {
         playerPos.position += deltaTime * playerVel;
-        /*
-         * Set the player's position, then rotation
-         * Can be simplified to the line below
-         * 
-         * transform.SetPositionAndRotation(playerPos.position, playerPos.rotation);
-         */
 
-        transform.position = playerPos.position;
-        transform.rotation = playerPos.rotation;
+        transform.SetPositionAndRotation(playerPos.position, playerPos.rotation);
     }
 
     Vector3 Friction(Vector3 vel, float fricCoef)

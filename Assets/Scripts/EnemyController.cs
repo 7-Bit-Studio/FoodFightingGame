@@ -116,7 +116,7 @@ public class EnemyController : MonoBehaviour
         {
             transform.gameObject.SetActive(false);
         }
-    }
+    }   
     void UpdateMovement()
     {
         if (wasJustHit)
@@ -158,8 +158,7 @@ public class EnemyController : MonoBehaviour
 
         Collisions();
 
-        transform.rotation = enemyPos.rotation;
-        transform.position = enemyPos.position;
+        transform.SetPositionAndRotation(enemyPos.position, enemyPos.rotation);
     }
 
     void EnemyCollision()
