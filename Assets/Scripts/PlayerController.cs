@@ -120,12 +120,13 @@ public class PlayerController : MonoBehaviour
     
     void Attack(GameObject enemy, int damage)
     {
-        enemy.GetComponent<EnemyController>().OnHit(damage);
+        if (playerAttack.activeSelf) return;
+        playerAttack.GetComponent<PlayerAttack>().OnAttack(enemy, playerPos.position, 10, damage);
+
+        //enemy.GetComponent<EnemyController>().OnHit(damage);
 
         Vector2 VectorFromPlayerToEnemy = enemy.transform.position - playerPos.position;
         VectorFromPlayerToEnemy.Normalize();
-
-        playerAttack.GetComponent<PlayerAttack>().OnAttack(VectorFromPlayerToEnemy, playerPos.position, 5);
     }
 
     void HandleInputs()
@@ -157,7 +158,7 @@ public class PlayerController : MonoBehaviour
             Debug.Log($"{mouseDistFromPlayer}");
             int indexOfMinDistance = Array.IndexOf(distFromMouse, minDistanceFromMouse);
 
-            if (Mathf.Min(enemyDistances) > attackRange) return;
+            if (enemyDistances[indexOfMinDistance] > attackRange) return;
 
             Debug.Log($"{indexOfMinDistance}");
             Attack(livingEnemies[indexOfMinDistance], 10);
