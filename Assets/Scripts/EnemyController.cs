@@ -30,6 +30,7 @@ public class EnemyController : MonoBehaviour
     /// How many seconds for each animation frame to last
     /// </summary>
     [SerializeField] private float animationDuration = 0.25f;
+    [SerializeField] private int collisionLoops = 1;
 
     // EnemyController values
     private Transform enemyPos;
@@ -60,7 +61,7 @@ public class EnemyController : MonoBehaviour
     {
         wasJustHit = false;
         isStunned = false;
-        player = Functions.GetSiblingGameObject(transform, "Player");
+        player = Functions.GetSiblingGameObject("Player");
 
         movement = player.GetComponent<PlayerController>();
 
@@ -115,6 +116,7 @@ public class EnemyController : MonoBehaviour
         if(health <= 0)
         {
             transform.gameObject.SetActive(false);
+            Debug.Log($"{transform.name} has died!");
         }
     }   
     void UpdateMovement()
@@ -156,7 +158,10 @@ public class EnemyController : MonoBehaviour
     {
         enemyPos.position += enemyVel * deltaTime;
 
-        Collisions();
+        for (int i = 0; i < collisionLoops; i++)
+        {
+            Collisions();
+        }
 
         transform.SetPositionAndRotation(enemyPos.position, enemyPos.rotation);
     }
@@ -168,7 +173,7 @@ public class EnemyController : MonoBehaviour
         float colliderRad = GetComponent<CircleCollider2D>().radius;
 
         Vector3 colliderOffset = (Vector3)GetComponent<CircleCollider2D>().offset;
-        Vector3 colliderCenter = enemyPos.position + colliderOffset;
+        Vector3 colliderCenter;
         GameObject[] gameObjects = new GameObject[objects.Length];
 
         for(int i = 0; i < objects.Length; i++)
@@ -184,6 +189,8 @@ public class EnemyController : MonoBehaviour
         foreach (GameObject gameObject in gameObjects)
         {
             if (gameObject == null) continue;
+            colliderCenter = enemyPos.position + colliderOffset;
+            //Debug.Log($"Checking collision");
             float otherColliderRad = gameObject.GetComponent<CircleCollider2D>().radius;
             Vector3 otherColliderCenter = gameObject.transform.position + (Vector3)gameObject.GetComponent<CircleCollider2D>().offset;
 
@@ -193,39 +200,34 @@ public class EnemyController : MonoBehaviour
             if (currentDistance < otherColliderRad + colliderRad)
             {
                 enemyPos.position += (colliderCenter - otherColliderCenter) * (minDistance - currentDistance);
+                enemyVel += (colliderCenter - otherColliderCenter) * (minDistance - currentDistance);
                 Debug.Log("Collision!");
             }
+            transform.SetPositionAndRotation(enemyPos.position, enemyPos.rotation);
         }
     }
 
     void PlayerCollision()
     {
-        float colliderRad = GetComponent<CircleCollider2D>().radius;
-        Vector3 colliderOffset = (Vector3)GetComponent<CircleCollider2D>().offset;
-        Vector3 colliderCenter = enemyPos.position + colliderOffset;
+        if (!player.GetComponent<CircleCollider2D>().isActiveAndEnabled) return;
 
-        Vector3 playerColliderPos = (Vector3)player.GetComponent<CircleCollider2D>().offset + data.position.transform.position;
+        float colliderRad = GetComponent<CircleCollider2D>().radius;
+
         float playerColliderRad = player.GetComponent<CircleCollider2D>().radius;
 
-        if (!player.GetComponent<CircleCollider2D>().isActiveAndEnabled)
+        if (playerDirection.magnitude < colliderRad + playerColliderRad)
         {
-            playerColliderRad = 0;
+            enemyPos.position += -normalizedPlayerDirection * ((colliderRad + playerColliderRad) - playerDirection.magnitude);
+            enemyVel += -playerDirection * ((colliderRad + playerColliderRad) - playerDirection.magnitude);
+            Debug.Log("Player Collision!");
         }
 
-
-        if (Vector3.Distance(colliderCenter, playerColliderPos) < colliderRad + playerColliderRad)
-        {
-            enemyPos.position += -playerDirection * ((colliderRad + playerColliderRad) - playerDirection.magnitude);
-            Debug.Log("Collision!");
-        }
+        transform.SetPositionAndRotation(enemyPos.position, enemyPos.rotation);
     }
 
     void Collisions()
     {
         EnemyCollision();
-        if (player.GetComponent<CircleCollider2D>().isActiveAndEnabled)
-        {
-            PlayerCollision();
-        }
+        PlayerCollision();
     }
 }
