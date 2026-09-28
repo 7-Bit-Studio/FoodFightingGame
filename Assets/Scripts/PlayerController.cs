@@ -121,7 +121,7 @@ public class PlayerController : MonoBehaviour
     void Attack(GameObject enemy, int damage)
     {
         if (playerAttack.activeSelf) return;
-        playerAttack.GetComponent<PlayerAttack>().OnAttack(enemy, playerPos.position, 10, damage);
+        playerAttack.GetComponent<PlayerAttack>().OnAttack(enemy, playerPos.position);
 
         //enemy.GetComponent<EnemyController>().OnHit(damage);
 

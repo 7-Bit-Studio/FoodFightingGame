@@ -39,6 +39,7 @@ public class EnemyController : MonoBehaviour
     // EnemyData Values
     private VarTypes.Direction facing;
     private VarTypes.Data data;
+    private VarTypes.Data playerData;
     private PlayerController movement;
 
     private Sprite[] spriteArr;
@@ -56,7 +57,7 @@ public class EnemyController : MonoBehaviour
     private bool wasJustHit;
     private float hitTime;
 
-
+    public VarTypes.Data GetData() => data; 
     void Start()
     {
         wasJustHit = false;
@@ -65,7 +66,7 @@ public class EnemyController : MonoBehaviour
 
         movement = player.GetComponent<PlayerController>();
 
-        data = movement.GetData();
+        playerData = movement.GetData();
 
         enemyPos = GetComponent<Transform>();
         data.velocity = enemyVel;
@@ -82,9 +83,9 @@ public class EnemyController : MonoBehaviour
     void Update()
     {
         if (!transform.gameObject.activeSelf) return;
-        data = movement.GetData();
+        playerData = movement.GetData();
         
-        playerDirection = data.position.transform.position - transform.position;
+        playerDirection = playerData.position.transform.position - transform.position;
         normalizedPlayerDirection = playerDirection.normalized;
         deltaTime = Time.deltaTime;
 
@@ -151,6 +152,9 @@ public class EnemyController : MonoBehaviour
             enemyVel = enemyVel.normalized * maxSpeed;
         }
 
+        data.velocity = enemyVel;
+        data.position = enemyPos;
+
         UpdatePosition();
     }
 
@@ -162,6 +166,9 @@ public class EnemyController : MonoBehaviour
         {
             Collisions();
         }
+
+        data.velocity = enemyVel;
+        data.position = enemyPos;
 
         transform.SetPositionAndRotation(enemyPos.position, enemyPos.rotation);
     }
