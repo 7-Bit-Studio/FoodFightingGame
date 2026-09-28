@@ -26,6 +26,8 @@ public class PlayerAttack : MonoBehaviour
         AttackPos.rotation = Quaternion.Euler(new Vector3(0, 0, Mathf.Rad2Deg * Mathf.Atan2(-AttackVel.x, AttackVel.y)));
 
         transform.SetPositionAndRotation(AttackPos.position, AttackPos.rotation);
+
+        //if(AttackPos.position.x > )
     }
 
 

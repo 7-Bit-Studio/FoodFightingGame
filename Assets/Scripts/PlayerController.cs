@@ -155,10 +155,10 @@ public class PlayerController : MonoBehaviour
             float mouseDistFromPlayer = Vector3.Distance(MouseInWorldPosition, playerPos.position);
 
             Debug.Log($"{mouseDistFromPlayer}");
-
-            if(mouseDistFromPlayer > attackRange) return;
-
             int indexOfMinDistance = Array.IndexOf(distFromMouse, minDistanceFromMouse);
+
+            if (Mathf.Min(enemyDistances) > attackRange) return;
+
             Debug.Log($"{indexOfMinDistance}");
             Attack(livingEnemies[indexOfMinDistance], 10);
         }
