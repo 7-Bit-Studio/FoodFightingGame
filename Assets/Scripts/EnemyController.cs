@@ -116,6 +116,7 @@ public class EnemyController : MonoBehaviour
         if(health <= 0)
         {
             transform.gameObject.SetActive(false);
+            Debug.Log($"{transform.name} has died!");
         }
     }   
     void UpdateMovement()
@@ -157,12 +158,9 @@ public class EnemyController : MonoBehaviour
     {
         enemyPos.position += enemyVel * deltaTime;
 
-        if (collisionLoops > 0)
+        for (int i = 0; i < collisionLoops; i++)
         {
-            for (int i = 0; i < collisionLoops; i++)
-            {
-                Collisions();
-            }
+            Collisions();
         }
 
         transform.SetPositionAndRotation(enemyPos.position, enemyPos.rotation);
@@ -175,7 +173,7 @@ public class EnemyController : MonoBehaviour
         float colliderRad = GetComponent<CircleCollider2D>().radius;
 
         Vector3 colliderOffset = (Vector3)GetComponent<CircleCollider2D>().offset;
-        Vector3 colliderCenter = enemyPos.position + colliderOffset;
+        Vector3 colliderCenter;
         GameObject[] gameObjects = new GameObject[objects.Length];
 
         for(int i = 0; i < objects.Length; i++)
@@ -211,18 +209,11 @@ public class EnemyController : MonoBehaviour
 
     void PlayerCollision()
     {
+        if (!player.GetComponent<CircleCollider2D>().isActiveAndEnabled) return;
+
         float colliderRad = GetComponent<CircleCollider2D>().radius;
-        Vector3 colliderOffset = (Vector3)GetComponent<CircleCollider2D>().offset;
-        Vector3 colliderCenter = enemyPos.position + colliderOffset;
 
-        Vector3 playerColliderPos = (Vector3)player.GetComponent<CircleCollider2D>().offset + data.position.transform.position;
         float playerColliderRad = player.GetComponent<CircleCollider2D>().radius;
-
-        if (!player.GetComponent<CircleCollider2D>().isActiveAndEnabled)
-        {
-            playerColliderRad = 0;
-        }
-
 
         if (playerDirection.magnitude < colliderRad + playerColliderRad)
         {
@@ -237,10 +228,6 @@ public class EnemyController : MonoBehaviour
     void Collisions()
     {
         EnemyCollision();
-        if (player.GetComponent<CircleCollider2D>().isActiveAndEnabled)
-        {
-            PlayerCollision();
-        }
-
+        PlayerCollision();
     }
 }
