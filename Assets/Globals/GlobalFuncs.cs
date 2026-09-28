@@ -96,7 +96,7 @@ namespace Assets.Globals
             return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
         }
 
-        public static GameObject GetSiblingGameObject(string SiblingName)
+        public static GameObject GetSiblingGameObject(Transform transform, string SiblingName)
         {
             Scene scene;
             GameObject[] gameObjects;
@@ -120,30 +120,6 @@ namespace Assets.Globals
             }
 
             return returnObject;
-        }
-
-        public static Quaternion ToQuaternion(float yaw, float pitch, float roll)
-        {
-            float cy = Mathf.Cos(yaw * 0.5f);
-            float sy = Mathf.Sin(yaw * 0.5f);
-            float cp = Mathf.Cos(pitch * 0.5f);
-            float sp = Mathf.Sin(pitch * 0.5f);
-            float cr = Mathf.Cos(roll * 0.5f);
-            float sr = Mathf.Sin(roll * 0.5f);
-
-            Quaternion q = new()
-            {
-                w = cr * cp * cy + sr * sp * sy,
-                x = sr * cp * cy - cr * sp * sy,
-                y = cr * sp * cy + sr * cp * sy,
-                z = cr * cp * sy - sr * sp * cy
-            };
-
-            return q;
-        }
-        public static Quaternion ToQuaternion(Vector3 vector3)
-        {
-            return ToQuaternion(vector3.x, vector3.y, vector3.z);
         }
     }
     public struct VarTypes
