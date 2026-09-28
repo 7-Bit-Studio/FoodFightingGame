@@ -61,7 +61,7 @@ public class EnemyController : MonoBehaviour
     {
         wasJustHit = false;
         isStunned = false;
-        player = Functions.GetSiblingGameObject(transform, "Player");
+        player = Functions.GetSiblingGameObject("Player");
 
         movement = player.GetComponent<PlayerController>();
 

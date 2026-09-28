@@ -10,11 +10,12 @@ using UnityEngine.InputSystem;
 
 // Globals
 using Assets.Globals;
-    
+using UnityEngine.Rendering;
+
 /// <summary>
-    /// Data about the player
-    /// </summary>
-    [RequireComponent(typeof(Transform))]
+/// Data about the player
+/// </summary>
+[RequireComponent(typeof(Transform))]
     
 public class PlayerController : MonoBehaviour
 {
@@ -28,6 +29,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int health = 100;
     [SerializeField] private int defense = 0;
     [SerializeField] private float attackRange = 2.5f;
+    [SerializeField] private GameObject playerAttack;
     
     // PlayerController values
     private Transform playerPos;
@@ -86,7 +88,6 @@ public class PlayerController : MonoBehaviour
         deltaTime = Time.deltaTime;
         moveAction = moveActionReference.action;
 
-
         HandleInputs();
     
         // Move Input Vector
@@ -94,14 +95,11 @@ public class PlayerController : MonoBehaviour
         moveInputVector2 = moveAction != null ? moveAction.ReadValue<Vector2>() : Vector2.zero;
         moveInput = (Vector3)moveInputVector2;
 
-
-
         UpdateMovement();
 
         UpdatePlayerFacingDirection();
         livingEnemies = GetLivingEnemies();
         DrawCircle(attackRange, transform.position, 0.01f);
-
     }
 
     GameObject[] GetLivingEnemies()
@@ -123,11 +121,16 @@ public class PlayerController : MonoBehaviour
     void Attack(GameObject enemy, int damage)
     {
         enemy.GetComponent<EnemyController>().OnHit(damage);
+
+        Vector2 VectorFromPlayerToEnemy = enemy.transform.position - playerPos.position;
+        VectorFromPlayerToEnemy.Normalize();
+
+        playerAttack.GetComponent<PlayerAttack>().OnAttack(VectorFromPlayerToEnemy, playerPos.position, 5);
     }
 
     void HandleInputs()
     {
-        if (Keyboard.current.ctrlKey.isPressed && Keyboard.current.qKey.wasReleasedThisFrame)
+        if (Keyboard.current.ctrlKey.isPressed && Keyboard.current.qKey.wasPressedThisFrame)
         {
             string debugImageName = "Hide-the-pain-Harold-large-meme-8_0";
             transform.Find(debugImageName).gameObject.SetActive(!transform.Find(debugImageName).gameObject.activeSelf);
@@ -135,12 +138,28 @@ public class PlayerController : MonoBehaviour
 
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
-            if (enemyDistances.Length == 0) return;
-            float minDistance = Mathf.Min(enemyDistances);
+            Vector2 MouseInWorldPosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
 
-            if(minDistance > attackRange) return;
+            float minDistanceFromMouse = float.PositiveInfinity;
+            float[] distFromMouse = new float[livingEnemies.Length];
 
-            int indexOfMinDistance = Array.IndexOf(enemyDistances, minDistance);
+            for (int i = 0; i < livingEnemies.Length; i++)
+            {
+                float currDistFromMouse = Vector3.Distance(MouseInWorldPosition, livingEnemies[i].transform.position);
+                distFromMouse[i] = currDistFromMouse;
+                if (minDistanceFromMouse > currDistFromMouse)
+                {
+                    minDistanceFromMouse = currDistFromMouse;
+                }
+            }
+            float mouseDistFromPlayer = Vector3.Distance(MouseInWorldPosition, playerPos.position);
+
+            Debug.Log($"{mouseDistFromPlayer}");
+
+            if(mouseDistFromPlayer > attackRange) return;
+
+            int indexOfMinDistance = Array.IndexOf(distFromMouse, minDistanceFromMouse);
+            Debug.Log($"{indexOfMinDistance}");
             Attack(livingEnemies[indexOfMinDistance], 10);
         }
     }
