@@ -30,6 +30,7 @@ public class EnemyController : MonoBehaviour
     /// How many seconds for each animation frame to last
     /// </summary>
     [SerializeField] private float animationDuration = 0.25f;
+    [SerializeField] private int collisionLoops = 1;
 
     // EnemyController values
     private Transform enemyPos;
@@ -156,7 +157,13 @@ public class EnemyController : MonoBehaviour
     {
         enemyPos.position += enemyVel * deltaTime;
 
-        Collisions();
+        if (collisionLoops > 0)
+        {
+            for (int i = 0; i < collisionLoops; i++)
+            {
+                Collisions();
+            }
+        }
 
         transform.SetPositionAndRotation(enemyPos.position, enemyPos.rotation);
     }
@@ -184,6 +191,8 @@ public class EnemyController : MonoBehaviour
         foreach (GameObject gameObject in gameObjects)
         {
             if (gameObject == null) continue;
+            colliderCenter = enemyPos.position + colliderOffset;
+            //Debug.Log($"Checking collision");
             float otherColliderRad = gameObject.GetComponent<CircleCollider2D>().radius;
             Vector3 otherColliderCenter = gameObject.transform.position + (Vector3)gameObject.GetComponent<CircleCollider2D>().offset;
 
@@ -193,8 +202,10 @@ public class EnemyController : MonoBehaviour
             if (currentDistance < otherColliderRad + colliderRad)
             {
                 enemyPos.position += (colliderCenter - otherColliderCenter) * (minDistance - currentDistance);
+                enemyVel += (colliderCenter - otherColliderCenter) * (minDistance - currentDistance);
                 Debug.Log("Collision!");
             }
+            transform.SetPositionAndRotation(enemyPos.position, enemyPos.rotation);
         }
     }
 
@@ -213,11 +224,14 @@ public class EnemyController : MonoBehaviour
         }
 
 
-        if (Vector3.Distance(colliderCenter, playerColliderPos) < colliderRad + playerColliderRad)
+        if (playerDirection.magnitude < colliderRad + playerColliderRad)
         {
-            enemyPos.position += -playerDirection * ((colliderRad + playerColliderRad) - playerDirection.magnitude);
-            Debug.Log("Collision!");
+            enemyPos.position += -normalizedPlayerDirection * ((colliderRad + playerColliderRad) - playerDirection.magnitude);
+            enemyVel += -playerDirection * ((colliderRad + playerColliderRad) - playerDirection.magnitude);
+            Debug.Log("Player Collision!");
         }
+
+        transform.SetPositionAndRotation(enemyPos.position, enemyPos.rotation);
     }
 
     void Collisions()
@@ -227,5 +241,6 @@ public class EnemyController : MonoBehaviour
         {
             PlayerCollision();
         }
+
     }
 }
