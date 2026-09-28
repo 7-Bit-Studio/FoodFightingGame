@@ -53,7 +53,7 @@ public class UIText : MonoBehaviour
     {
         docPath += "\\FPS-Logs";
         docName = $"FPS-{DateTime.Now:dd-MM-yyyy_HH.mm.ss.fff}.csv";
-        File.AppendAllText(Path.Combine(docPath, docName), $"FPS,\tTime\n");
+        File.AppendAllText(Path.Combine(docPath, docName), $"Time,\tFPS\n");
     }
     void InitializeVars()
     {
@@ -157,6 +157,6 @@ public class UIText : MonoBehaviour
 
     void FPSFileWrite()
     {
-        File.AppendAllText(Path.Combine(docPath, docName), $"{currFPS},\t{Time.time}\n");
+        File.AppendAllText(Path.Combine(docPath, docName), $"{Time.time},\t{currFPS}\n");
     }
 }
