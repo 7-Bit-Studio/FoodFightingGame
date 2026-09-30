@@ -30,7 +30,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float attackLenience = 0.5f;
 
     // PlayerController values
-    private Transform playerPos;
+    private Transform playerTransform;
+    private Vector3 playerPos;
     private Vector3 playerVel;
     
     // PlayerData Values
@@ -67,8 +68,9 @@ public class PlayerController : MonoBehaviour
         moveInputVector2 = Vector2.zero;
         moveInput = Vector3.zero;
         playerVel = Vector3.zero;
-    
-        playerPos = GetComponent<Transform>();
+        
+        playerTransform = GetComponent<Transform>();
+        playerPos = playerTransform.position;
     
         data.velocity = playerVel;
         data.position = playerPos;
@@ -116,14 +118,14 @@ public class PlayerController : MonoBehaviour
         return livingEnemies;
     }
     
-    void Attack(GameObject enemy, int damage)
+    void Attack(GameObject enemy)
     {
         if (playerAttack.activeSelf) return;
-        playerAttack.GetComponent<PlayerAttack>().OnAttack(enemy, playerPos.position);
+        playerAttack.GetComponent<PlayerAttack>().OnAttack(enemy, playerPos);
 
         //enemy.GetComponent<EnemyController>().OnHit(damage);
 
-        Vector2 VectorFromPlayerToEnemy = enemy.transform.position - playerPos.position;
+        Vector2 VectorFromPlayerToEnemy = enemy.transform.position - playerPos;
         VectorFromPlayerToEnemy.Normalize();
     }
 
@@ -153,7 +155,7 @@ public class PlayerController : MonoBehaviour
                         minDistanceFromMouse = currDistFromMouse;
                     }
                 }
-                float mouseDistFromPlayer = Vector3.Distance(MouseInWorldPosition, playerPos.position);
+                float mouseDistFromPlayer = Vector3.Distance(MouseInWorldPosition, playerPos);
 
                 Debug.Log($"{mouseDistFromPlayer}");
                 int indexOfMinDistance = Array.IndexOf(distFromMouse, minDistanceFromMouse);
@@ -161,7 +163,7 @@ public class PlayerController : MonoBehaviour
                 if (enemyDistances[indexOfMinDistance] > attackRange) return;
 
                 Debug.Log($"{indexOfMinDistance}");
-                Attack(livingEnemies[indexOfMinDistance], 10);
+                Attack(livingEnemies[indexOfMinDistance]);
             }
         }
         else
@@ -183,7 +185,7 @@ public class PlayerController : MonoBehaviour
                         minDistanceFromMouse = currDistFromMouse;
                     }
                 }
-                float mouseDistFromPlayer = Vector3.Distance(MouseInWorldPosition, playerPos.position);
+                float mouseDistFromPlayer = Vector3.Distance(MouseInWorldPosition, playerPos);
 
                 Debug.Log($"{mouseDistFromPlayer}");
                 int? indexOfMinDistanceNullable = Array.IndexOf(distFromMouse, minDistanceFromMouse);
@@ -194,7 +196,7 @@ public class PlayerController : MonoBehaviour
                 if (enemyDistances[indexOfMinDistance] > attackRange) return;
 
                 Debug.Log($"{indexOfMinDistance}");
-                Attack(livingEnemies[indexOfMinDistance], 10);
+                Attack(livingEnemies[indexOfMinDistance]);
             }
         }
     }
@@ -274,9 +276,9 @@ public class PlayerController : MonoBehaviour
     }
     void UpdatePosition()
     {
-        playerPos.position += deltaTime * playerVel;
+        playerPos += deltaTime * playerVel;
 
-        transform.SetPositionAndRotation(playerPos.position, playerPos.rotation);
+        transform.SetPositionAndRotation(playerPos, playerTransform.rotation);
     }
 
     Vector3 Friction(Vector3 vel, float fricCoef)

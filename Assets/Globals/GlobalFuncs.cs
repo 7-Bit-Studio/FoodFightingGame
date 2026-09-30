@@ -192,7 +192,8 @@ namespace Assets.Globals
         }
         public struct Data
         {
-            public Transform position;
+            public Vector3 position;
+            public Transform transform;
             public Vector3 velocity;
             public Direction direction;
             public int health;
