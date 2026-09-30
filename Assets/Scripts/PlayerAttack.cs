@@ -4,15 +4,12 @@ using UnityEngine.Rendering;
 
 public class PlayerAttack : MonoBehaviour
 {
-    [SerializeField] private float damageArea = 0.5f;
     [SerializeField] private int damage = 10;
     [SerializeField] private float speed = 20;
-    private VarTypes.Data data;
     private Vector3 AttackVel;
     private Transform AttackPos;
     private float deltaTime;
     private Vector2 startPos;
-    public VarTypes.Data GetData() => data;
     private GameObject currentTarget;
     void Start()
     {

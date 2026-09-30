@@ -60,7 +60,6 @@ public class EnemyController : MonoBehaviour
     private GameObject healthBar;
     private Transform healthValueTransform;
     private int startHealth;
-    private float inverseStartHealth;
 
     public VarTypes.Data GetData() => data; 
     void Start()
@@ -84,7 +83,6 @@ public class EnemyController : MonoBehaviour
         spriteAtlas.GetSprites(spriteArr);
 
         startHealth = health;
-        inverseStartHealth = 1 / startHealth;
 
         if (isBoss)
         {
