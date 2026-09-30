@@ -14,8 +14,6 @@ public class PlayerAttack : MonoBehaviour
     private Vector2 startPos;
     public VarTypes.Data GetData() => data;
     private GameObject currentTarget;
-    private Vector3 direction;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         AttackPos = GetComponent<Transform>();
