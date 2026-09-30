@@ -31,6 +31,7 @@ public class EnemyController : MonoBehaviour
     /// </summary>
     [SerializeField] private float animationDuration = 0.25f;
     [SerializeField] private int collisionLoops = 1;
+    [SerializeField] private bool isBoss = false;
 
     // EnemyController values
     private Transform enemyPos;
@@ -56,6 +57,10 @@ public class EnemyController : MonoBehaviour
     private bool isStunned;
     private bool wasJustHit;
     private float hitTime;
+    private GameObject healthBar;
+    private Transform healthValueTransform;
+    private int startHealth;
+    private float inverseStartHealth;
 
     public VarTypes.Data GetData() => data; 
     void Start()
@@ -77,6 +82,15 @@ public class EnemyController : MonoBehaviour
         timeAtLastSpriteUpdate = Time.time;
         currentSpriteIndex = 0;
         spriteAtlas.GetSprites(spriteArr);
+
+        startHealth = health;
+        inverseStartHealth = 1 / startHealth;
+
+        if (isBoss)
+        {
+            healthBar = transform.Find("HealthBarBoss").gameObject;
+            healthValueTransform = healthBar.transform.Find("HealthBarInner");
+        }
     }
 
     // Update is called once per frame
@@ -96,6 +110,13 @@ public class EnemyController : MonoBehaviour
             GetComponent<SpriteRenderer>().sprite = currentSprite;
             currentSpriteIndex += 1;
             currentSpriteIndex %= spriteArr.Length;
+        }
+
+
+        if (isBoss)
+        {
+            healthValueTransform.localScale = new Vector3(health * 0.9f / startHealth, healthValueTransform.localScale.y, healthValueTransform.localScale.z);
+            healthValueTransform.localPosition = new Vector3(( 0.9f * ((float)health / startHealth) - 0.9f)/2f, healthValueTransform.localPosition.y, healthValueTransform.localPosition.z);
         }
 
         UpdateMovement();
