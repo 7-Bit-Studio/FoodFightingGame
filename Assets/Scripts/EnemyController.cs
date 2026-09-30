@@ -235,6 +235,9 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// CALLED EVERY FRAME, BE CAREFUL
+    /// </summary>
     void PlayerCollision()
     {
         if (!player.GetComponent<CircleCollider2D>().isActiveAndEnabled) return;
