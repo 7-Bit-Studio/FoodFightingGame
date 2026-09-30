@@ -62,9 +62,10 @@ public class PlayerAttack : MonoBehaviour
         *  time * velocity is equivilant to distance
         *  therefore, (distance / speed) * velocity is the updated relative transform
         *  and we add the distance to the transform to get the new transform
-        *  by subtracting the start transform of the player's attack, we get the vector pointing at where the enemy will be from
-        *  where the attack started, so the attack auto-aims at where the enemy will be, due to lack of fine control over direction
-        *  of projectile from the player
+        *  by subtracting the start transform of the player's attack, we get the vector
+        *  pointing at where the enemy will be from where the attack started, so the
+        *  attack auto-aims at where the enemy will be, due to lack of fine control
+        *  over direction of projectile from the player
         */
         Vector3 direction = ((distance/speed) * data.velocity) + data.transform.position - start;
         Debug.Log($"Speed: {speed}");
