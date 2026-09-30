@@ -7,6 +7,7 @@ namespace Assets.Globals
 {
     public readonly struct Functions
     {
+
         /// <summary>
         /// Rounds float to the number of decimal places provided
         /// </summary>
@@ -21,11 +22,18 @@ namespace Assets.Globals
 
             return value;
         }
+
+        /// <summary>
+        /// Rounds double to the number of decimal places provided
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="precision"></param>
+        /// <returns></returns>
         public double Round(double value, int precision)
         {
             double decPow = Mathf.Pow(10, precision);
 
-            value = Mathf.Round((float)(decPow * value)) / decPow;
+            value = Math.Round(decPow * value) / decPow;
 
             return value;
         }
@@ -62,6 +70,13 @@ namespace Assets.Globals
 
             return value;
         }
+
+        /// <summary>
+        /// smoothes out bumpy data, float
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="length"></param>
+        /// <returns></returns>
         public float AverageOverFrames(float[] data, int length)
         {
             float average = 0f;
@@ -75,6 +90,13 @@ namespace Assets.Globals
 
             return average;
         }
+
+        /// <summary>
+        /// smoothes out bumpy data, Vector3
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="length"></param>
+        /// <returns></returns>
         public Vector3 AverageOverFrames(Vector3[] data, int length)
         {
             float[] x = new float[length];
@@ -91,11 +113,11 @@ namespace Assets.Globals
             return new Vector3(AverageOverFrames(x, length), AverageOverFrames(y, length), AverageOverFrames(z, length));
         }
 
-        public static Sprite ConvertToSprite(Texture2D texture)
-        {
-            return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
-        }
-
+        /// <summary>
+        /// gets sibling GameObject from name
+        /// </summary>
+        /// <param name="SiblingName"></param>
+        /// <returns></returns>
         public static GameObject GetSiblingGameObject(string SiblingName)
         {
             Scene scene;
@@ -122,6 +144,14 @@ namespace Assets.Globals
             return returnObject;
         }
 
+        /// <summary>
+        /// i totally stole this code lol
+        /// couldn't tell ya how tf this works, but it does
+        /// </summary>
+        /// <param name="yaw"></param>
+        /// <param name="pitch"></param>
+        /// <param name="roll"></param>
+        /// <returns></returns>
         public static Quaternion ToQuaternion(float yaw, float pitch, float roll)
         {
             float cy = Mathf.Cos(yaw * 0.5f);
@@ -141,6 +171,12 @@ namespace Assets.Globals
 
             return q;
         }
+
+        /// <summary>
+        /// couldn't tell ya how tf this works, but it does
+        /// </summary>
+        /// <param name="vector3"></param>
+        /// <returns></returns>
         public static Quaternion ToQuaternion(Vector3 vector3)
         {
             return ToQuaternion(vector3.x, vector3.y, vector3.z);
