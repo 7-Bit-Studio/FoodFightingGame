@@ -30,7 +30,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int defense = 0;
     [SerializeField] private float attackRange = 2.5f;
     [SerializeField] private GameObject playerAttack;
-    
+    [SerializeField] private bool CheatMode = false;
+    [SerializeField] private float attackLenience = 0.5f;
+
     // PlayerController values
     private Transform playerPos;
     private Vector3 playerVel;
@@ -136,32 +138,68 @@ public class PlayerController : MonoBehaviour
             string debugImageName = "Hide-the-pain-Harold-large-meme-8_0";
             transform.Find(debugImageName).gameObject.SetActive(!transform.Find(debugImageName).gameObject.activeSelf);
         }
-
-        if (Mouse.current.leftButton.wasPressedThisFrame)
+        if (!CheatMode)
         {
-            Vector2 MouseInWorldPosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-
-            float minDistanceFromMouse = float.PositiveInfinity;
-            float[] distFromMouse = new float[livingEnemies.Length];
-
-            for (int i = 0; i < livingEnemies.Length; i++)
+            if (Mouse.current.leftButton.wasPressedThisFrame)
             {
-                float currDistFromMouse = Vector3.Distance(MouseInWorldPosition, livingEnemies[i].transform.position);
-                distFromMouse[i] = currDistFromMouse;
-                if (minDistanceFromMouse > currDistFromMouse)
+                Vector2 MouseInWorldPosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+
+                float minDistanceFromMouse = float.PositiveInfinity;
+                float[] distFromMouse = new float[livingEnemies.Length];
+
+                for (int i = 0; i < livingEnemies.Length; i++)
                 {
-                    minDistanceFromMouse = currDistFromMouse;
+                    float currDistFromMouse = Vector3.Distance(MouseInWorldPosition, livingEnemies[i].transform.position);
+                    distFromMouse[i] = currDistFromMouse;
+                    if (currDistFromMouse > attackLenience) continue;
+                    if (minDistanceFromMouse > currDistFromMouse)
+                    {
+                        minDistanceFromMouse = currDistFromMouse;
+                    }
                 }
+                float mouseDistFromPlayer = Vector3.Distance(MouseInWorldPosition, playerPos.position);
+
+                Debug.Log($"{mouseDistFromPlayer}");
+                int indexOfMinDistance = Array.IndexOf(distFromMouse, minDistanceFromMouse);
+
+                if (enemyDistances[indexOfMinDistance] > attackRange) return;
+
+                Debug.Log($"{indexOfMinDistance}");
+                Attack(livingEnemies[indexOfMinDistance], 10);
             }
-            float mouseDistFromPlayer = Vector3.Distance(MouseInWorldPosition, playerPos.position);
+        }
+        else
+        {
+            if (Mouse.current.leftButton.isPressed)
+            {
+                Vector2 MouseInWorldPosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
 
-            Debug.Log($"{mouseDistFromPlayer}");
-            int indexOfMinDistance = Array.IndexOf(distFromMouse, minDistanceFromMouse);
+                float minDistanceFromMouse = float.PositiveInfinity;
+                float[] distFromMouse = new float[livingEnemies.Length];
 
-            if (enemyDistances[indexOfMinDistance] > attackRange) return;
+                for (int i = 0; i < livingEnemies.Length; i++)
+                {
+                    float currDistFromMouse = Vector3.Distance(MouseInWorldPosition, livingEnemies[i].transform.position);
+                    distFromMouse[i] = currDistFromMouse;
+                    if (currDistFromMouse > attackLenience) continue;
+                    if (minDistanceFromMouse > currDistFromMouse)
+                    {
+                        minDistanceFromMouse = currDistFromMouse;
+                    }
+                }
+                float mouseDistFromPlayer = Vector3.Distance(MouseInWorldPosition, playerPos.position);
 
-            Debug.Log($"{indexOfMinDistance}");
-            Attack(livingEnemies[indexOfMinDistance], 10);
+                Debug.Log($"{mouseDistFromPlayer}");
+                int? indexOfMinDistanceNullable = Array.IndexOf(distFromMouse, minDistanceFromMouse);
+                int indexOfMinDistance = indexOfMinDistanceNullable == null ? -1 : (int) indexOfMinDistanceNullable;
+
+                if (indexOfMinDistance == -1) return;
+
+                if (enemyDistances[indexOfMinDistance] > attackRange) return;
+
+                Debug.Log($"{indexOfMinDistance}");
+                Attack(livingEnemies[indexOfMinDistance], 10);
+            }
         }
     }
 
