@@ -312,4 +312,17 @@ public class PlayerController : MonoBehaviour
     {
         DrawPolygon(100, radius, centerPos, strokeWidth, strokeWidth);
     }
+
+    public void OnHit(int damage)
+    {
+        int dealtDamage = damage - defense;
+        dealtDamage = Math.Max(0, dealtDamage);
+
+        health -= dealtDamage;
+
+        if(health <= 0)
+        {
+            transform.gameObject.SetActive(false);
+        }
+    }
 }
