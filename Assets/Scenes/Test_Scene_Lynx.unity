@@ -2518,7 +2518,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 937b5d8b9aea75b41862c6d61c2ba7e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAttack
-  damageArea: 0.5
   damage: 10
   speed: 20
 --- !u!1 &1582620831
