@@ -256,6 +256,9 @@ public class EnemyController : MonoBehaviour
         transform.SetPositionAndRotation(enemyPos.position, enemyPos.rotation);
     }
 
+    /// <summary>
+    /// Resolve all collisions with enemies and the player
+    /// </summary>
     void Collisions()
     {
         EnemyCollision();
