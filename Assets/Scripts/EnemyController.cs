@@ -1,19 +1,8 @@
-using System.ComponentModel;
-using System;
+// System
 
 // Unity
-using Unity;
-using Unity.U2D;
-using Unity.Mathematics;
-using Unity.VisualScripting;
-
-// Unity Engine
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.U2D;
-using UnityEngine.InputSystem;
-using UnityEngine.TextCore.Text;
-using UnityEngine.SceneManagement;
 
 // Globals
 using Assets.Globals;

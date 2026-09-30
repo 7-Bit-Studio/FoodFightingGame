@@ -1,6 +1,5 @@
-using Assets.Globals;
 using UnityEngine;
-using UnityEngine.Rendering;
+using Assets.Globals;
 
 public class PlayerAttack : MonoBehaviour
 {

@@ -1,16 +1,12 @@
-// Unity
+// System
 using System;
-using Unity;
-using Unity.Mathematics;
-using Unity.VisualScripting;
 
-// Unity Engine
+// Unity
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 // Globals
 using Assets.Globals;
-using UnityEngine.Rendering;
 
 /// <summary>
 /// Data about the player
