@@ -1,0 +1,1510 @@
+fileFormatVersion: 2
+guid: c394763c44340034bac61b4bf316566f
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -2853970235989360665
+    second: Cheesy_0
+  - first:
+      213: -8600450556130157428
+    second: Cheesy_1
+  - first:
+      213: -8062851861398970866
+    second: Cheesy_2
+  - first:
+      213: 8013052474775405175
+    second: Cheesy_3
+  - first:
+      213: 2478155479212970267
+    second: Cheesy_4
+  - first:
+      213: -8760655259995647973
+    second: Cheesy_5
+  - first:
+      213: 1133444860434668897
+    second: Cheesy_6
+  - first:
+      213: 8446805601144959157
+    second: Cheesy_7
+  - first:
+      213: 5101737602609802194
+    second: Cheesy_8
+  - first:
+      213: 3377735102602802797
+    second: Cheesy_9
+  - first:
+      213: -9015503600860883859
+    second: Cheesy_10
+  - first:
+      213: -783713989063231579
+    second: Cheesy_11
+  - first:
+      213: 1603709488763668620
+    second: Cheesy_12
+  - first:
+      213: -6365656026378289926
+    second: Cheesy_13
+  - first:
+      213: 5179016752935362739
+    second: Cheesy_14
+  - first:
+      213: -4128944342821650478
+    second: Cheesy_15
+  - first:
+      213: 5369553127076640542
+    second: Cheesy_16
+  - first:
+      213: 5385970979197692923
+    second: Cheesy_17
+  - first:
+      213: 1589528239498032177
+    second: Cheesy_18
+  - first:
+      213: -6885615287247874536
+    second: Cheesy_19
+  - first:
+      213: -1952339228981510019
+    second: Cheesy_20
+  - first:
+      213: 852250293147493422
+    second: Cheesy_21
+  - first:
+      213: -5273865780396214185
+    second: Cheesy_22
+  - first:
+      213: 6346719231743872439
+    second: Cheesy_23
+  - first:
+      213: 6120941390096810054
+    second: Cheesy_24
+  - first:
+      213: -3457045528374626819
+    second: Cheesy_25
+  - first:
+      213: -3124647848424853557
+    second: Cheesy_26
+  - first:
+      213: -6100031388486020828
+    second: Cheesy_27
+  - first:
+      213: -7731648672081716519
+    second: Cheesy_28
+  - first:
+      213: -9110015545976251246
+    second: Cheesy_29
+  - first:
+      213: -3801198889885171004
+    second: Cheesy_30
+  - first:
+      213: 326953294890377396
+    second: Cheesy_31
+  - first:
+      213: 261833386866804642
+    second: Cheesy_32
+  - first:
+      213: -5602163989202524541
+    second: Cheesy_33
+  - first:
+      213: 7308040387038711714
+    second: Cheesy_34
+  - first:
+      213: -3476309636675673593
+    second: Cheesy_35
+  - first:
+      213: 2026505552235073870
+    second: Cheesy_36
+  - first:
+      213: 2009910686867803403
+    second: Cheesy_37
+  - first:
+      213: 8449598710499605901
+    second: Cheesy_38
+  - first:
+      213: -2557997323086753963
+    second: Cheesy_39
+  - first:
+      213: 7733552454575318348
+    second: Cheesy_40
+  - first:
+      213: 6992843037590942432
+    second: Cheesy_41
+  - first:
+      213: 1773344642608837408
+    second: Cheesy_42
+  - first:
+      213: 7458572487895028345
+    second: Cheesy_43
+  - first:
+      213: 2418341781516384127
+    second: Cheesy_44
+  - first:
+      213: -189761516292565176
+    second: Cheesy_45
+  - first:
+      213: 4241321282855656133
+    second: Cheesy_46
+  - first:
+      213: -3919536554303839968
+    second: Cheesy_47
+  - first:
+      213: -69139016762294340
+    second: Cheesy_48
+  - first:
+      213: 2368302785263905946
+    second: Cheesy_49
+  - first:
+      213: 2928142581686648320
+    second: Cheesy_50
+  - first:
+      213: -145599434441444268
+    second: Cheesy_51
+  - first:
+      213: 4276386616410587132
+    second: Cheesy_52
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Cheesy_0
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 817
+        width: 94
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7eff05cf039a468d0800000000000000
+      internalID: -2853970235989360665
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_1
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 817
+        width: 94
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c8c1d8d49cf05a880800000000000000
+      internalID: -8600450556130157428
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_2
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 817
+        width: 94
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e0e97bc63fefa1090800000000000000
+      internalID: -8062851861398970866
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_3
+      rect:
+        serializedVersion: 2
+        x: 401
+        y: 817
+        width: 94
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7728d8555c4143f60800000000000000
+      internalID: 8013052474775405175
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_4
+      rect:
+        serializedVersion: 2
+        x: 529
+        y: 817
+        width: 94
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b115dac474d246220800000000000000
+      internalID: 2478155479212970267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_5
+      rect:
+        serializedVersion: 2
+        x: 657
+        y: 817
+        width: 94
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b105d4cf476eb6680800000000000000
+      internalID: -8760655259995647973
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_6
+      rect:
+        serializedVersion: 2
+        x: 785
+        y: 817
+        width: 94
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16d53b6681ecabf00800000000000000
+      internalID: 1133444860434668897
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_7
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 689
+        width: 94
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b0760fe0f4193570800000000000000
+      internalID: 8446805601144959157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_8
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 689
+        width: 94
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2db6fc4c1530dc640800000000000000
+      internalID: 5101737602609802194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_9
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 689
+        width: 94
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d66f1080e2020ee20800000000000000
+      internalID: 3377735102602802797
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_10
+      rect:
+        serializedVersion: 2
+        x: 401
+        y: 689
+        width: 94
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d649e6fbd3f72e280800000000000000
+      internalID: -9015503600860883859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_11
+      rect:
+        serializedVersion: 2
+        x: 529
+        y: 689
+        width: 94
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5a7b16c7740bf15f0800000000000000
+      internalID: -783713989063231579
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_12
+      rect:
+        serializedVersion: 2
+        x: 657
+        y: 689
+        width: 94
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c888ea08845814610800000000000000
+      internalID: 1603709488763668620
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_13
+      rect:
+        serializedVersion: 2
+        x: 785
+        y: 689
+        width: 94
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: afcb5691295a8a7a0800000000000000
+      internalID: -6365656026378289926
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_14
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 581
+        width: 94
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b062841c409fd740800000000000000
+      internalID: 5179016752935362739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_15
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 561
+        width: 86
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2dfb1cc0ffa03b6c0800000000000000
+      internalID: -4128944342821650478
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_16
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 553
+        width: 114
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e17bdf5be1c748a40800000000000000
+      internalID: 5369553127076640542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_17
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 561
+        width: 94
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bfb24a9c110deba40800000000000000
+      internalID: 5385970979197692923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_18
+      rect:
+        serializedVersion: 2
+        x: 401
+        y: 561
+        width: 94
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1347bbb13832f0610800000000000000
+      internalID: 1589528239498032177
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_19
+      rect:
+        serializedVersion: 2
+        x: 529
+        y: 561
+        width: 94
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8165797b0616170a0800000000000000
+      internalID: -6885615287247874536
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_20
+      rect:
+        serializedVersion: 2
+        x: 657
+        y: 561
+        width: 94
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d704f7fa0d5e7e4e0800000000000000
+      internalID: -1952339228981510019
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_21
+      rect:
+        serializedVersion: 2
+        x: 785
+        y: 581
+        width: 94
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e2467ce402dc3db00800000000000000
+      internalID: 852250293147493422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_22
+      rect:
+        serializedVersion: 2
+        x: 789
+        y: 561
+        width: 86
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 758356ec3077fc6b0800000000000000
+      internalID: -5273865780396214185
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_23
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 425
+        width: 114
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7bdcb31d383141850800000000000000
+      internalID: 6346719231743872439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_24
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 433
+        width: 94
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 640c4bf93c3f1f450800000000000000
+      internalID: 6120941390096810054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_25
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 433
+        width: 94
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df5b0ec786b1600d0800000000000000
+      internalID: -3457045528374626819
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_26
+      rect:
+        serializedVersion: 2
+        x: 401
+        y: 433
+        width: 94
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bcfa272465503a4d0800000000000000
+      internalID: -3124647848424853557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_27
+      rect:
+        serializedVersion: 2
+        x: 529
+        y: 433
+        width: 94
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 421de8285c5585ba0800000000000000
+      internalID: -6100031388486020828
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_28
+      rect:
+        serializedVersion: 2
+        x: 657
+        y: 453
+        width: 94
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9dad27c2f7aa3b490800000000000000
+      internalID: -7731648672081716519
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_29
+      rect:
+        serializedVersion: 2
+        x: 661
+        y: 433
+        width: 86
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 29c9ccbb029b29180800000000000000
+      internalID: -9110015545976251246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_30
+      rect:
+        serializedVersion: 2
+        x: 775
+        y: 425
+        width: 114
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c209cfcfbd6f3bc0800000000000000
+      internalID: -3801198889885171004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_31
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 305
+        width: 94
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b0a5181a42998400800000000000000
+      internalID: 326953294890377396
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_32
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 305
+        width: 94
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a7888ef31832a300800000000000000
+      internalID: 261833386866804642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_33
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 305
+        width: 94
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 386291a888d1142b0800000000000000
+      internalID: -5602163989202524541
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_34
+      rect:
+        serializedVersion: 2
+        x: 401
+        y: 305
+        width: 94
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2af86a923006b6560800000000000000
+      internalID: 7308040387038711714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_35
+      rect:
+        serializedVersion: 2
+        x: 529
+        y: 325
+        width: 94
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 702eda0cdcaa1cfc0800000000000000
+      internalID: -3476309636675673593
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_36
+      rect:
+        serializedVersion: 2
+        x: 533
+        y: 305
+        width: 86
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e41145810189f1c10800000000000000
+      internalID: 2026505552235073870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_37
+      rect:
+        serializedVersion: 2
+        x: 647
+        y: 297
+        width: 114
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b0d4409ee13a4eb10800000000000000
+      internalID: 2009910686867803403
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_38
+      rect:
+        serializedVersion: 2
+        x: 785
+        y: 309
+        width: 94
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d8d7de16241034570800000000000000
+      internalID: 8449598710499605901
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_39
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 179
+        width: 94
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 55f830dccfa208cd0800000000000000
+      internalID: -2557997323086753963
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_40
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 175
+        width: 94
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c45efcabbf8135b60800000000000000
+      internalID: 7733552454575318348
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_41
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 177
+        width: 96
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e2fba961b19b0160800000000000000
+      internalID: 6992843037590942432
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_42
+      rect:
+        serializedVersion: 2
+        x: 395
+        y: 177
+        width: 102
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 023ba0f8e8f2c9810800000000000000
+      internalID: 1773344642608837408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_43
+      rect:
+        serializedVersion: 2
+        x: 529
+        y: 177
+        width: 96
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9721c78192c228760800000000000000
+      internalID: 7458572487895028345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_44
+      rect:
+        serializedVersion: 2
+        x: 657
+        y: 177
+        width: 96
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f77f4c0990daf8120800000000000000
+      internalID: 2418341781516384127
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_45
+      rect:
+        serializedVersion: 2
+        x: 785
+        y: 173
+        width: 94
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 847975508e4dd5df0800000000000000
+      internalID: -189761516292565176
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_46
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 51
+        width: 94
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ca5aea3c333cda30800000000000000
+      internalID: 4241321282855656133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_47
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 49
+        width: 94
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 021af8c35420b99c0800000000000000
+      internalID: -3919536554303839968
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_48
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 49
+        width: 94
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cbf73c93e6e5a0ff0800000000000000
+      internalID: -69139016762294340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_49
+      rect:
+        serializedVersion: 2
+        x: 401
+        y: 49
+        width: 94
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a9c293cd5d6edd020800000000000000
+      internalID: 2368302785263905946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_50
+      rect:
+        serializedVersion: 2
+        x: 529
+        y: 49
+        width: 94
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 00eb0210a2ad2a820800000000000000
+      internalID: 2928142581686648320
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_51
+      rect:
+        serializedVersion: 2
+        x: 575
+        y: 37
+        width: 12
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 454be96f51abafdf0800000000000000
+      internalID: -145599434441444268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cheesy_52
+      rect:
+        serializedVersion: 2
+        x: 591
+        y: 33
+        width: 16
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cff336968f6c85b30800000000000000
+      internalID: 4276386616410587132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Cheesy_0: -2853970235989360665
+      Cheesy_1: -8600450556130157428
+      Cheesy_10: -9015503600860883859
+      Cheesy_11: -783713989063231579
+      Cheesy_12: 1603709488763668620
+      Cheesy_13: -6365656026378289926
+      Cheesy_14: 5179016752935362739
+      Cheesy_15: -4128944342821650478
+      Cheesy_16: 5369553127076640542
+      Cheesy_17: 5385970979197692923
+      Cheesy_18: 1589528239498032177
+      Cheesy_19: -6885615287247874536
+      Cheesy_2: -8062851861398970866
+      Cheesy_20: -1952339228981510019
+      Cheesy_21: 852250293147493422
+      Cheesy_22: -5273865780396214185
+      Cheesy_23: 6346719231743872439
+      Cheesy_24: 6120941390096810054
+      Cheesy_25: -3457045528374626819
+      Cheesy_26: -3124647848424853557
+      Cheesy_27: -6100031388486020828
+      Cheesy_28: -7731648672081716519
+      Cheesy_29: -9110015545976251246
+      Cheesy_3: 8013052474775405175
+      Cheesy_30: -3801198889885171004
+      Cheesy_31: 326953294890377396
+      Cheesy_32: 261833386866804642
+      Cheesy_33: -5602163989202524541
+      Cheesy_34: 7308040387038711714
+      Cheesy_35: -3476309636675673593
+      Cheesy_36: 2026505552235073870
+      Cheesy_37: 2009910686867803403
+      Cheesy_38: 8449598710499605901
+      Cheesy_39: -2557997323086753963
+      Cheesy_4: 2478155479212970267
+      Cheesy_40: 7733552454575318348
+      Cheesy_41: 6992843037590942432
+      Cheesy_42: 1773344642608837408
+      Cheesy_43: 7458572487895028345
+      Cheesy_44: 2418341781516384127
+      Cheesy_45: -189761516292565176
+      Cheesy_46: 4241321282855656133
+      Cheesy_47: -3919536554303839968
+      Cheesy_48: -69139016762294340
+      Cheesy_49: 2368302785263905946
+      Cheesy_5: -8760655259995647973
+      Cheesy_50: 2928142581686648320
+      Cheesy_51: -145599434441444268
+      Cheesy_52: 4276386616410587132
+      Cheesy_6: 1133444860434668897
+      Cheesy_7: 8446805601144959157
+      Cheesy_8: 5101737602609802194
+      Cheesy_9: 3377735102602802797
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

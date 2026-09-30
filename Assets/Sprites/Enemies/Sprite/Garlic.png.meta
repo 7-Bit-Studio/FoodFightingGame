@@ -1,0 +1,600 @@
+fileFormatVersion: 2
+guid: 42c3edb47de3e3d4596b9360a63db599
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -912498489993581376
+    second: Garlic_0
+  - first:
+      213: 3356208544395961622
+    second: Garlic_1
+  - first:
+      213: 8672196899316348145
+    second: Garlic_2
+  - first:
+      213: -4270435203005716846
+    second: Garlic_3
+  - first:
+      213: 8819774881955280956
+    second: Garlic_4
+  - first:
+      213: 3673853537169677212
+    second: Garlic_5
+  - first:
+      213: 8944776131026966622
+    second: Garlic_6
+  - first:
+      213: 8559513760527654250
+    second: Garlic_7
+  - first:
+      213: 1533655062320360353
+    second: Garlic_8
+  - first:
+      213: -3872787242917164731
+    second: Garlic_9
+  - first:
+      213: 9130644764393701270
+    second: Garlic_10
+  - first:
+      213: 7401958780476175839
+    second: Garlic_11
+  - first:
+      213: -6178865211540647538
+    second: Garlic_12
+  - first:
+      213: -3470196918537539887
+    second: Garlic_13
+  - first:
+      213: -5275307203798568905
+    second: Garlic_14
+  - first:
+      213: -8139883465471485266
+    second: Garlic_15
+  - first:
+      213: -7636731672416210069
+    second: Garlic_16
+  - first:
+      213: -5153346622527784436
+    second: Garlic_17
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Garlic_0
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 523
+        width: 82
+        height: 108
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0cc2add35772653f0800000000000000
+      internalID: -912498489993581376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Garlic_1
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 523
+        width: 82
+        height: 108
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6152ad0a3e5a39e20800000000000000
+      internalID: 3356208544395961622
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Garlic_2
+      rect:
+        serializedVersion: 2
+        x: 279
+        y: 523
+        width: 82
+        height: 108
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f4bef5f125d95870800000000000000
+      internalID: 8672196899316348145
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Garlic_3
+      rect:
+        serializedVersion: 2
+        x: 407
+        y: 521
+        width: 82
+        height: 110
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 29665800fcd5cb4c0800000000000000
+      internalID: -4270435203005716846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Garlic_4
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 395
+        width: 82
+        height: 108
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c387bd5a682266a70800000000000000
+      internalID: 8819774881955280956
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Garlic_5
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 395
+        width: 82
+        height: 108
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c9b9fcfb3562cf230800000000000000
+      internalID: 3673853537169677212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Garlic_6
+      rect:
+        serializedVersion: 2
+        x: 279
+        y: 395
+        width: 82
+        height: 108
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e58514def7a322c70800000000000000
+      internalID: 8944776131026966622
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Garlic_7
+      rect:
+        serializedVersion: 2
+        x: 407
+        y: 393
+        width: 82
+        height: 110
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6d915a3a6089c670800000000000000
+      internalID: 8559513760527654250
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Garlic_8
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 267
+        width: 82
+        height: 108
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1aba59d4723a84510800000000000000
+      internalID: 1533655062320360353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Garlic_9
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 267
+        width: 82
+        height: 108
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 549024f7588114ac0800000000000000
+      internalID: -3872787242917164731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Garlic_10
+      rect:
+        serializedVersion: 2
+        x: 279
+        y: 267
+        width: 82
+        height: 108
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69f77f7790196be70800000000000000
+      internalID: 9130644764393701270
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Garlic_11
+      rect:
+        serializedVersion: 2
+        x: 407
+        y: 265
+        width: 82
+        height: 110
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd5bd582b4a09b660800000000000000
+      internalID: 7401958780476175839
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Garlic_12
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 139
+        width: 82
+        height: 108
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e81d91fb3d2404aa0800000000000000
+      internalID: -6178865211540647538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Garlic_13
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 139
+        width: 82
+        height: 108
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1de2ae9d94267dfc0800000000000000
+      internalID: -3470196918537539887
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Garlic_14
+      rect:
+        serializedVersion: 2
+        x: 279
+        y: 131
+        width: 82
+        height: 116
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 730f6844c085ac6b0800000000000000
+      internalID: -5275307203798568905
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Garlic_15
+      rect:
+        serializedVersion: 2
+        x: 407
+        y: 127
+        width: 82
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eaa1f777d13590f80800000000000000
+      internalID: -8139883465471485266
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Garlic_16
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 15
+        width: 28
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b6338ac4101e40690800000000000000
+      internalID: -7636731672416210069
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Garlic_17
+      rect:
+        serializedVersion: 2
+        x: 173
+        y: 13
+        width: 40
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c0ab5c7ec82ab78b0800000000000000
+      internalID: -5153346622527784436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Garlic_0: -912498489993581376
+      Garlic_1: 3356208544395961622
+      Garlic_10: 9130644764393701270
+      Garlic_11: 7401958780476175839
+      Garlic_12: -6178865211540647538
+      Garlic_13: -3470196918537539887
+      Garlic_14: -5275307203798568905
+      Garlic_15: -8139883465471485266
+      Garlic_16: -7636731672416210069
+      Garlic_17: -5153346622527784436
+      Garlic_2: 8672196899316348145
+      Garlic_3: -4270435203005716846
+      Garlic_4: 8819774881955280956
+      Garlic_5: 3673853537169677212
+      Garlic_6: 8944776131026966622
+      Garlic_7: 8559513760527654250
+      Garlic_8: 1533655062320360353
+      Garlic_9: -3872787242917164731
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
