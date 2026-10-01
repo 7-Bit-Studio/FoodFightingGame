@@ -1,19 +1,8 @@
-using System.ComponentModel;
-using System;
+// System
 
 // Unity
-using Unity;
-using Unity.U2D;
-using Unity.Mathematics;
-using Unity.VisualScripting;
-
-// Unity Engine
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.U2D;
-using UnityEngine.InputSystem;
-using UnityEngine.TextCore.Text;
-using UnityEngine.SceneManagement;
 
 // Globals
 using Assets.Globals;
@@ -34,7 +23,8 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private bool isBoss = false;
 
     // EnemyController values
-    private Transform enemyPos;
+    private Transform enemyTransform;
+    private Vector3 enemyPos;
     private Vector3 enemyVel;
 
     // EnemyData Values
@@ -60,7 +50,6 @@ public class EnemyController : MonoBehaviour
     private GameObject healthBar;
     private Transform healthValueTransform;
     private int startHealth;
-    private float inverseStartHealth;
 
     public VarTypes.Data GetData() => data; 
     void Start()
@@ -73,10 +62,12 @@ public class EnemyController : MonoBehaviour
 
         playerData = movement.GetData();
 
-        enemyPos = GetComponent<Transform>();
+        enemyTransform = GetComponent<Transform>();
+        enemyPos = enemyTransform.position;
         data.velocity = enemyVel;
-        data.position = enemyPos;
+        data.transform = enemyTransform;
         data.health = health;
+        data.position = enemyPos;
 
         spriteArr = new Sprite[spriteAtlas.spriteCount];
         timeAtLastSpriteUpdate = Time.time;
@@ -84,7 +75,6 @@ public class EnemyController : MonoBehaviour
         spriteAtlas.GetSprites(spriteArr);
 
         startHealth = health;
-        inverseStartHealth = 1 / startHealth;
 
         if (isBoss)
         {
@@ -99,7 +89,7 @@ public class EnemyController : MonoBehaviour
         if (!transform.gameObject.activeSelf) return;
         playerData = movement.GetData();
         
-        playerDirection = playerData.position.transform.position - transform.position;
+        playerDirection = playerData.position - transform.position;
         normalizedPlayerDirection = playerDirection.normalized;
         deltaTime = Time.deltaTime;
 
@@ -115,6 +105,9 @@ public class EnemyController : MonoBehaviour
 
         if (isBoss)
         {
+            // if anyone knows of a better way to do this, please let me know
+            // no, setting localScale.x to a number doesn't work
+            // same with localPosition
             healthValueTransform.localScale = new Vector3(health * 0.9f / startHealth, healthValueTransform.localScale.y, healthValueTransform.localScale.z);
             healthValueTransform.localPosition = new Vector3(( 0.9f * ((float)health / startHealth) - 0.9f)/2f, healthValueTransform.localPosition.y, healthValueTransform.localPosition.z);
         }
@@ -137,7 +130,7 @@ public class EnemyController : MonoBehaviour
 
         if(health <= 0)
         {
-            transform.gameObject.SetActive(false);
+            enemyTransform.gameObject.SetActive(false);
             Debug.Log($"{transform.name} has died!");
         }
     }   
@@ -175,13 +168,14 @@ public class EnemyController : MonoBehaviour
 
         data.velocity = enemyVel;
         data.position = enemyPos;
+        data.transform = enemyTransform;
 
         UpdatePosition();
     }
 
     void UpdatePosition()
     {
-        enemyPos.position += enemyVel * deltaTime;
+        enemyTransform.position += enemyVel * deltaTime;
 
         for (int i = 0; i < collisionLoops; i++)
         {
@@ -190,8 +184,10 @@ public class EnemyController : MonoBehaviour
 
         data.velocity = enemyVel;
         data.position = enemyPos;
+        data.transform = enemyTransform;
 
-        transform.SetPositionAndRotation(enemyPos.position, enemyPos.rotation);
+        // leaving enemyTransform.position to keep function looking balanced
+        transform.SetPositionAndRotation(enemyTransform.position, enemyTransform.rotation);
     }
 
     void EnemyCollision()
@@ -217,7 +213,7 @@ public class EnemyController : MonoBehaviour
         foreach (GameObject gameObject in gameObjects)
         {
             if (gameObject == null) continue;
-            colliderCenter = enemyPos.position + colliderOffset;
+            colliderCenter = enemyPos + colliderOffset;
             //Debug.Log($"Checking collision");
             float otherColliderRad = gameObject.GetComponent<CircleCollider2D>().radius;
             Vector3 otherColliderCenter = gameObject.transform.position + (Vector3)gameObject.GetComponent<CircleCollider2D>().offset;
@@ -227,14 +223,19 @@ public class EnemyController : MonoBehaviour
 
             if (currentDistance < otherColliderRad + colliderRad)
             {
-                enemyPos.position += (colliderCenter - otherColliderCenter) * (minDistance - currentDistance);
+                enemyPos += (colliderCenter - otherColliderCenter) * (minDistance - currentDistance);
                 enemyVel += (colliderCenter - otherColliderCenter) * (minDistance - currentDistance);
                 Debug.Log("Collision!");
             }
-            transform.SetPositionAndRotation(enemyPos.position, enemyPos.rotation);
+
+            // leaving enemyTransform.position to keep function looking balanced
+            transform.SetPositionAndRotation(enemyTransform.position, enemyTransform.rotation);
         }
     }
 
+    /// <summary>
+    /// CALLED EVERY FRAME, BE CAREFUL
+    /// </summary>
     void PlayerCollision()
     {
         if (!player.GetComponent<CircleCollider2D>().isActiveAndEnabled) return;
@@ -245,14 +246,19 @@ public class EnemyController : MonoBehaviour
 
         if (playerDirection.magnitude < colliderRad + playerColliderRad)
         {
-            enemyPos.position += -normalizedPlayerDirection * ((colliderRad + playerColliderRad) - playerDirection.magnitude);
-            enemyVel += -playerDirection * ((colliderRad + playerColliderRad) - playerDirection.magnitude);
+            // normalizedPlayerDirection is negative to make vector point away from player
+            enemyPos += -normalizedPlayerDirection * ((colliderRad + playerColliderRad) - playerDirection.magnitude);
+            enemyVel += -normalizedPlayerDirection * ((colliderRad + playerColliderRad) - playerDirection.magnitude);
             Debug.Log("Player Collision!");
         }
 
-        transform.SetPositionAndRotation(enemyPos.position, enemyPos.rotation);
+        // leaving enemyTransform.position to keep function looking balanced
+        transform.SetPositionAndRotation(enemyTransform.position, enemyTransform.rotation);
     }
 
+    /// <summary>
+    /// Resolve all collisions with enemies and the player
+    /// </summary>
     void Collisions()
     {
         EnemyCollision();

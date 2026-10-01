@@ -3,17 +3,8 @@
 //  System
 using System;
 using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Diagnostics;
-using System.ComponentModel;
 
 // Unity
-using Unity;
-using Unity.VectorGraphics;
-using Unity.VisualScripting;
-
-// Unity Engine
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
@@ -106,7 +97,7 @@ public class UIText : MonoBehaviour
 
         data = movement.GetData();
         playerVel = data.velocity;
-        playerPos = data.position.position;
+        playerPos = data.transform.position;
         deltaTime = Time.deltaTime;
 
         prevPlayerVel1 = prevPlayerVel2[0..(int)averageDuration];

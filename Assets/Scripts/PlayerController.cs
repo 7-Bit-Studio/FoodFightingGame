@@ -1,16 +1,12 @@
-// Unity
+// System
 using System;
-using Unity;
-using Unity.Mathematics;
-using Unity.VisualScripting;
 
-// Unity Engine
+// Unity
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 // Globals
 using Assets.Globals;
-using UnityEngine.Rendering;
 
 /// <summary>
 /// Data about the player
@@ -34,7 +30,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float attackLenience = 0.5f;
 
     // PlayerController values
-    private Transform playerPos;
+    private Transform playerTransform;
+    private Vector3 playerPos;
     private Vector3 playerVel;
     
     // PlayerData Values
@@ -71,8 +68,9 @@ public class PlayerController : MonoBehaviour
         moveInputVector2 = Vector2.zero;
         moveInput = Vector3.zero;
         playerVel = Vector3.zero;
-    
-        playerPos = GetComponent<Transform>();
+        
+        playerTransform = GetComponent<Transform>();
+        playerPos = playerTransform.position;
     
         data.velocity = playerVel;
         data.position = playerPos;
@@ -120,14 +118,14 @@ public class PlayerController : MonoBehaviour
         return livingEnemies;
     }
     
-    void Attack(GameObject enemy, int damage)
+    void Attack(GameObject enemy)
     {
         if (playerAttack.activeSelf) return;
-        playerAttack.GetComponent<PlayerAttack>().OnAttack(enemy, playerPos.position);
+        playerAttack.GetComponent<PlayerAttack>().OnAttack(enemy, playerPos);
 
         //enemy.GetComponent<EnemyController>().OnHit(damage);
 
-        Vector2 VectorFromPlayerToEnemy = enemy.transform.position - playerPos.position;
+        Vector2 VectorFromPlayerToEnemy = enemy.transform.position - playerPos;
         VectorFromPlayerToEnemy.Normalize();
     }
 
@@ -157,7 +155,7 @@ public class PlayerController : MonoBehaviour
                         minDistanceFromMouse = currDistFromMouse;
                     }
                 }
-                float mouseDistFromPlayer = Vector3.Distance(MouseInWorldPosition, playerPos.position);
+                float mouseDistFromPlayer = Vector3.Distance(MouseInWorldPosition, playerPos);
 
                 Debug.Log($"{mouseDistFromPlayer}");
                 int indexOfMinDistance = Array.IndexOf(distFromMouse, minDistanceFromMouse);
@@ -165,7 +163,7 @@ public class PlayerController : MonoBehaviour
                 if (enemyDistances[indexOfMinDistance] > attackRange) return;
 
                 Debug.Log($"{indexOfMinDistance}");
-                Attack(livingEnemies[indexOfMinDistance], 10);
+                Attack(livingEnemies[indexOfMinDistance]);
             }
         }
         else
@@ -187,7 +185,7 @@ public class PlayerController : MonoBehaviour
                         minDistanceFromMouse = currDistFromMouse;
                     }
                 }
-                float mouseDistFromPlayer = Vector3.Distance(MouseInWorldPosition, playerPos.position);
+                float mouseDistFromPlayer = Vector3.Distance(MouseInWorldPosition, playerPos);
 
                 Debug.Log($"{mouseDistFromPlayer}");
                 int? indexOfMinDistanceNullable = Array.IndexOf(distFromMouse, minDistanceFromMouse);
@@ -198,7 +196,7 @@ public class PlayerController : MonoBehaviour
                 if (enemyDistances[indexOfMinDistance] > attackRange) return;
 
                 Debug.Log($"{indexOfMinDistance}");
-                Attack(livingEnemies[indexOfMinDistance], 10);
+                Attack(livingEnemies[indexOfMinDistance]);
             }
         }
     }
@@ -278,9 +276,9 @@ public class PlayerController : MonoBehaviour
     }
     void UpdatePosition()
     {
-        playerPos.position += deltaTime * playerVel;
+        playerPos += deltaTime * playerVel;
 
-        transform.SetPositionAndRotation(playerPos.position, playerPos.rotation);
+        transform.SetPositionAndRotation(playerPos, playerTransform.rotation);
     }
 
     Vector3 Friction(Vector3 vel, float fricCoef)
@@ -311,5 +309,42 @@ public class PlayerController : MonoBehaviour
     public void DrawCircle(float radius, Vector3 centerPos, float strokeWidth)
     {
         DrawPolygon(100, radius, centerPos, strokeWidth, strokeWidth);
+    }
+
+    public void OnHit(int damage)
+    {
+        int dealtDamage = damage - defense;
+        dealtDamage = Math.Max(0, dealtDamage);
+
+        health -= dealtDamage;
+
+        if(health <= 0)
+        {
+            transform.gameObject.SetActive(false);
+        }
+    }
+
+    public void OnCollision(GameObject @object)
+    {
+        //assuming box collider
+        if (@object.GetComponent<Collider>().GetType() != typeof(BoxCollider2D)) return;
+
+        Collider2D boxCollider2D = @object.GetComponent<Collider2D>();
+        Bounds bounds = boxCollider2D.bounds;
+        float horizontalDisplacement = bounds.extents.x - Math.Abs(playerPos.x - bounds.center.x);
+        float verticalDisplacement = bounds.extents.y - Math.Abs(playerPos.y - bounds.center.y);
+
+        if (horizontalDisplacement > 0) return;
+
+        if (verticalDisplacement > 0) return;
+
+        if (verticalDisplacement < horizontalDisplacement)
+        {
+            playerPos.y += (bounds.center.y - playerPos.y > 0 ? 1 : -1) * (playerPos.y - verticalDisplacement);
+        }
+        else
+        {
+            playerPos.x += (bounds.center.x - playerPos.x > 0 ? 1 : -1) * (playerPos.x - horizontalDisplacement);
+        }
     }
 }
