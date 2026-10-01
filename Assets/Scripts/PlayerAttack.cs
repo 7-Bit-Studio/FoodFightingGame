@@ -68,6 +68,7 @@ public class PlayerAttack : MonoBehaviour
         *  over direction of projectile from the player
         */
         Vector3 direction = ((distance/speed) * data.velocity) + data.position - start;
+        Debug.Log($"{data.transform.position} vs {data.position}");
         Debug.Log($"Speed: {speed}");
         Debug.Log($"{distance / speed * data.velocity}");
 
