@@ -67,11 +67,7 @@ public class PlayerAttack : MonoBehaviour
         *  attack auto-aims at where the enemy will be, due to lack of fine control
         *  over direction of projectile from the player
         */
-<<<<<<< Updated upstream
-        Vector3 direction = ((distance/speed) * data.velocity) + data.transform.position - start;
-=======
         Vector3 direction = ((distance/speed) * data.velocity) + data.position - start;
->>>>>>> Stashed changes
         Debug.Log($"Speed: {speed}");
         Debug.Log($"{distance / speed * data.velocity}");
 

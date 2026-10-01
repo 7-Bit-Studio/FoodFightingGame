@@ -323,8 +323,6 @@ public class PlayerController : MonoBehaviour
             transform.gameObject.SetActive(false);
         }
     }
-<<<<<<< Updated upstream
-=======
 
     public void OnCollision(GameObject @object)
     {
@@ -349,5 +347,4 @@ public class PlayerController : MonoBehaviour
             playerPos.x += (bounds.center.x - playerPos.x > 0 ? 1 : -1) * (playerPos.x - horizontalDisplacement);
         }
     }
->>>>>>> Stashed changes
 }
