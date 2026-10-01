@@ -158,7 +158,10 @@ public class PlayerController : MonoBehaviour
                 float mouseDistFromPlayer = Vector3.Distance(MouseInWorldPosition, playerPos);
 
                 Debug.Log($"{mouseDistFromPlayer}");
-                int indexOfMinDistance = Array.IndexOf(distFromMouse, minDistanceFromMouse);
+                int? indexOfMinDistanceNullable = Array.IndexOf(distFromMouse, minDistanceFromMouse);
+                int indexOfMinDistance = indexOfMinDistanceNullable == null ? -1 : (int)indexOfMinDistanceNullable;
+
+                if (indexOfMinDistance == -1) return;
 
                 if (enemyDistances[indexOfMinDistance] > attackRange) return;
 
@@ -277,6 +280,12 @@ public class PlayerController : MonoBehaviour
     void UpdatePosition()
     {
         playerPos += deltaTime * playerVel;
+
+        data.position = playerPos;
+        data.velocity = playerVel;
+        data.transform = transform;
+        data.direction = facing;
+        data.health = health;
 
         transform.SetPositionAndRotation(playerPos, playerTransform.rotation);
     }

@@ -97,7 +97,7 @@ public class UIText : MonoBehaviour
 
         data = movement.GetData();
         playerVel = data.velocity;
-        playerPos = data.transform.position;
+        playerPos = data.position;
         deltaTime = Time.deltaTime;
 
         prevPlayerVel1 = prevPlayerVel2[0..(int)averageDuration];

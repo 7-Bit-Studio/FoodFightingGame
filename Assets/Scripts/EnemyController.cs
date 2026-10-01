@@ -175,19 +175,21 @@ public class EnemyController : MonoBehaviour
 
     void UpdatePosition()
     {
-        enemyTransform.position += enemyVel * deltaTime;
+        enemyPos += enemyVel * deltaTime;
 
         for (int i = 0; i < collisionLoops; i++)
         {
             Collisions();
         }
 
+        enemyTransform.position = enemyPos;
+
         data.velocity = enemyVel;
         data.position = enemyPos;
         data.transform = enemyTransform;
 
         // leaving enemyTransform.position to keep function looking balanced
-        transform.SetPositionAndRotation(enemyTransform.position, enemyTransform.rotation);
+        transform.SetPositionAndRotation(enemyPos, enemyTransform.rotation);
     }
 
     void EnemyCollision()
