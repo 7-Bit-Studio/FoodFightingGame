@@ -323,4 +323,31 @@ public class PlayerController : MonoBehaviour
             transform.gameObject.SetActive(false);
         }
     }
+<<<<<<< Updated upstream
+=======
+
+    public void OnCollision(GameObject @object)
+    {
+        //assuming box collider
+        if (@object.GetComponent<Collider>().GetType() != typeof(BoxCollider2D)) return;
+
+        Collider2D boxCollider2D = @object.GetComponent<Collider2D>();
+        Bounds bounds = boxCollider2D.bounds;
+        float horizontalDisplacement = bounds.extents.x - Math.Abs(playerPos.x - bounds.center.x);
+        float verticalDisplacement = bounds.extents.y - Math.Abs(playerPos.y - bounds.center.y);
+
+        if (horizontalDisplacement > 0) return;
+
+        if (verticalDisplacement > 0) return;
+
+        if (verticalDisplacement < horizontalDisplacement)
+        {
+            playerPos.y += (bounds.center.y - playerPos.y > 0 ? 1 : -1) * (playerPos.y - verticalDisplacement);
+        }
+        else
+        {
+            playerPos.x += (bounds.center.x - playerPos.x > 0 ? 1 : -1) * (playerPos.x - horizontalDisplacement);
+        }
+    }
+>>>>>>> Stashed changes
 }
