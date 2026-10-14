@@ -48,7 +48,7 @@ public class CraftingMenu : MonoBehaviour
         {
             ScreenInit();
         }
-        if (Keyboard.current.cKey.isPressed)
+        if (Keyboard.current.cKey.wasReleasedThisFrame)
         {
             showCraftingMenu = !showCraftingMenu;
         }

@@ -7,6 +7,8 @@ using UnityEngine.U2D;
 // Globals
 using Assets.Globals;
 
+
+
 public class EnemyController : MonoBehaviour
 {
     [Header("Movement Settings")]
@@ -15,6 +17,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private int health = 100;
     [SerializeField] private int defense = 0;
     [SerializeField] private float acceleration = 0.2f;
+    [SerializeField] private GameObject theDrop;
     /// <summary>
     /// How many seconds for each animation frame to last
     /// </summary>
@@ -51,7 +54,7 @@ public class EnemyController : MonoBehaviour
     private Transform healthValueTransform;
     private int startHealth;
 
-    public VarTypes.Data GetData() => data; 
+    public VarTypes.Data GetData() => data;
     void Start()
     {
         wasJustHit = false;
@@ -132,6 +135,8 @@ public class EnemyController : MonoBehaviour
         {
             enemyTransform.gameObject.SetActive(false);
             Debug.Log($"{transform.name} has died!");
+            theDrop.GetComponent<EnemyDrop>().DropTheShit(transform.position, transform.rotation);
+
         }
     }   
     void UpdateMovement()

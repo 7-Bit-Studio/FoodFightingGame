@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 5454516667620009910}
   - component: {fileID: 5267305356235824150}
   - component: {fileID: 3506498076970830168}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: CraftingMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -66,8 +66,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: -0.00082445, y: -0.00000047684}
+  m_SizeDelta: {x: 970.66, y: 546}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5267305356235824150
 CanvasRenderer:
