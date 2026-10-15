@@ -135,6 +135,7 @@ public class EnemyController : MonoBehaviour
         {
             enemyTransform.gameObject.SetActive(false);
             Debug.Log($"{transform.name} has died!");
+            //Drop the relevant item for the enemy
             theDrop.GetComponent<EnemyDrop>().DropTheShit(transform.position, transform.rotation);
 
         }

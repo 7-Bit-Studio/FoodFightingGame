@@ -16,13 +16,15 @@ public class EnemyDrop : MonoBehaviour
         
     }
 
+
+    //The code to spawn the item in the world
     public void DropTheShit(Vector3 pos, Quaternion rotation)
     {
-        transform.gameObject.SetActive(true);
+        //Spawn the object
         Instantiate(this, pos, rotation);
         Debug.Log("Object has Spawned!");
        
     }
 
-
+    
 }

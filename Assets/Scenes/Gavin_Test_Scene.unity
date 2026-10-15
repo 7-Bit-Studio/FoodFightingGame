@@ -1577,7 +1577,7 @@ MonoBehaviour:
   health: 100
   defense: 0
   acceleration: 15
-  theDrop: {fileID: 0}
+  theDrop: {fileID: 8685718274278120859, guid: be9008c03723bec42ad5572eab8e9952, type: 3}
   animationDuration: 0.25
   collisionLoops: 1
   isBoss: 0
