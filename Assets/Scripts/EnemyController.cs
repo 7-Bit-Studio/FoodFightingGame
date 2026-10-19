@@ -54,6 +54,8 @@ public class EnemyController : MonoBehaviour
     private Transform healthValueTransform;
     private int startHealth;
 
+    private bool isAlive;
+
     public VarTypes.Data GetData() => data;
     void Start()
     {
@@ -78,6 +80,8 @@ public class EnemyController : MonoBehaviour
         spriteAtlas.GetSprites(spriteArr);
 
         startHealth = health;
+
+        isAlive = true;
 
         if (isBoss)
         {
@@ -131,12 +135,13 @@ public class EnemyController : MonoBehaviour
         hitTime = Time.time;
         wasJustHit = true;
 
-        if(health <= 0)
+        if(health <= 0 && isAlive)
         {
             enemyTransform.gameObject.SetActive(false);
             Debug.Log($"{transform.name} has died!");
             //Drop the relevant item for the enemy
             theDrop.GetComponent<EnemyDrop>().DropTheShit(transform.position, transform.rotation);
+            isAlive = false;
 
         }
     }   
