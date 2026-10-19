@@ -1,23 +1,24 @@
 // System
 using System;
-
+// Custom functions and variable types
+using Assets.Globals;
 // Unity
 using UnityEngine;
+using UnityEngine.U2D;
 using UnityEngine.InputSystem;
 
-// Globals
-using Assets.Globals;
 
+[RequireComponent(typeof(Transform))]
+[RequireComponent(typeof(SpriteRenderer))]
 /// <summary>
 /// Data about the player
 /// </summary>
-[RequireComponent(typeof(Transform))]
-    
 public class PlayerController : MonoBehaviour
 {
 
     [Header("Movement Settings")]
     [SerializeField] private InputActionReference moveActionReference;
+    [SerializeField] private SpriteAtlas spriteAtlas;
     [SerializeField] private float maxSpeed = 5f;
     [SerializeField] private float playerAcc = 5f;
     [SerializeField] private float frictionCoefficient = 1.01f;
@@ -48,6 +49,11 @@ public class PlayerController : MonoBehaviour
     private float[] enemyDistances;
     private LineRenderer lineRenderer;
 
+    private Sprite[] spriteArr;
+    private Sprite currentSprite;
+    private int currentSpriteIndex;
+    private float timeAtLastSpriteUpdate;
+
     void Awake()
     {
         // Preliminary checks
@@ -71,16 +77,24 @@ public class PlayerController : MonoBehaviour
         
         playerTransform = GetComponent<Transform>();
         playerPos = playerTransform.position;
-    
+
+        facing = VarTypes.Direction.Down;
+
+        spriteArr = new Sprite[spriteAtlas.spriteCount];
         data.velocity = playerVel;
         data.position = playerPos;
         data.health = health;
+        data.direction = facing;
+
+        currentSprite = spriteArr[6];
         lineRenderer.startColor = Color.black;
         lineRenderer.endColor = Color.black;
 
         transform.Find("Main Camera").position = new Vector3(0, 0, -10);
+        //GetComponent<SpriteRenderer>().sprite = currentSprite;
+        Debug.Log(spriteArr.Length);
     }
-    
+
     // Update is called once per frame
     public void Update()
     {
@@ -155,9 +169,8 @@ public class PlayerController : MonoBehaviour
                         minDistanceFromMouse = currDistFromMouse;
                     }
                 }
-                float mouseDistFromPlayer = Vector3.Distance(MouseInWorldPosition, playerPos);
 
-                Debug.Log($"{mouseDistFromPlayer}");
+                //Debug.Log($"{mouseDistFromPlayer}");
                 int? indexOfMinDistanceNullable = Array.IndexOf(distFromMouse, minDistanceFromMouse);
                 int indexOfMinDistance = indexOfMinDistanceNullable == null ? -1 : (int)indexOfMinDistanceNullable;
 
@@ -165,7 +178,7 @@ public class PlayerController : MonoBehaviour
 
                 if (enemyDistances[indexOfMinDistance] > attackRange) return;
 
-                Debug.Log($"{indexOfMinDistance}");
+                //Debug.Log($"{indexOfMinDistance}");
                 Attack(livingEnemies[indexOfMinDistance]);
             }
         }
@@ -188,9 +201,8 @@ public class PlayerController : MonoBehaviour
                         minDistanceFromMouse = currDistFromMouse;
                     }
                 }
-                float mouseDistFromPlayer = Vector3.Distance(MouseInWorldPosition, playerPos);
 
-                Debug.Log($"{mouseDistFromPlayer}");
+                //Debug.Log($"{mouseDistFromPlayer}");
                 int? indexOfMinDistanceNullable = Array.IndexOf(distFromMouse, minDistanceFromMouse);
                 int indexOfMinDistance = indexOfMinDistanceNullable == null ? -1 : (int) indexOfMinDistanceNullable;
 
@@ -198,7 +210,7 @@ public class PlayerController : MonoBehaviour
 
                 if (enemyDistances[indexOfMinDistance] > attackRange) return;
 
-                Debug.Log($"{indexOfMinDistance}");
+                //Debug.Log($"{indexOfMinDistance}");
                 Attack(livingEnemies[indexOfMinDistance]);
             }
         }
@@ -214,18 +226,32 @@ public class PlayerController : MonoBehaviour
         {
             VelocityMovement();
         }
-    
+
         UpdatePosition();
         data.velocity = playerVel;
         data.position = playerPos;
 
-        if(playerVel.x > 0)
+        if (Math.Abs(playerVel.y) < Math.Abs(playerVel.x))
         {
-            facing = VarTypes.Direction.Left;
+            if (playerVel.x > 0)
+            {
+                facing = VarTypes.Direction.Left;
+            }
+            else
+            {
+                facing = VarTypes.Direction.Right;
+            }
         }
-        else
+        if(Math.Abs(playerVel.x) < Math.Abs(playerVel.y))
         {
-            facing = VarTypes.Direction.Right;
+            if (playerVel.y > 0)
+            {
+                facing = VarTypes.Direction.Up;
+            }
+            else
+            {
+                facing = VarTypes.Direction.Down;
+            }
         }
 
         data.direction = facing;
@@ -233,16 +259,42 @@ public class PlayerController : MonoBehaviour
 
     void UpdatePlayerFacingDirection()
     {
-        if(facing == VarTypes.Direction.Left)
+        VarTypes.Direction facing = data.direction;
+        /*
+        if (Time.time - timeAtLastSpriteUpdate > animationDuration)
         {
+            currentSprite = spriteArr[currentSpriteIndex];
+            timeAtLastSpriteUpdate = Time.time;
+            GetComponent<SpriteRenderer>().sprite = currentSprite;
+            currentSpriteIndex += 1;
+            currentSpriteIndex %= spriteArr.Length;
+        }
+        */
+        if (facing == VarTypes.Direction.Left)
+        {
+            //currentSprite = spriteArr[2];
             transform.localScale = new Vector3(-1, transform.localScale.y,transform.localScale.z);
             transform.Find("UI").localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
         }
-        else
+        if (facing == VarTypes.Direction.Right)
         {
+            //currentSprite = spriteArr[2];
             transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
             transform.Find("UI").localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
         }
+        if (facing == VarTypes.Direction.Up)
+        {
+            currentSprite = spriteArr[2];
+            //transform.localScale = new Vector3(transform.localScale.x, 1, transform.localScale.z);
+            //transform.Find("UI").localScale = new Vector3(transform.localScale.x, 1, transform.localScale.z);
+        }
+        if (facing == VarTypes.Direction.Down)
+        {
+            currentSprite = spriteArr[0];
+            //transform.localScale = new Vector3(transform.localScale.x, -1, transform.localScale.z);
+            //transform.Find("UI").localScale = new Vector3(transform.localScale.x, -1, transform.localScale.z);
+        }
+        //playerTransform.GetComponent<SpriteRenderer>().sprite = currentSprite;
     }
     
     // Updateing the player's velocity
