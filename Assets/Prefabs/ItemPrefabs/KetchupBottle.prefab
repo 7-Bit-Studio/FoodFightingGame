@@ -107,7 +107,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea2f11711e1f6a145adedc17ffc06ff6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyDrop
-  collisionLoops: 1
+  theItem: {fileID: 635679829543661334}
+  pInventory: {fileID: 6555784994428284387, guid: 52de52f7c7748384ba85c2c468dde358, type: 3}
 --- !u!58 &1695899198830116833
 CircleCollider2D:
   m_ObjectHideFlags: 0

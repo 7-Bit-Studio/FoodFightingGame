@@ -4,10 +4,12 @@ using UnityEngine;
 public class EnemyDrop : MonoBehaviour
 {
 
-    private Transform itemTransform;
-    
-    private GameObject player;
-    private PlayerController movement;
+
+
+
+    [SerializeField] private GameObject theItem;
+
+    [SerializeField] private PlayerInventory pInventory;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -31,7 +33,10 @@ public class EnemyDrop : MonoBehaviour
         if (collision.GetComponent<PlayerController>() != null)
         {
             Debug.Log("Trigger Detected!");
+            pInventory.items.Add(theItem);
+            Debug.Log(pInventory.items);
             transform.gameObject.SetActive(false);
+            
         }
     }
 
