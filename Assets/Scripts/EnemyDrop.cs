@@ -10,6 +10,8 @@ public class EnemyDrop : MonoBehaviour
     [SerializeField] private GameObject theItem;
 
     [SerializeField] private PlayerInventory pInventory;
+
+    private int count;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -37,10 +39,13 @@ public class EnemyDrop : MonoBehaviour
 
             pInventory = collision.GetComponent<PlayerInventory>();
 
+            count = pInventory.items.Count;
+
             Debug.Log(pInventory.items.Count);
             pInventory.items.Add(theItem);
 
             Debug.Log(pInventory.items.Count);
+            Debug.Log(pInventory.items[count]);
 
             transform.gameObject.SetActive(false);
             

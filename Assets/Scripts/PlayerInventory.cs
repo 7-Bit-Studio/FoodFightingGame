@@ -21,6 +21,10 @@ public class PlayerInventory : MonoBehaviour
         if (Keyboard.current.hKey.wasReleasedThisFrame)
         {
             Debug.Log(items.Count);
+            foreach (GameObject item in items)
+            {
+                Debug.Log(item.name);
+            }
         }
     }
 }
