@@ -382,6 +382,7 @@ public class PlayerController : MonoBehaviour
         if(health <= 0)
         {
             transform.gameObject.SetActive(false);
+            Application.Quit();
         }
     }
 
