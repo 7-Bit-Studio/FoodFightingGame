@@ -33,8 +33,15 @@ public class EnemyDrop : MonoBehaviour
         if (collision.GetComponent<PlayerController>() != null)
         {
             Debug.Log("Trigger Detected!");
+            
+
+            pInventory = collision.GetComponent<PlayerInventory>();
+
+            Debug.Log(pInventory.items.Count);
             pInventory.items.Add(theItem);
-            Debug.Log(pInventory.items);
+
+            Debug.Log(pInventory.items.Count);
+
             transform.gameObject.SetActive(false);
             
         }
