@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject playerAttack;
     [SerializeField] private bool CheatMode = false;
     [SerializeField] private float attackLenience = 0.5f;
+    [SerializeField] private bool canDie = true;
 
     // PlayerController values
     private Transform playerTransform;
@@ -379,7 +380,7 @@ public class PlayerController : MonoBehaviour
 
         health -= dealtDamage;
 
-        if(health <= 0)
+        if(health <= 0 && canDie)
         {
             transform.gameObject.SetActive(false);
             Application.Quit();

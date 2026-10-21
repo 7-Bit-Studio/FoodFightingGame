@@ -690,6 +690,7 @@ MonoBehaviour:
   playerAttack: {fileID: 1450978514}
   CheatMode: 1
   attackLenience: 0.5
+  canDie: 0
 --- !u!58 &430895893
 CircleCollider2D:
   m_ObjectHideFlags: 0
