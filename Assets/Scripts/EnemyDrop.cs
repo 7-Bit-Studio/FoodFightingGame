@@ -4,34 +4,21 @@ using UnityEngine;
 public class EnemyDrop : MonoBehaviour
 {
 
-    private Transform itemTransform;
-    private Vector3 itemPos;
-    private Vector3 itemVel;
 
-    [SerializeField] private int collisionLoops = 1;
 
-    private Vector3 playerDirection;
-    private Vector3 normalizedPlayerDirection;
-    private GameObject player;
-    private VarTypes.Data playerData;
-    private PlayerController movement;
+
+    [SerializeField] private GameObject theItem;
+
+    [SerializeField] private PlayerInventory pInventory;
+
+    private int count;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        player = Functions.GetSiblingGameObject("Player");
-        movement = player.GetComponent<PlayerController>();
-
-        playerData = movement.GetData();
-
-        itemTransform = GetComponent<Transform>();
-        itemPos = itemTransform.position;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
         
     }
+
+    
 
 
     //The code to spawn the item in the world
@@ -48,7 +35,20 @@ public class EnemyDrop : MonoBehaviour
         if (collision.GetComponent<PlayerController>() != null)
         {
             Debug.Log("Trigger Detected!");
+            
+
+            pInventory = collision.GetComponent<PlayerInventory>();
+
+            count = pInventory.items.Count;
+
+            Debug.Log(pInventory.items.Count);
+            pInventory.items.Add(theItem);
+
+            Debug.Log(pInventory.items.Count);
+            Debug.Log(pInventory.items[count]);
+
             transform.gameObject.SetActive(false);
+            
         }
     }
 
