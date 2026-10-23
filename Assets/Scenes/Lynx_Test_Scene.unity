@@ -759,7 +759,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   maxSpeed: 5
-  spriteAtlas: {fileID: 100100200, guid: 7dcfa5438fa126149aed339e2a8e33a8, type: 3}
+  enemyTexture: {fileID: 2800000, guid: 131de24f8c2f52d44acfb65bb4f34e0d, type: 3}
   health: 100
   defense: 0
   acceleration: 15
@@ -767,6 +767,8 @@ MonoBehaviour:
   animationDuration: 0.25
   collisionLoops: 1
   isBoss: 0
+  textureWidth: 64
+  textureHeight: 64
 --- !u!58 &402682807
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1180,7 +1182,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   maxSpeed: 5
-  spriteAtlas: {fileID: 100100200, guid: 24396ade8c1a70942a505587b68c2596, type: 3}
+  enemyTexture: {fileID: 2800000, guid: 9816445aab88dec4cbc2aa62c24a00e7, type: 3}
   health: 100
   defense: 0
   acceleration: 15
@@ -1188,6 +1190,8 @@ MonoBehaviour:
   animationDuration: 0.25
   collisionLoops: 1
   isBoss: 0
+  textureWidth: 64
+  textureHeight: 64
 --- !u!212 &442814324
 SpriteRenderer:
   serializedVersion: 3
@@ -1331,7 +1335,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   maxSpeed: 5
-  spriteAtlas: {fileID: 100100200, guid: 9aea578aa3fe0f445a5ae114d6a6737a, type: 3}
+  enemyTexture: {fileID: 2800000, guid: 3a930fff8cd3a134b9e9d6233f4bd552, type: 3}
   health: 100
   defense: 0
   acceleration: 15
@@ -1339,6 +1343,8 @@ MonoBehaviour:
   animationDuration: 0.25
   collisionLoops: 1
   isBoss: 0
+  textureWidth: 64
+  textureHeight: 64
 --- !u!212 &500168765
 SpriteRenderer:
   serializedVersion: 3
@@ -1830,12 +1836,12 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 3
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 8147377502316565462, guid: 7d6f966f6da20f449bbb8ff4783f9155, type: 3}
+  m_Sprite: {fileID: -3901169573531349525, guid: 8b5e389cc4dd4ae43b052e5ba1bd00e0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 14, y: 4}
+  m_Size: {x: 0.64, y: 0.64}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -1869,7 +1875,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   maxSpeed: 5
-  spriteAtlas: {fileID: 100100200, guid: fd20d513798158b4bbb52aa68859566d, type: 3}
+  enemyTexture: {fileID: 2800000, guid: 8b5e389cc4dd4ae43b052e5ba1bd00e0, type: 3}
   health: 100
   defense: 0
   acceleration: 15
@@ -1877,6 +1883,8 @@ MonoBehaviour:
   animationDuration: 0.25
   collisionLoops: 1
   isBoss: 0
+  textureWidth: 64
+  textureHeight: 64
 --- !u!58 &632861096
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2152,7 +2160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   maxSpeed: 5
-  spriteAtlas: {fileID: 100100200, guid: 9df5f7745146bc747890db742a4f49b0, type: 3}
+  enemyTexture: {fileID: 2800000, guid: 42c3edb47de3e3d4596b9360a63db599, type: 3}
   health: 100
   defense: 0
   acceleration: 15
@@ -2160,6 +2168,8 @@ MonoBehaviour:
   animationDuration: 0.25
   collisionLoops: 1
   isBoss: 0
+  textureWidth: 128
+  textureHeight: 128
 --- !u!212 &955310670
 SpriteRenderer:
   serializedVersion: 3
@@ -2267,7 +2277,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   maxSpeed: 5
-  spriteAtlas: {fileID: 100100200, guid: 98163a18673288b4cb8f3b125f3a252f, type: 3}
+  enemyTexture: {fileID: 2800000, guid: 2df6db5eb4047164c9c2cd3ae4747674, type: 3}
   health: 100
   defense: 0
   acceleration: 15
@@ -2275,6 +2285,8 @@ MonoBehaviour:
   animationDuration: 0.25
   collisionLoops: 1
   isBoss: 0
+  textureWidth: 64
+  textureHeight: 64
 --- !u!212 &1159635288
 SpriteRenderer:
   serializedVersion: 3
@@ -2677,7 +2689,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2696,9 +2708,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingLayerID: 58833897
+  m_SortingLayer: 1
+  m_SortingOrder: 5
   m_MaskInteraction: 0
   m_Sprite: {fileID: -4727606938896976845, guid: 4d229ee37ccaacb469ed74aa96557a26, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2811,7 +2823,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   maxSpeed: 5
-  spriteAtlas: {fileID: 100100200, guid: a162e3c49a275c749b1679be3150e1ed, type: 3}
+  enemyTexture: {fileID: 2800000, guid: c394763c44340034bac61b4bf316566f, type: 3}
   health: 400
   defense: 0
   acceleration: 15
@@ -2819,6 +2831,8 @@ MonoBehaviour:
   animationDuration: 0.25
   collisionLoops: 1
   isBoss: 1
+  textureWidth: 128
+  textureHeight: 128
 --- !u!212 &1932830493
 SpriteRenderer:
   serializedVersion: 3
@@ -2995,7 +3009,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   maxSpeed: 5
-  spriteAtlas: {fileID: 100100200, guid: da13c77708ded8b4ebd5c6c3ffa839cc, type: 3}
+  enemyTexture: {fileID: 2800000, guid: bdfc7773121829743bd8997497b79830, type: 3}
   health: 100
   defense: 0
   acceleration: 15
@@ -3003,6 +3017,8 @@ MonoBehaviour:
   animationDuration: 0.25
   collisionLoops: 1
   isBoss: 0
+  textureWidth: 64
+  textureHeight: 64
 --- !u!212 &2022408134
 SpriteRenderer:
   serializedVersion: 3

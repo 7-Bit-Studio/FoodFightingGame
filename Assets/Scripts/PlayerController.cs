@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour
     private int currentSpriteIndex;
     private int currentSpriteIndexAdd;
     private float timeAtLastSpriteUpdate;
-    private Functions functions = new();
+    private readonly Functions functions = new();
     private int animationDirectionMultiplier = 1;
 
     void Awake()
@@ -243,23 +243,32 @@ public class PlayerController : MonoBehaviour
         UpdatePosition();
         data.velocity = playerVel;
         data.position = playerPos;
+        float epsilon = 0.001f;
 
         if (Math.Abs(playerVel.y) < Math.Abs(playerVel.x))
         {
-            if (playerVel.x > 0)
+            if (playerVel.x > epsilon)
             {
                 facing = VarTypes.Direction.Right;
             }
-            else
+            else if(playerVel.x < -epsilon)
             {
                 facing = VarTypes.Direction.Left;
+            }
+            else
+            {
+                facing = VarTypes.Direction.Down;
             }
         }
         if(Math.Abs(playerVel.x) < Math.Abs(playerVel.y))
         {
-            if (playerVel.y > 0)
+            if (playerVel.y > epsilon)
             {
                 facing = VarTypes.Direction.Up;
+            }
+            else if(playerVel.y < -epsilon)
+            {
+                facing = VarTypes.Direction.Down;
             }
             else
             {
