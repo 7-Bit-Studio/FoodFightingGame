@@ -15,10 +15,9 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class PlayerController : MonoBehaviour
 {
-
     [Header("Movement Settings")]
     [SerializeField] private InputActionReference moveActionReference;
-    [SerializeField] private SpriteAtlas spriteAtlas;
+    [SerializeField] private Texture2D playerTexture;
     [SerializeField] private float maxSpeed = 5f;
     [SerializeField] private float playerAcc = 5f;
     [SerializeField] private float frictionCoefficient = 1.01f;
@@ -31,6 +30,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float attackLenience = 0.5f;
 
     // PlayerController values
+    private Sprite[] playerSprites;
     private Transform playerTransform;
     private Vector3 playerPos;
     private Vector3 playerVel;
@@ -53,6 +53,7 @@ public class PlayerController : MonoBehaviour
     private Sprite currentSprite;
     private int currentSpriteIndex;
     private float timeAtLastSpriteUpdate;
+    private Functions functions = new();
 
     void Awake()
     {
@@ -69,7 +70,9 @@ public class PlayerController : MonoBehaviour
         {
             lineRenderer = new GameObject().AddComponent<LineRenderer>();
         }
-    
+
+        playerSprites = functions.SliceGrid(playerTexture, 64, 76);
+
         // Initializing values
         moveInputVector2 = Vector2.zero;
         moveInput = Vector3.zero;
@@ -80,19 +83,17 @@ public class PlayerController : MonoBehaviour
 
         facing = VarTypes.Direction.Down;
 
-        spriteArr = new Sprite[spriteAtlas.spriteCount];
         data.velocity = playerVel;
         data.position = playerPos;
         data.health = health;
         data.direction = facing;
 
-        currentSprite = spriteArr[6];
+        currentSprite = playerSprites[6];
         lineRenderer.startColor = Color.black;
         lineRenderer.endColor = Color.black;
 
         transform.Find("Main Camera").position = new Vector3(0, 0, -10);
         //GetComponent<SpriteRenderer>().sprite = currentSprite;
-        Debug.Log(spriteArr.Length);
     }
 
     // Update is called once per frame
@@ -235,11 +236,11 @@ public class PlayerController : MonoBehaviour
         {
             if (playerVel.x > 0)
             {
-                facing = VarTypes.Direction.Left;
+                facing = VarTypes.Direction.Right;
             }
             else
             {
-                facing = VarTypes.Direction.Right;
+                facing = VarTypes.Direction.Left;
             }
         }
         if(Math.Abs(playerVel.x) < Math.Abs(playerVel.y))
@@ -272,32 +273,32 @@ public class PlayerController : MonoBehaviour
         */
         if (facing == VarTypes.Direction.Left)
         {
-            //currentSprite = spriteArr[2];
-            transform.localScale = new Vector3(-1, transform.localScale.y,transform.localScale.z);
-            transform.Find("UI").localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
+            currentSprite = playerSprites[3];
+            //transform.localScale = new Vector3(-1, transform.localScale.y,transform.localScale.z);
+            //transform.Find("UI").localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
         }
         if (facing == VarTypes.Direction.Right)
         {
-            //currentSprite = spriteArr[2];
-            transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
-            transform.Find("UI").localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
+            currentSprite = playerSprites[6];
+            //transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
+            //transform.Find("UI").localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
         }
         if (facing == VarTypes.Direction.Up)
         {
-            currentSprite = spriteArr[2];
+            currentSprite = playerSprites[9];
             //transform.localScale = new Vector3(transform.localScale.x, 1, transform.localScale.z);
             //transform.Find("UI").localScale = new Vector3(transform.localScale.x, 1, transform.localScale.z);
         }
         if (facing == VarTypes.Direction.Down)
         {
-            currentSprite = spriteArr[0];
+            currentSprite = playerSprites[0];
             //transform.localScale = new Vector3(transform.localScale.x, -1, transform.localScale.z);
             //transform.Find("UI").localScale = new Vector3(transform.localScale.x, -1, transform.localScale.z);
         }
-        //playerTransform.GetComponent<SpriteRenderer>().sprite = currentSprite;
+        playerTransform.GetComponent<SpriteRenderer>().sprite = currentSprite;
     }
     
-    // Updateing the player's velocity
+    // Updating the player's velocity
     void VelocityMovement()
     {
         // PlayerData in metres per second
