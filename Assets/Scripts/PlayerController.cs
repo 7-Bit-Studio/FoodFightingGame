@@ -52,8 +52,10 @@ public class PlayerController : MonoBehaviour
     private Sprite[] spriteArr;
     private Sprite currentSprite;
     private int currentSpriteIndex;
+    private int currentSpriteIndexAdd;
     private float timeAtLastSpriteUpdate;
     private Functions functions = new();
+    private int animationDirectionMultiplier = 1;
 
     void Awake()
     {
@@ -99,6 +101,16 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
+
+        if (Time.time - timeAtLastSpriteUpdate > 0.33f)
+        {
+            timeAtLastSpriteUpdate = Time.time;
+            currentSpriteIndexAdd += animationDirectionMultiplier;
+            if (currentSpriteIndexAdd >= 2 || currentSpriteIndexAdd <= 0)
+            {
+                animationDirectionMultiplier *= -1;
+            }
+        }
         // Setting current-frame constants
         deltaTime = Time.deltaTime;
         moveAction = moveActionReference.action;
@@ -273,25 +285,25 @@ public class PlayerController : MonoBehaviour
         */
         if (facing == VarTypes.Direction.Left)
         {
-            currentSprite = playerSprites[3];
+            currentSprite = playerSprites[3 + currentSpriteIndexAdd];
             //transform.localScale = new Vector3(-1, transform.localScale.y,transform.localScale.z);
             //transform.Find("UI").localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
         }
         if (facing == VarTypes.Direction.Right)
         {
-            currentSprite = playerSprites[6];
+            currentSprite = playerSprites[6 + currentSpriteIndexAdd];
             //transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
             //transform.Find("UI").localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
         }
         if (facing == VarTypes.Direction.Up)
         {
-            currentSprite = playerSprites[9];
+            currentSprite = playerSprites[9 + currentSpriteIndexAdd];
             //transform.localScale = new Vector3(transform.localScale.x, 1, transform.localScale.z);
             //transform.Find("UI").localScale = new Vector3(transform.localScale.x, 1, transform.localScale.z);
         }
         if (facing == VarTypes.Direction.Down)
         {
-            currentSprite = playerSprites[0];
+            currentSprite = playerSprites[0 + currentSpriteIndexAdd];
             //transform.localScale = new Vector3(transform.localScale.x, -1, transform.localScale.z);
             //transform.Find("UI").localScale = new Vector3(transform.localScale.x, -1, transform.localScale.z);
         }
