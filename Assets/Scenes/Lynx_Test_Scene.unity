@@ -874,7 +874,8 @@ MonoBehaviour:
   attackRange: 3
   RangedAttacks:
   - {fileID: 1450978514}
-  MeleeAttacks: []
+  MeleeAttacks:
+  - {fileID: 1580270606}
   CheatMode: 1
   attackLenience: 0.5
   attackCooldown: 0.2
@@ -2553,6 +2554,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1580270610}
   - component: {fileID: 1580270609}
+  - component: {fileID: 1580270611}
   m_Layer: 0
   m_Name: PlayerMeleeAttack
   m_TagString: Untagged
@@ -2618,7 +2620,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
   m_BlendShapeWeights: []
 --- !u!4 &1580270610
 Transform:
@@ -2629,12 +2631,28 @@ Transform:
   m_GameObject: {fileID: 1580270606}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5, y: 0, z: 0}
+  m_LocalPosition: {x: -5.32, y: 0.5, z: 0}
   m_LocalScale: {x: 0.17, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1580270611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1580270606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eef587c66096a2f468a87b23f6e68dff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAttack
+  damage: 10
+  swingSpeed: 119.4
+  range: 5
+  swingAngle: 45
 --- !u!1 &1582620831
 GameObject:
   m_ObjectHideFlags: 0
@@ -2918,7 +2936,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30b39334202e93e418ab9ead0d358a79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
-  maxSpeed: 5
+  maxSpeed: 0
   enemyTexture: {fileID: 2800000, guid: c394763c44340034bac61b4bf316566f, type: 3}
   health: 400
   defense: 0

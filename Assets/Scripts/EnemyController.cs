@@ -59,6 +59,7 @@ public class EnemyController : MonoBehaviour
     private bool isAlive;
     private readonly Functions functions = new();
     private readonly SpriteFilter spriteFilter = new();
+    private bool hasDrop = false;
 
     public VarTypes.Data GetData() => data;
     void Start()
@@ -91,6 +92,11 @@ public class EnemyController : MonoBehaviour
         {
             healthBar = transform.Find("HealthBarBoss").gameObject;
             healthValueTransform = healthBar.transform.Find("HealthBarInner");
+        }
+
+        if(theDrop != null)
+        {
+            hasDrop = true;
         }
     }
 
@@ -144,7 +150,10 @@ public class EnemyController : MonoBehaviour
             enemyTransform.gameObject.SetActive(false);
             Debug.Log($"{transform.name} has died!");
             //Drop the relevant item for the enemy
-            theDrop.GetComponent<EnemyDrop>().DropTheShit(transform.position, transform.rotation);
+            if (hasDrop)
+            {
+                theDrop.GetComponent<EnemyDrop>().DropTheShit(transform.position, transform.rotation);
+            }
             isAlive = false;
 
         }

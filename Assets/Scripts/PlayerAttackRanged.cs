@@ -32,27 +32,40 @@ public class PlayerAttackRanged : MonoBehaviour
 
         if (Vector3.Distance(AttackPos.position, startPos) > maxDistance)
         {
-            Destroy(transform.gameObject);
+            Kill();
         }
 
         if (Vector3.Distance(AttackPos.position, currentTarget.transform.position) < 0.5f)
         {
             currentTarget.GetComponent<EnemyController>().OnHit(damage);
-            Destroy(transform.gameObject);
+            Kill();
         }
     }
 
+    void Kill()
+    {
+        Destroy(transform.gameObject);
+    }
 
     public void OnAttack(GameObject enemy, Vector3 start)
     {
         // if targeted enemy is not active, return
-        if (AttackPos.gameObject.activeSelf) return;
+        if (AttackPos.gameObject.activeSelf)
+        {
+            Kill();
+            return;
+        }
 
         // set targeted enemy
         currentTarget = enemy;
 
         // find distance to targeted enemy
         float distance = Vector3.Distance(enemy.transform.position, start);
+        if(distance > maxDistance)
+        {
+            Kill();
+            return;
+        }
 
         //get general enemy data
         VarTypes.Data data = enemy.GetComponent<EnemyController>().GetData();
