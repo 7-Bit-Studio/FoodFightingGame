@@ -58,6 +58,7 @@ public class EnemyController : MonoBehaviour
 
     private bool isAlive;
     private readonly Functions functions = new();
+    private readonly SpriteFilter spriteFilter = new();
 
     public VarTypes.Data GetData() => data;
     void Start()
@@ -78,6 +79,7 @@ public class EnemyController : MonoBehaviour
         data.position = enemyPos;
 
         enemySprites = functions.SliceGrid(enemyTexture, textureWidth, textureHeight);
+        enemySprites = spriteFilter.RemoveEmpty(enemyTexture, enemySprites);
         timeAtLastSpriteUpdate = Time.time;
         currentSpriteIndex = 0;
 

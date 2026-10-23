@@ -25,9 +25,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int health = 100;
     [SerializeField] private int defense = 0;
     [SerializeField] private float attackRange = 2.5f;
-    [SerializeField] private GameObject playerAttack;
+    [SerializeField] private GameObject[] RangedAttacks;
+    [SerializeField] private GameObject[] MeleeAttacks;
     [SerializeField] private bool CheatMode = false;
     [SerializeField] private float attackLenience = 0.5f;
+    [SerializeField] private float attackCooldown = 0.5f;
 
     // PlayerController values
     private Sprite[] playerSprites;
@@ -54,6 +56,7 @@ public class PlayerController : MonoBehaviour
     private int currentSpriteIndex;
     private int currentSpriteIndexAdd;
     private float timeAtLastSpriteUpdate;
+    private float timeAtLastAttack;
     private readonly Functions functions = new();
     private int animationDirectionMultiplier = 1;
 
@@ -94,7 +97,7 @@ public class PlayerController : MonoBehaviour
         lineRenderer.startColor = Color.black;
         lineRenderer.endColor = Color.black;
 
-        transform.Find("Main Camera").position = new Vector3(0, 0, -10);
+        transform.Find("Main Camera").localPosition = new Vector3(0, 0, -10);
         //GetComponent<SpriteRenderer>().sprite = currentSprite;
     }
 
@@ -145,15 +148,36 @@ public class PlayerController : MonoBehaviour
         return livingEnemies;
     }
     
-    void Attack(GameObject enemy)
+    void RangedAttack(GameObject enemy, int attackIndex)
     {
-        if (playerAttack.activeSelf) return;
+        if (!CheatMode)
+        {
+            if (Time.time - timeAtLastAttack < attackCooldown) return;
+        }
+        timeAtLastAttack = Time.time;
+        GameObject playerAttack = new GameObject();
+        playerAttack.AddComponent<PlayerAttack>();
+        playerAttack.GetComponent<PlayerAttack>().maxDistance = attackRange;
+        playerAttack.AddComponent<SpriteRenderer>();
+        playerAttack.GetComponent<SpriteRenderer>().sprite = RangedAttacks[attackIndex].GetComponent<SpriteRenderer>().sprite;
+        playerAttack.transform.localScale = RangedAttacks[attackIndex].transform.localScale;
         playerAttack.GetComponent<PlayerAttack>().OnAttack(enemy, playerPos);
+        playerAttack.SetActive(true);
 
         //enemy.GetComponent<EnemyController>().OnHit(damage);
 
         Vector2 VectorFromPlayerToEnemy = enemy.transform.position - playerPos;
         VectorFromPlayerToEnemy.Normalize();
+    }
+
+    private GameObject Instantiate(object attackPrefab, Vector3 position, Quaternion rotation)
+    {
+        GameObject prefab = attackPrefab as GameObject;
+        if (prefab == null)
+        {
+            return null;
+        }
+        return UnityEngine.Object.Instantiate(prefab, position, rotation);
     }
 
     void HandleInputs()
@@ -192,7 +216,7 @@ public class PlayerController : MonoBehaviour
                 if (enemyDistances[indexOfMinDistance] > attackRange) return;
 
                 //Debug.Log($"{indexOfMinDistance}");
-                Attack(livingEnemies[indexOfMinDistance]);
+                RangedAttack(livingEnemies[indexOfMinDistance], 0);
             }
         }
         else
@@ -224,7 +248,7 @@ public class PlayerController : MonoBehaviour
                 if (enemyDistances[indexOfMinDistance] > attackRange) return;
 
                 //Debug.Log($"{indexOfMinDistance}");
-                Attack(livingEnemies[indexOfMinDistance]);
+                RangedAttack(livingEnemies[indexOfMinDistance], 0);
             }
         }
     }
