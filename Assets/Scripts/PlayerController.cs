@@ -22,44 +22,42 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float playerAcc = 5f;
     [SerializeField] private float frictionCoefficient = 1.01f;
     [SerializeField] private bool useAcceleration = true;
+    [Header("Health Settings")]
     [SerializeField] private int health = 100;
     [SerializeField] private int defense = 0;
+    [Header("Attack Settings")]
     [SerializeField] private float attackRange = 2.5f;
     [SerializeField] private GameObject[] RangedAttacks;
     [SerializeField] private GameObject[] MeleeAttacks;
     [SerializeField] private bool CheatMode = false;
     [SerializeField] private float attackLenience = 0.5f;
     [SerializeField] private float attackCooldown = 0.5f;
-
-    // PlayerController values
-    private Sprite[] playerSprites;
+    
+    // PlayerData Values
+    private InputAction moveAction;
+    public VarTypes.Data GetData() => data;
+    private VarTypes.Direction facing;
+    private VarTypes.Data data;
+    private Vector2 moveInputVector2;
+    private Vector3 moveInput;
     private Transform playerTransform;
     private Vector3 playerPos;
     private Vector3 playerVel;
-    
-    // PlayerData Values
-    private VarTypes.Direction facing;
-    private Vector2 moveInputVector2;
-    private InputAction moveAction;
-    private Vector3 moveInput;
-    private VarTypes.Data data;
-    public VarTypes.Data GetData() => data;
 
     // DeltaTime
     private float deltaTime;
     private GameObject[] livingEnemies;
     private float[] enemyDistances;
     private LineRenderer lineRenderer;
-
-    private Sprite[] spriteArr;
-    private Sprite currentSprite;
-    private int currentSpriteIndex;
-    private int currentSpriteIndexAdd;
-    private float timeAtLastSpriteUpdate;
     private float timeAtLastAttack;
     private readonly Functions functions = new();
     private int animationDirectionMultiplier = 1;
 
+    // Player Animation
+    private Sprite[] playerSprites;
+    private Sprite currentSprite;
+    private int currentSpriteIndexAdd;
+    private float timeAtLastSpriteUpdate;
     void Awake()
     {
         // Preliminary checks
@@ -150,34 +148,23 @@ public class PlayerController : MonoBehaviour
     
     void RangedAttack(GameObject enemy, int attackIndex)
     {
-        if (!CheatMode)
-        {
-            if (Time.time - timeAtLastAttack < attackCooldown) return;
-        }
+        if (!CheatMode && Time.time - timeAtLastAttack < attackCooldown) return;
+
         timeAtLastAttack = Time.time;
-        GameObject playerAttack = new GameObject();
-        playerAttack.AddComponent<PlayerAttack>();
-        playerAttack.GetComponent<PlayerAttack>().maxDistance = attackRange;
+
+        GameObject playerAttack = new();
+        playerAttack.AddComponent<PlayerAttackRanged>();
+        playerAttack.GetComponent<PlayerAttackRanged>().maxDistance = attackRange;
         playerAttack.AddComponent<SpriteRenderer>();
         playerAttack.GetComponent<SpriteRenderer>().sprite = RangedAttacks[attackIndex].GetComponent<SpriteRenderer>().sprite;
         playerAttack.transform.localScale = RangedAttacks[attackIndex].transform.localScale;
-        playerAttack.GetComponent<PlayerAttack>().OnAttack(enemy, playerPos);
+        playerAttack.GetComponent<PlayerAttackRanged>().OnAttack(enemy, playerPos);
         playerAttack.SetActive(true);
 
         //enemy.GetComponent<EnemyController>().OnHit(damage);
 
         Vector2 VectorFromPlayerToEnemy = enemy.transform.position - playerPos;
         VectorFromPlayerToEnemy.Normalize();
-    }
-
-    private GameObject Instantiate(object attackPrefab, Vector3 position, Quaternion rotation)
-    {
-        GameObject prefab = attackPrefab as GameObject;
-        if (prefab == null)
-        {
-            return null;
-        }
-        return UnityEngine.Object.Instantiate(prefab, position, rotation);
     }
 
     void HandleInputs()
@@ -306,39 +293,21 @@ public class PlayerController : MonoBehaviour
     void UpdatePlayerFacingDirection()
     {
         VarTypes.Direction facing = data.direction;
-        /*
-        if (Time.time - timeAtLastSpriteUpdate > animationDuration)
-        {
-            currentSprite = spriteArr[currentSpriteIndex];
-            timeAtLastSpriteUpdate = Time.time;
-            GetComponent<SpriteRenderer>().sprite = currentSprite;
-            currentSpriteIndex += 1;
-            currentSpriteIndex %= spriteArr.Length;
-        }
-        */
         if (facing == VarTypes.Direction.Left)
         {
             currentSprite = playerSprites[3 + currentSpriteIndexAdd];
-            //transform.localScale = new Vector3(-1, transform.localScale.y,transform.localScale.z);
-            //transform.Find("UI").localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
         }
         if (facing == VarTypes.Direction.Right)
         {
             currentSprite = playerSprites[6 + currentSpriteIndexAdd];
-            //transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
-            //transform.Find("UI").localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
         }
         if (facing == VarTypes.Direction.Up)
         {
             currentSprite = playerSprites[9 + currentSpriteIndexAdd];
-            //transform.localScale = new Vector3(transform.localScale.x, 1, transform.localScale.z);
-            //transform.Find("UI").localScale = new Vector3(transform.localScale.x, 1, transform.localScale.z);
         }
         if (facing == VarTypes.Direction.Down)
         {
             currentSprite = playerSprites[0 + currentSpriteIndexAdd];
-            //transform.localScale = new Vector3(transform.localScale.x, -1, transform.localScale.z);
-            //transform.Find("UI").localScale = new Vector3(transform.localScale.x, -1, transform.localScale.z);
         }
         playerTransform.GetComponent<SpriteRenderer>().sprite = currentSprite;
     }

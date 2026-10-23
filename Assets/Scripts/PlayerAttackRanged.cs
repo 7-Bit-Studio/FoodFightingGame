@@ -1,7 +1,7 @@
 using UnityEngine;
 using Assets.Globals;
 
-public class PlayerAttack : MonoBehaviour
+public class PlayerAttackRanged : MonoBehaviour
 {
     [SerializeField] private int damage = 10;
     [SerializeField] private float speed = 20;
