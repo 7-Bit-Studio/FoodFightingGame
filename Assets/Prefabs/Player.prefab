@@ -49,7 +49,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5454516667620009910
 RectTransform:
   m_ObjectHideFlags: 0
@@ -291,10 +291,11 @@ GameObject:
   - component: {fileID: 8733587525588814580}
   - component: {fileID: 3299817185842629983}
   - component: {fileID: 4019471157553757471}
+  - component: {fileID: 5950192173625212780}
+  - component: {fileID: 6555784994428284387}
   - component: {fileID: 3829864857699877317}
   - component: {fileID: 1978819818478681040}
   - component: {fileID: 289042330201366811}
-  - component: {fileID: 5950192173625212780}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -409,7 +410,7 @@ MonoBehaviour:
   health: 100
   defense: 0
   attackRange: 2.5
-  playerAttack: {fileID: 0}
+  playerAttack: {fileID: 1000423231909372618, guid: 580328186744cec46a2b91b3298d927e, type: 3}
   CheatMode: 0
   attackLenience: 0.5
 --- !u!114 &4019471157553757471
@@ -428,6 +429,32 @@ MonoBehaviour:
   FPSTextElement: {fileID: 1466895455521593937}
   SpeedElement: {fileID: 9117941203349782130}
   PositionElement: {fileID: 7420666466697024398}
+--- !u!114 &5950192173625212780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2281186170341192996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff9050500a3df404f9fef8b8f6a6bec1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CraftingMenu
+  CMenu: {fileID: 1232392138271833297}
+--- !u!114 &6555784994428284387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2281186170341192996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 782badbd71097374793d6d5e2ef1a69d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInventory
+  items: []
 --- !u!58 &3829864857699877317
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -601,19 +628,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &5950192173625212780
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2281186170341192996}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff9050500a3df404f9fef8b8f6a6bec1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CraftingMenu
-  CMenu: {fileID: 1232392138271833297}
 --- !u!1 &2544485896361003880
 GameObject:
   m_ObjectHideFlags: 0
