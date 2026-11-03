@@ -6,6 +6,21 @@ namespace Assets.Globals
 {
     public readonly struct Functions
     {
+        public Sprite[] SliceGrid(Texture2D tex, int cellW, int cellH, float ppu = 100f)
+        {
+            int cols = tex.width / cellW;
+            int rows = tex.height / cellH;
+            Sprite[] result = new Sprite[cols * rows];
+            int i = 0;
+            for (int y = rows - 1; y >= 0; y--)
+            {
+                for (int x = 0; x < cols; x++)
+                {
+                    result[i++] = Sprite.Create(tex, new Rect(x * cellW, y * cellH, cellW, cellH), new Vector2(0.5f, 0.5f), ppu);
+                }
+            }
+            return result;
+        }
 
         /// <summary>
         /// Rounds float to the number of decimal places provided
