@@ -5,12 +5,13 @@ public class PlayerAttack : MonoBehaviour
 {
     [SerializeField] private int damage = 10;
     [SerializeField] private float speed = 20;
+    [SerializeField] public float maxDistance = 10;
     private Vector3 AttackVel;
     private Transform AttackPos;
     private float deltaTime;
     private Vector2 startPos;
     private GameObject currentTarget;
-    void Start()
+    void Awake()
     {
         AttackPos = GetComponent<Transform>();
         AttackPos.gameObject.SetActive(false);
@@ -29,17 +30,15 @@ public class PlayerAttack : MonoBehaviour
 
         transform.SetPositionAndRotation(AttackPos.position, AttackPos.rotation);
 
-        if (Mathf.Abs(AttackPos.position.x - startPos.x) > 10 || Mathf.Abs(AttackPos.position.y - startPos.y) > 10)
+        if (Vector3.Distance(AttackPos.position, startPos) > maxDistance)
         {
-            transform.gameObject.SetActive(false);
-            AttackVel = Vector3.zero;
-            AttackPos.position = startPos;
+            Destroy(transform.gameObject);
         }
 
         if (Vector3.Distance(AttackPos.position, currentTarget.transform.position) < 0.5f)
         {
             currentTarget.GetComponent<EnemyController>().OnHit(damage);
-            transform.gameObject.SetActive(false);
+            Destroy(transform.gameObject);
         }
     }
 
@@ -51,7 +50,7 @@ public class PlayerAttack : MonoBehaviour
 
         // set targeted enemy
         currentTarget = enemy;
-        
+
         // find distance to targeted enemy
         float distance = Vector3.Distance(enemy.transform.position, start);
 
