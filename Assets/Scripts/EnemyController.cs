@@ -6,6 +6,7 @@ using UnityEngine.U2D;
 
 // Globals
 using Assets.Globals;
+using Unity.VisualScripting;
 
 
 
@@ -17,6 +18,8 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private int health = 100;
     [SerializeField] private int defense = 0;
     [SerializeField] private float acceleration = 0.2f;
+    [SerializeField] private int damage = 10;
+    [SerializeField] private int attackDelay = 100;
     [SerializeField] private GameObject theDrop;
     /// <summary>
     /// How many seconds for each animation frame to last
@@ -26,6 +29,8 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private bool isBoss = false;
     [SerializeField] private int textureWidth = 64;
     [SerializeField] private int textureHeight = 76;
+
+    [SerializeField] private int timeSinceLastAttack = 0;
 
     // EnemyController values
     private Transform enemyTransform;
@@ -55,6 +60,8 @@ public class EnemyController : MonoBehaviour
     private GameObject healthBar;
     private Transform healthValueTransform;
     private int startHealth;
+
+
 
     private bool isAlive;
     private readonly Functions functions = new();
@@ -97,6 +104,7 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        timeSinceLastAttack++;
         if (!transform.gameObject.activeSelf) return;
         playerData = movement.GetData();
         
@@ -266,7 +274,17 @@ public class EnemyController : MonoBehaviour
             // normalizedPlayerDirection is negative to make vector point away from player
             enemyPos += -normalizedPlayerDirection * ((colliderRad + playerColliderRad) - playerDirection.magnitude);
             enemyVel += -normalizedPlayerDirection * ((colliderRad + playerColliderRad) - playerDirection.magnitude);
+
             Debug.Log("Player Collision!");
+
+            PlayerController pController = player.GetComponent<PlayerController>();
+
+            if (timeSinceLastAttack > attackDelay)
+            {
+
+            pController.OnHit(damage);
+                timeSinceLastAttack = 0;
+            }
         }
 
         // leaving enemyTransform.position to keep function looking balanced

@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject[] MeleeAttacks;
     [SerializeField] private bool CheatMode = false;
     [SerializeField] private float attackLenience = 0.5f;
+    [SerializeField] private bool canDie = true;
     [SerializeField] private float attackCooldown = 0.5f;
 
     // PlayerController values
@@ -425,9 +426,10 @@ public class PlayerController : MonoBehaviour
 
         health -= dealtDamage;
 
-        if(health <= 0)
+        if(health <= 0 && canDie)
         {
             transform.gameObject.SetActive(false);
+            Application.Quit();
         }
     }
 
