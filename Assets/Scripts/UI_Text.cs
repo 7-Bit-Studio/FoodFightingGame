@@ -11,6 +11,7 @@ using UnityEngine.InputSystem;
 
 // Custom Datatypes
 using Assets.Globals;
+using TMPro;
 
 public class UIText : MonoBehaviour
 {
@@ -21,6 +22,8 @@ public class UIText : MonoBehaviour
     [SerializeField] private Text FPSTextElement;
     [SerializeField] private Text SpeedElement;
     [SerializeField] private Text PositionElement;
+    [SerializeField] private TextMeshPro WASDPrompt;
+    [SerializeField] private GameObject promptBackground;
     private Transform TopLeftCorner;
     private Functions functions;
     private PlayerController movement;
@@ -39,6 +42,14 @@ public class UIText : MonoBehaviour
     private int screenWidth;
     private int screenHeight;
     private bool showDebugInfo;
+    private bool showWASDPrompt;
+    private bool wPressed;
+    private bool aPressed;
+    private bool sPressed;
+    private bool dPressed;
+
+
+    private Transform abovePlayer;
 
     void Loginit_()
     {
@@ -58,6 +69,7 @@ public class UIText : MonoBehaviour
         prevPlayerVel1 = new Vector3[averageDuration];
         prevPlayerVel2 = new Vector3[averageDuration + 1];
         showDebugInfo = false;
+        showWASDPrompt = true;
     }
 
     void ScreenInit()
@@ -69,6 +81,7 @@ public class UIText : MonoBehaviour
         // -screenWidth/2 and screenHeight/2 to align with the top-left corner
         // 0.95 for a 5% padding margin
         TopLeftCorner.localPosition = new Vector3(-(screenWidth / 2) * (1 - margin), (1 - margin) * screenHeight / 2);
+        abovePlayer.localPosition = new Vector3(-(screenWidth / 2) * (1 - margin), (1 - margin) * screenHeight / 2);
     }
 
     void Start()
@@ -93,6 +106,10 @@ public class UIText : MonoBehaviour
             PositionElement.gameObject.SetActive(true);
             FPSTextElement.gameObject.SetActive(true);
             SpeedElement.gameObject.SetActive(true);
+        }
+        if (showWASDPrompt)
+        {
+            
         }
 
         data = movement.GetData();
@@ -132,6 +149,7 @@ public class UIText : MonoBehaviour
         {
             showDebugInfo = !showDebugInfo;
         }
+
     }
 
     void SetText(Text textElement, string text)

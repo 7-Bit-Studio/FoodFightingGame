@@ -32,13 +32,15 @@ public class PlayerAttack : MonoBehaviour
 
         if (Vector3.Distance(AttackPos.position, startPos) > maxDistance)
         {
-            Destroy(transform.gameObject);
+            //Destroy(transform.gameObject);
+            transform.gameObject.SetActive(false);
         }
 
         if (Vector3.Distance(AttackPos.position, currentTarget.transform.position) < 0.5f)
         {
             currentTarget.GetComponent<EnemyController>().OnHit(damage);
-            Destroy(transform.gameObject);
+            //Destroy(transform.gameObject);
+            transform.gameObject.SetActive(false);
         }
     }
 
