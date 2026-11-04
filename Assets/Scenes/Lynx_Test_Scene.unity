@@ -763,12 +763,15 @@ MonoBehaviour:
   health: 100
   defense: 0
   acceleration: 15
+  damage: 10
+  attackDelay: 100
   theDrop: {fileID: 0}
   animationDuration: 0.25
   collisionLoops: 1
   isBoss: 0
   textureWidth: 64
   textureHeight: 64
+  timeSinceLastAttack: 0
 --- !u!58 &402682807
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -864,7 +867,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Movement
   moveActionReference: {fileID: -1680190386980627800, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  playerTexture: {fileID: 2800000, guid: af3b3368c94950d40b61a4fe601b13ff, type: 3}
+  spriteAtlas: {fileID: 100100200, guid: e0c607507f05bd7409a7079eed9a6db3, type: 3}
   maxSpeed: 5
   playerAcc: 25
   frictionCoefficient: 1.05
@@ -872,12 +875,10 @@ MonoBehaviour:
   health: 100
   defense: 0
   attackRange: 3
-  RangedAttacks:
-  - {fileID: 1450978514}
-  MeleeAttacks: []
+  playerAttack: {fileID: 1450978514}
   CheatMode: 1
   attackLenience: 0.5
-  attackCooldown: 0.2
+  canDie: 0
 --- !u!58 &430895893
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1189,12 +1190,15 @@ MonoBehaviour:
   health: 100
   defense: 0
   acceleration: 15
+  damage: 10
+  attackDelay: 100
   theDrop: {fileID: 0}
   animationDuration: 0.25
   collisionLoops: 1
   isBoss: 0
   textureWidth: 64
   textureHeight: 64
+  timeSinceLastAttack: 0
 --- !u!212 &442814324
 SpriteRenderer:
   serializedVersion: 3
@@ -1342,12 +1346,15 @@ MonoBehaviour:
   health: 100
   defense: 0
   acceleration: 15
+  damage: 10
+  attackDelay: 100
   theDrop: {fileID: 0}
   animationDuration: 0.25
   collisionLoops: 1
   isBoss: 0
   textureWidth: 64
   textureHeight: 64
+  timeSinceLastAttack: 0
 --- !u!212 &500168765
 SpriteRenderer:
   serializedVersion: 3
@@ -1882,12 +1889,15 @@ MonoBehaviour:
   health: 100
   defense: 0
   acceleration: 15
+  damage: 10
+  attackDelay: 100
   theDrop: {fileID: 0}
   animationDuration: 0.25
   collisionLoops: 1
   isBoss: 0
   textureWidth: 64
   textureHeight: 64
+  timeSinceLastAttack: 0
 --- !u!58 &632861096
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2167,12 +2177,15 @@ MonoBehaviour:
   health: 100
   defense: 0
   acceleration: 15
+  damage: 10
+  attackDelay: 100
   theDrop: {fileID: 0}
   animationDuration: 0.25
   collisionLoops: 1
   isBoss: 0
   textureWidth: 128
   textureHeight: 128
+  timeSinceLastAttack: 0
 --- !u!212 &955310670
 SpriteRenderer:
   serializedVersion: 3
@@ -2284,12 +2297,15 @@ MonoBehaviour:
   health: 100
   defense: 0
   acceleration: 15
+  damage: 10
+  attackDelay: 100
   theDrop: {fileID: 0}
   animationDuration: 0.25
   collisionLoops: 1
   isBoss: 0
   textureWidth: 64
   textureHeight: 64
+  timeSinceLastAttack: 0
 --- !u!212 &1159635288
 SpriteRenderer:
   serializedVersion: 3
@@ -2831,12 +2847,15 @@ MonoBehaviour:
   health: 400
   defense: 0
   acceleration: 15
+  damage: 10
+  attackDelay: 100
   theDrop: {fileID: 0}
   animationDuration: 0.25
   collisionLoops: 1
   isBoss: 1
   textureWidth: 128
   textureHeight: 128
+  timeSinceLastAttack: 0
 --- !u!212 &1932830493
 SpriteRenderer:
   serializedVersion: 3
@@ -3017,12 +3036,15 @@ MonoBehaviour:
   health: 100
   defense: 0
   acceleration: 15
+  damage: 10
+  attackDelay: 100
   theDrop: {fileID: 0}
   animationDuration: 0.25
   collisionLoops: 1
   isBoss: 0
   textureWidth: 64
   textureHeight: 64
+  timeSinceLastAttack: 0
 --- !u!212 &2022408134
 SpriteRenderer:
   serializedVersion: 3
