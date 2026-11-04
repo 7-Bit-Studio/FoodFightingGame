@@ -22,8 +22,8 @@ public class UIText : MonoBehaviour
     [SerializeField] private Text FPSTextElement;
     [SerializeField] private Text SpeedElement;
     [SerializeField] private Text PositionElement;
-    [SerializeField] private TextMeshPro WASDPrompt;
-    [SerializeField] private GameObject promptBackground;
+    //[SerializeField] private TextMeshProUGUI WASDPrompt;
+    //[SerializeField] private GameObject promptBackground;
     private Transform TopLeftCorner;
     private Functions functions;
     private PlayerController movement;
@@ -42,11 +42,11 @@ public class UIText : MonoBehaviour
     private int screenWidth;
     private int screenHeight;
     private bool showDebugInfo;
-    private bool showWASDPrompt;
-    private bool wPressed;
-    private bool aPressed;
-    private bool sPressed;
-    private bool dPressed;
+    //private bool showWASDPrompt;
+    //private bool wPressed;
+   // private bool aPressed;
+    //private bool sPressed;
+    //private bool dPressed;
 
 
     private Transform abovePlayer;
@@ -69,7 +69,7 @@ public class UIText : MonoBehaviour
         prevPlayerVel1 = new Vector3[averageDuration];
         prevPlayerVel2 = new Vector3[averageDuration + 1];
         showDebugInfo = false;
-        showWASDPrompt = true;
+        //showWASDPrompt = true;
     }
 
     void ScreenInit()
@@ -81,7 +81,7 @@ public class UIText : MonoBehaviour
         // -screenWidth/2 and screenHeight/2 to align with the top-left corner
         // 0.95 for a 5% padding margin
         TopLeftCorner.localPosition = new Vector3(-(screenWidth / 2) * (1 - margin), (1 - margin) * screenHeight / 2);
-        abovePlayer.localPosition = new Vector3(-(screenWidth / 2) * (1 - margin), (1 - margin) * screenHeight / 2);
+        //abovePlayer.localPosition = new Vector3(-(screenWidth / 2) * (1 - margin), (1 - margin) * screenHeight / 2);
     }
 
     void Start()
@@ -107,10 +107,10 @@ public class UIText : MonoBehaviour
             FPSTextElement.gameObject.SetActive(true);
             SpeedElement.gameObject.SetActive(true);
         }
-        if (showWASDPrompt)
-        {
+        //if (showWASDPrompt)
+        //{
             
-        }
+        //}
 
         data = movement.GetData();
         playerVel = data.velocity;

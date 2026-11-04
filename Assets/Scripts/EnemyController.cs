@@ -57,7 +57,7 @@ public class EnemyController : MonoBehaviour
     private bool isStunned;
     private bool wasJustHit;
     private float hitTime;
-    private GameObject healthBar;
+    //private GameObject healthBar;
     private Transform healthValueTransform;
     private int startHealth;
 
@@ -96,8 +96,8 @@ public class EnemyController : MonoBehaviour
 
         if (isBoss)
         {
-            healthBar = transform.Find("HealthBarBoss").gameObject;
-            healthValueTransform = healthBar.transform.Find("HealthBarInner");
+            //healthBar = transform.Find("HealthBarBoss").gameObject;
+            //healthValueTransform = healthBar.transform.Find("HealthBarInner");
         }
     }
 
@@ -114,7 +114,7 @@ public class EnemyController : MonoBehaviour
 
         if (Time.time - timeAtLastSpriteUpdate > animationDuration)
         {
-            currentSprite = enemySprites[currentSpriteIndex];
+            currentSprite = enemySprites[currentSpriteIndex];   
             timeAtLastSpriteUpdate = Time.time;
             GetComponent<SpriteRenderer>().sprite = currentSprite;
             currentSpriteIndex += 1;
@@ -122,15 +122,15 @@ public class EnemyController : MonoBehaviour
         }
 
 
-        if (isBoss)
-        {
+        //if (isBoss)
+        //{
             // if anyone knows of a better way to do this, please let me know
             // no, setting localScale.x to a number doesn't work
             // same with localPosition
-            healthValueTransform.localScale = new Vector3(health * 0.9f / startHealth, healthValueTransform.localScale.y, healthValueTransform.localScale.z);
-            healthValueTransform.localPosition = new Vector3(( 0.9f * ((float)health / startHealth) - 0.9f)/2f, healthValueTransform.localPosition.y, healthValueTransform.localPosition.z);
-        }
-
+        //    healthValueTransform.localScale = new Vector3(health * 0.9f / startHealth, healthValueTransform.localScale.y, healthValueTransform.localScale.z);
+        //    healthValueTransform.localPosition = new Vector3(( 0.9f * ((float)health / startHealth) - 0.9f)/2f, healthValueTransform.localPosition.y, healthValueTransform.localPosition.z);
+        //}
+        
         UpdateMovement();
     }
 
