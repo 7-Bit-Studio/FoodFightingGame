@@ -6,6 +6,7 @@ using Assets.Globals;
 using UnityEngine;
 using UnityEngine.U2D;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 
 [RequireComponent(typeof(Transform))]
@@ -388,8 +389,7 @@ public class PlayerController : MonoBehaviour
         if(health <= 0 && canDie)
         {
             
-            
-            GameOverScreen.gameObject.SetActive(true);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 
