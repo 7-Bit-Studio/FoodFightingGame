@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
     [Header("Movement Settings")]
     [SerializeField] private InputActionReference moveActionReference;
     [SerializeField] private Texture2D playerTexture;
-     
+    
     [SerializeField] private float maxSpeed = 5f;
     [SerializeField] private float playerAcc = 5f;
     [SerializeField] private float frictionCoefficient = 1.01f;
