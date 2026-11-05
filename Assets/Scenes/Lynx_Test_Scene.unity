@@ -851,6 +851,7 @@ MonoBehaviour:
   FPSTextElement: {fileID: 390711398}
   SpeedElement: {fileID: 517474262}
   PositionElement: {fileID: 366054922}
+  debugLogging: 0
 --- !u!114 &430895892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2936,7 +2937,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30b39334202e93e418ab9ead0d358a79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
-  maxSpeed: 0
+  maxSpeed: 5
   enemyTexture: {fileID: 2800000, guid: c394763c44340034bac61b4bf316566f, type: 3}
   health: 400
   defense: 0
