@@ -21,6 +21,7 @@ public class UIText : MonoBehaviour
     [SerializeField] private Text FPSTextElement;
     [SerializeField] private Text SpeedElement;
     [SerializeField] private Text PositionElement;
+    [SerializeField] private bool debugLogging = false;
     private Transform TopLeftCorner;
     private Functions functions;
     private PlayerController movement;
@@ -48,7 +49,7 @@ public class UIText : MonoBehaviour
     }
     void InitializeVars()
     {
-        Loginit_();
+        if (debugLogging) Loginit_();
         movement = GetComponent<PlayerController>();
         fpsLow = float.PositiveInfinity;
         functions = new Functions();
@@ -114,8 +115,9 @@ public class UIText : MonoBehaviour
         roundedFPS = functions.Round(currFPS, 1);
         playerPos = functions.Round(playerPos, 1) * 10;
 
+
         FPS();
-        FPSFileWrite();
+        if (debugLogging) FPSFileWrite();
         SetText(FPSTextElement,$"{roundedFPS}fps");
         SetText(SpeedElement, $"{smoothedPlayerVel.x}, {smoothedPlayerVel.y}");
         SetText(PositionElement, $"X: {playerPos.x} Y: {playerPos.y}\nT: {functions.Round(Time.timeAsDouble,2)} sec");
