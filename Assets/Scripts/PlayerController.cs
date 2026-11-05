@@ -6,8 +6,8 @@ using Assets.Globals;
 using UnityEngine;
 using UnityEngine.U2D;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 
 [RequireComponent(typeof(Transform))]
@@ -27,29 +27,26 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float playerAcc = 5f;
     [SerializeField] private float frictionCoefficient = 1.01f;
     [SerializeField] private bool useAcceleration = true;
-    [Header("Health Settings")]
-    [SerializeField] private int health = 100;
-    [SerializeField] private int defense = 0;
     [Header("Attack Settings")]
     [SerializeField] private float attackRange = 2.5f;
     [SerializeField] private bool CheatMode = false;
     [SerializeField] private float attackLenience = 0.5f;
     [SerializeField] private float attackCooldown = 0.5f;
     
-    [SerializeField] private bool canDie = true;
-
-    // PlayerController values
-    private Transform playerTransform;
-    private Vector3 playerPos;
-    private Vector3 playerVel;
     
     // PlayerData Values
+    [Header("Health Settings")]
+    [SerializeField] private int health = 100;
+    [SerializeField] private int defense = 0;
+    [SerializeField] private bool canDie = true;
     private InputAction moveAction;
     public VarTypes.Data GetData() => data;
     private VarTypes.Direction facing;
     private VarTypes.Data data;
     private Vector2 moveInputVector2;
     private Vector3 moveInput;
+
+    // PlayerController values
     private Transform playerTransform;
     private Vector3 playerPos;
     private Vector3 playerVel;
@@ -62,11 +59,6 @@ public class PlayerController : MonoBehaviour
     private float timeAtLastAttack;
     private readonly Functions functions = new();
     private int animationDirectionMultiplier = 1;
-
-    private Sprite[] spriteArr;
-    private Sprite currentSprite;
-    private int currentSpriteIndex;
-    private float timeAtLastSpriteUpdate;
 
     // Player Animation
     private Sprite[] playerSprites;
@@ -100,13 +92,13 @@ public class PlayerController : MonoBehaviour
 
         facing = VarTypes.Direction.Down;
 
-        spriteArr = new Sprite[spriteAtlas.spriteCount];
+        playerSprites = new Sprite[spriteAtlas.spriteCount];
         data.velocity = playerVel;
         data.position = playerPos;
         data.health = health;
         data.direction = facing;
 
-        currentSprite = spriteArr[6];
+        currentSprite = playerSprites[6];
         lineRenderer.startColor = Color.black;
         lineRenderer.endColor = Color.black;
 
@@ -115,7 +107,7 @@ public class PlayerController : MonoBehaviour
 
         transform.Find("Main Camera").position = new Vector3(0, 0, -10);
         //GetComponent<SpriteRenderer>().sprite = currentSprite;
-        Debug.Log(spriteArr.Length);
+        Debug.Log(playerSprites.Length);
     }
 
     // Update is called once per frame
@@ -169,13 +161,12 @@ public class PlayerController : MonoBehaviour
         playerAttack.transform.localScale = RangedAttacks[attackIndex].transform.localScale;
         playerAttack.GetComponent<PlayerAttackRanged>().OnAttack(enemy, playerPos);
         playerAttack.SetActive(true);
-        playerAttack.SetActive(true);
 
         //enemy.GetComponent<EnemyController>().OnHit(damage);
 
         Vector2 VectorFromPlayerToEnemy = enemy.transform.position - playerPos;
         VectorFromPlayerToEnemy.Normalize();
-
+    }
     void MeleeAttack(GameObject enemy, int attackIndex)
     {
         if (!CheatMode && Time.time - timeAtLastAttack < attackCooldown) return;
@@ -193,8 +184,6 @@ public class PlayerController : MonoBehaviour
         Vector2 VectorFromPlayerToEnemy = enemy.transform.position - playerPos;
         VectorFromPlayerToEnemy.Normalize();
     }
-    }
-
     void HandleInputs()
     {
         if (Keyboard.current.ctrlKey.isPressed && Keyboard.current.qKey.wasPressedThisFrame)
@@ -223,17 +212,40 @@ public class PlayerController : MonoBehaviour
                 }
 
                 if (indexOfMinDistance == -1) return;
-                bool isRangedAttack = Mouse.current.leftButton.isPressed && CheatMode || Mouse.current.leftButton.wasPressedThisFrame && !CheatMode;
-                bool isMeleeAttack = Mouse.current.rightButton.isPressed && CheatMode || Mouse.current.rightButton.wasPressedThisFrame && !CheatMode;
-                if (isRangedAttack)
+                if (enemyDistances[indexOfMinDistance] > attackRange) return;
+
+                //Debug.Log($"{indexOfMinDistance}");
+                Attack(livingEnemies[indexOfMinDistance]);
+            }
+        }
+        else
+        {
+            if (Mouse.current.leftButton.isPressed)
+            {
+                Vector2 MouseInWorldPosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+
+                float minDistanceFromMouse = float.PositiveInfinity;
+                float[] distFromMouse = new float[livingEnemies.Length];
+
+                for (int i = 0; i < livingEnemies.Length; i++)
                 {
                     RangedAttack(livingEnemies[indexOfMinDistance], attackIndex);
                 }
                 if (isMeleeAttack)
                 {
                     MeleeAttack(livingEnemies[indexOfMinDistance], attackIndex);
-                    }
-                RangedAttack(livingEnemies[indexOfMinDistance], 0);
+                }
+
+                //Debug.Log($"{mouseDistFromPlayer}");
+                int? indexOfMinDistanceNullable = Array.IndexOf(distFromMouse, minDistanceFromMouse);
+                int indexOfMinDistance = indexOfMinDistanceNullable == null ? -1 : (int) indexOfMinDistanceNullable;
+
+                if (indexOfMinDistance == -1) return;
+
+                if (enemyDistances[indexOfMinDistance] > attackRange) return;
+
+                //Debug.Log($"{indexOfMinDistance}");
+                Attack(livingEnemies[indexOfMinDistance]);
             }
         }
     }
@@ -255,9 +267,13 @@ public class PlayerController : MonoBehaviour
 
         if (Math.Abs(playerVel.y) < Math.Abs(playerVel.x))
         {
-            if (playerVel.x > 0)
+            if (playerVel.x > epsilon)
             {
                 facing = VarTypes.Direction.Left;
+            }
+            else if (playerVel.x < -epsilon)
+            {
+                facing = VarTypes.Direction.Right;
             }
             else
             {
@@ -266,13 +282,13 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            if (playerVel.y > 0)
+            if (playerVel.y > epsilon)
             {
                 facing = VarTypes.Direction.Up;
+            }
             else if (playerVel.y < -epsilon)
             {
                 facing = VarTypes.Direction.Down;
-            }
             }
             else
             {
@@ -288,20 +304,20 @@ public class PlayerController : MonoBehaviour
     {
         VarTypes.Direction facing = data.direction;
         if (facing == VarTypes.Direction.Left)
+        {
             currentSprite = playerSprites[3 + currentSpriteIndexAdd];
-            //transform.Find("UI").localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
         }
         if (facing == VarTypes.Direction.Right)
+        {
             currentSprite = playerSprites[6 + currentSpriteIndexAdd];
-            //transform.Find("UI").localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
         }
         if (facing == VarTypes.Direction.Up)
+        {
             currentSprite = playerSprites[9 + currentSpriteIndexAdd];
-            //transform.Find("UI").localScale = new Vector3(transform.localScale.x, 1, transform.localScale.z);
         }
         if (facing == VarTypes.Direction.Down)
+        {
             currentSprite = playerSprites[0 + currentSpriteIndexAdd];
-            //transform.Find("UI").localScale = new Vector3(transform.localScale.x, -1, transform.localScale.z);
         }
         //playerTransform.GetComponent<SpriteRenderer>().sprite = currentSprite;
     }
