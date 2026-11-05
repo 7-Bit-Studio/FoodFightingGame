@@ -6,6 +6,7 @@ using Assets.Globals;
 using UnityEngine;
 using UnityEngine.U2D;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using System.Linq;
 
 
@@ -16,9 +17,12 @@ using System.Linq;
 /// </summary>
 public class PlayerController : MonoBehaviour
 {
+
     [Header("Movement Settings")]
     [SerializeField] private InputActionReference moveActionReference;
-    [SerializeField] private Texture2D playerTexture;
+    [SerializeField] private SpriteAtlas spriteAtlas;
+    [SerializeField] private GameObject playerAttack;
+    [SerializeField] private GameObject GameOverScreen;
     [SerializeField] private float maxSpeed = 5f;
     [SerializeField] private float playerAcc = 5f;
     [SerializeField] private float frictionCoefficient = 1.01f;
@@ -28,12 +32,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int defense = 0;
     [Header("Attack Settings")]
     [SerializeField] private float attackRange = 2.5f;
-    [SerializeField] private GameObject[] RangedAttacks;
-    [SerializeField] private GameObject[] MeleeAttacks;
     [SerializeField] private bool CheatMode = false;
     [SerializeField] private float attackLenience = 0.5f;
     [SerializeField] private float attackCooldown = 0.5f;
     
+    [SerializeField] private bool canDie = true;
+
+    // PlayerController values
+    private Transform playerTransform;
+    private Vector3 playerPos;
+    private Vector3 playerVel;
     
     // PlayerData Values
     private InputAction moveAction;
@@ -54,6 +62,11 @@ public class PlayerController : MonoBehaviour
     private float timeAtLastAttack;
     private readonly Functions functions = new();
     private int animationDirectionMultiplier = 1;
+
+    private Sprite[] spriteArr;
+    private Sprite currentSprite;
+    private int currentSpriteIndex;
+    private float timeAtLastSpriteUpdate;
 
     // Player Animation
     private Sprite[] playerSprites;
@@ -76,9 +89,7 @@ public class PlayerController : MonoBehaviour
         {
             lineRenderer = new GameObject().AddComponent<LineRenderer>();
         }
-
-        playerSprites = functions.SliceGrid(playerTexture, 64, 76);
-
+    
         // Initializing values
         moveInputVector2 = Vector2.zero;
         moveInput = Vector3.zero;
@@ -89,32 +100,27 @@ public class PlayerController : MonoBehaviour
 
         facing = VarTypes.Direction.Down;
 
+        spriteArr = new Sprite[spriteAtlas.spriteCount];
         data.velocity = playerVel;
         data.position = playerPos;
         data.health = health;
         data.direction = facing;
 
-        currentSprite = playerSprites[6];
+        currentSprite = spriteArr[6];
         lineRenderer.startColor = Color.black;
         lineRenderer.endColor = Color.black;
 
-        transform.Find("Main Camera").localPosition = new Vector3(0, 0, -10);
+        GameOverScreen.gameObject.SetActive(false);
+        GameOverScreen.transform.position = playerPos;
+
+        transform.Find("Main Camera").position = new Vector3(0, 0, -10);
         //GetComponent<SpriteRenderer>().sprite = currentSprite;
+        Debug.Log(spriteArr.Length);
     }
 
     // Update is called once per frame
     public void Update()
     {
-
-        if (Time.time - timeAtLastSpriteUpdate > 0.33f)
-        {
-            timeAtLastSpriteUpdate = Time.time;
-            currentSpriteIndexAdd += animationDirectionMultiplier;
-            if (currentSpriteIndexAdd >= 2 || currentSpriteIndexAdd <= 0)
-            {
-                animationDirectionMultiplier *= -1;
-            }
-        }
         // Setting current-frame constants
         deltaTime = Time.deltaTime;
         moveAction = moveActionReference.action;
@@ -149,7 +155,7 @@ public class PlayerController : MonoBehaviour
         return livingEnemies;
     }
     
-    void RangedAttack(GameObject enemy, int attackIndex)
+    void Attack(GameObject enemy)
     {
         if (!CheatMode && Time.time - timeAtLastAttack < attackCooldown) return;
 
@@ -163,12 +169,12 @@ public class PlayerController : MonoBehaviour
         playerAttack.transform.localScale = RangedAttacks[attackIndex].transform.localScale;
         playerAttack.GetComponent<PlayerAttackRanged>().OnAttack(enemy, playerPos);
         playerAttack.SetActive(true);
+        playerAttack.SetActive(true);
 
         //enemy.GetComponent<EnemyController>().OnHit(damage);
 
         Vector2 VectorFromPlayerToEnemy = enemy.transform.position - playerPos;
         VectorFromPlayerToEnemy.Normalize();
-    }
 
     void MeleeAttack(GameObject enemy, int attackIndex)
     {
@@ -186,6 +192,7 @@ public class PlayerController : MonoBehaviour
         //enemy.GetComponent<EnemyController>().OnHit(damage);
         Vector2 VectorFromPlayerToEnemy = enemy.transform.position - playerPos;
         VectorFromPlayerToEnemy.Normalize();
+    }
     }
 
     void HandleInputs()
@@ -216,7 +223,6 @@ public class PlayerController : MonoBehaviour
                 }
 
                 if (indexOfMinDistance == -1) return;
-
                 bool isRangedAttack = Mouse.current.leftButton.isPressed && CheatMode || Mouse.current.leftButton.wasPressedThisFrame && !CheatMode;
                 bool isMeleeAttack = Mouse.current.rightButton.isPressed && CheatMode || Mouse.current.rightButton.wasPressedThisFrame && !CheatMode;
                 if (isRangedAttack)
@@ -226,7 +232,8 @@ public class PlayerController : MonoBehaviour
                 if (isMeleeAttack)
                 {
                     MeleeAttack(livingEnemies[indexOfMinDistance], attackIndex);
-                }
+                    }
+                RangedAttack(livingEnemies[indexOfMinDistance], 0);
             }
         }
     }
@@ -245,32 +252,27 @@ public class PlayerController : MonoBehaviour
         UpdatePosition();
         data.velocity = playerVel;
         data.position = playerPos;
-        float epsilon = 0.001f;
 
         if (Math.Abs(playerVel.y) < Math.Abs(playerVel.x))
         {
-            if (playerVel.x > epsilon)
-            {
-                facing = VarTypes.Direction.Right;
-            }
-            else if(playerVel.x < -epsilon)
+            if (playerVel.x > 0)
             {
                 facing = VarTypes.Direction.Left;
             }
             else
             {
-                facing = VarTypes.Direction.Down;
+                facing = VarTypes.Direction.Right;
             }
         }
         else
         {
-            if (playerVel.y > epsilon)
+            if (playerVel.y > 0)
             {
                 facing = VarTypes.Direction.Up;
-            }
             else if (playerVel.y < -epsilon)
             {
                 facing = VarTypes.Direction.Down;
+            }
             }
             else
             {
@@ -279,31 +281,32 @@ public class PlayerController : MonoBehaviour
         }
 
         data.direction = facing;
+        GameOverScreen.transform.position = playerPos;
     }
 
     void UpdatePlayerFacingDirection()
     {
         VarTypes.Direction facing = data.direction;
         if (facing == VarTypes.Direction.Left)
-        {
             currentSprite = playerSprites[3 + currentSpriteIndexAdd];
+            //transform.Find("UI").localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
         }
         if (facing == VarTypes.Direction.Right)
-        {
             currentSprite = playerSprites[6 + currentSpriteIndexAdd];
+            //transform.Find("UI").localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
         }
         if (facing == VarTypes.Direction.Up)
-        {
             currentSprite = playerSprites[9 + currentSpriteIndexAdd];
+            //transform.Find("UI").localScale = new Vector3(transform.localScale.x, 1, transform.localScale.z);
         }
         if (facing == VarTypes.Direction.Down)
-        {
             currentSprite = playerSprites[0 + currentSpriteIndexAdd];
+            //transform.Find("UI").localScale = new Vector3(transform.localScale.x, -1, transform.localScale.z);
         }
-        playerTransform.GetComponent<SpriteRenderer>().sprite = currentSprite;
+        //playerTransform.GetComponent<SpriteRenderer>().sprite = currentSprite;
     }
     
-    // Updating the player's velocity
+    // Updateing the player's velocity
     void VelocityMovement()
     {
         // PlayerData in metres per second
@@ -365,9 +368,10 @@ public class PlayerController : MonoBehaviour
 
         health -= dealtDamage;
 
-        if(health <= 0)
+        if(health <= 0 && canDie)
         {
-            transform.gameObject.SetActive(false);
+            
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 }

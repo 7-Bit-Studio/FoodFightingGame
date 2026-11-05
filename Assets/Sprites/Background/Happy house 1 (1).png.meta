@@ -58,7 +58,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -139,12 +139,12 @@ TextureImporter:
       name: Happy house 1 (1)_0
       rect:
         serializedVersion: 2
-        x: 1
-        y: 98
-        width: 46
-        height: 46
+        x: 2
+        y: 99
+        width: 44
+        height: 44
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -161,12 +161,12 @@ TextureImporter:
       name: Happy house 1 (1)_1
       rect:
         serializedVersion: 2
-        x: 49
-        y: 98
-        width: 46
-        height: 46
+        x: 50
+        y: 99
+        width: 44
+        height: 44
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -183,12 +183,12 @@ TextureImporter:
       name: Happy house 1 (1)_2
       rect:
         serializedVersion: 2
-        x: 97
-        y: 98
-        width: 46
-        height: 46
+        x: 98
+        y: 99
+        width: 44
+        height: 44
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -205,12 +205,12 @@ TextureImporter:
       name: Happy house 1 (1)_3
       rect:
         serializedVersion: 2
-        x: 1
-        y: 50
-        width: 46
-        height: 46
+        x: 2
+        y: 51
+        width: 44
+        height: 44
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -227,12 +227,12 @@ TextureImporter:
       name: Happy house 1 (1)_4
       rect:
         serializedVersion: 2
-        x: 51
-        y: 50
-        width: 42
-        height: 34
+        x: 52
+        y: 51
+        width: 40
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -249,12 +249,12 @@ TextureImporter:
       name: Happy house 1 (1)_5
       rect:
         serializedVersion: 2
-        x: 99
-        y: 50
-        width: 42
-        height: 34
+        x: 100
+        y: 51
+        width: 40
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -271,12 +271,12 @@ TextureImporter:
       name: Happy house 1 (1)_6
       rect:
         serializedVersion: 2
-        x: 3
-        y: 2
-        width: 42
-        height: 34
+        x: 4
+        y: 3
+        width: 40
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -293,12 +293,12 @@ TextureImporter:
       name: Happy house 1 (1)_7
       rect:
         serializedVersion: 2
-        x: 51
-        y: 2
-        width: 42
-        height: 34
+        x: 52
+        y: 3
+        width: 40
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -315,7 +315,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 60bdf8a77bf04d64d933955d51096415
     internalID: 0
     vertices: []
     indices: 
@@ -323,7 +323,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       Happy house 1 (1)_0: -7745046445171838518
       Happy house 1 (1)_1: 7510415145619149385

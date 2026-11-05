@@ -91,7 +91,7 @@ SpriteRenderer:
   m_Size: {x: 14, y: 4}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
 --- !u!114 &5981922811708687089
@@ -107,14 +107,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   maxSpeed: 5
-  spriteAtlas: {fileID: 100100200, guid: fd20d513798158b4bbb52aa68859566d, type: 3}
+  enemyTexture: {fileID: 2800000, guid: 8b5e389cc4dd4ae43b052e5ba1bd00e0, type: 3}
   health: 100
   defense: 0
   acceleration: 15
+  damage: 10
+  attackDelay: 100
   theDrop: {fileID: 8685718274278120859, guid: be9008c03723bec42ad5572eab8e9952, type: 3}
   animationDuration: 0.25
   collisionLoops: 1
   isBoss: 0
+  textureWidth: 64
+  textureHeight: 76
+  timeSinceLastAttack: 0
 --- !u!58 &8302709314100219333
 CircleCollider2D:
   m_ObjectHideFlags: 0
