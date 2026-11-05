@@ -115,6 +115,7 @@ public class PlayerController : MonoBehaviour
                 animationDirectionMultiplier *= -1;
             }
         }
+
         // Setting current-frame constants
         deltaTime = Time.deltaTime;
         moveAction = moveActionReference.action;
@@ -122,7 +123,6 @@ public class PlayerController : MonoBehaviour
         HandleInputs();
     
         // Move Input Vector
-    
         moveInputVector2 = moveAction != null ? moveAction.ReadValue<Vector2>() : Vector2.zero;
         moveInput = (Vector3)moveInputVector2;
 
