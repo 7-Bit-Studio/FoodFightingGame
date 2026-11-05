@@ -23,6 +23,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float playerAcc = 5f;
     [SerializeField] private float frictionCoefficient = 1.01f;
     [SerializeField] private bool useAcceleration = true;
+
+
+    // PlayerData Values
     [Header("Health Settings")]
     [SerializeField] private int health = 100;
     [SerializeField] private int defense = 0;
@@ -33,9 +36,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool CheatMode = false;
     [SerializeField] private float attackLenience = 0.5f;
     [SerializeField] private float attackCooldown = 0.5f;
-    
-    
-    // PlayerData Values
     private InputAction moveAction;
     public VarTypes.Data GetData() => data;
     private VarTypes.Direction facing;
