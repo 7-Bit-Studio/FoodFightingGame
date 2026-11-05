@@ -6,6 +6,10 @@ namespace Assets.Globals
 {
     public readonly struct Functions
     {
+        public static Vector3 Friction(Vector3 vel, float fricCoef)
+        {
+            return vel * fricCoef;
+        }
         public Sprite[] SliceGrid(Texture2D tex, int cellW, int cellH, float ppu = 100f)
         {
             int cols = tex.width / cellW;

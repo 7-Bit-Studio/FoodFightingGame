@@ -195,55 +195,39 @@ public class PlayerController : MonoBehaviour
             string debugImageName = "Hide-the-pain-Harold-large-meme-8_0";
             transform.Find(debugImageName).gameObject.SetActive(!transform.Find(debugImageName).gameObject.activeSelf);
         }
-        if ((Mouse.current.rightButton.wasPressedThisFrame && !CheatMode) || (CheatMode && Mouse.current.rightButton.isPressed))
+
+        Vector2 MouseInWorldPosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        float MouseDistanceFromPlayer = Vector2.Distance(MouseInWorldPosition, playerPos);
+        if (MouseDistanceFromPlayer <= attackRange)
         {
-            Vector2 MouseInWorldPosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-
-            float minDistanceFromMouse = float.PositiveInfinity;
-            int indexOfMinDistance = -1;
-
-            for (int i = 0; i < livingEnemies.Length; i++)
+            if (Mouse.current.leftButton.isPressed || Mouse.current.rightButton.isPressed)
             {
-                float currDistFromMouse = Vector3.Distance(MouseInWorldPosition, livingEnemies[i].transform.position);
-                if (currDistFromMouse > attackLenience) continue;
-                if (minDistanceFromMouse > currDistFromMouse)
+                float minDistanceFromMouse = float.PositiveInfinity;
+                int indexOfMinDistance = -1;
+                for (int i = 0; i < livingEnemies.Length; i++)
                 {
-                    minDistanceFromMouse = currDistFromMouse;
-                    indexOfMinDistance = i;
+                    float currDistFromMouse = Vector3.Distance(MouseInWorldPosition, livingEnemies[i].transform.position);
+                    if (currDistFromMouse > attackLenience) continue;
+                    if (minDistanceFromMouse > currDistFromMouse)
+                    {
+                        minDistanceFromMouse = currDistFromMouse;
+                        indexOfMinDistance = i;
+                    }
+                }
+
+                if (indexOfMinDistance == -1) return;
+
+                bool isRangedAttack = Mouse.current.leftButton.isPressed && CheatMode || Mouse.current.leftButton.wasPressedThisFrame && !CheatMode;
+                bool isMeleeAttack = Mouse.current.rightButton.isPressed && CheatMode || Mouse.current.rightButton.wasPressedThisFrame && !CheatMode;
+                if (isRangedAttack)
+                {
+                    RangedAttack(livingEnemies[indexOfMinDistance], attackIndex);
+                }
+                if (isMeleeAttack)
+                {
+                    MeleeAttack(livingEnemies[indexOfMinDistance], attackIndex);
                 }
             }
-
-            //Debug.Log($"{mouseDistFromPlayer}");
-
-            if (indexOfMinDistance == -1) return;
-
-            //Debug.Log($"{indexOfMinDistance}");
-            MeleeAttack(livingEnemies[indexOfMinDistance], attackIndex);
-        }
-        if ((Mouse.current.leftButton.wasPressedThisFrame && !CheatMode) || (CheatMode && Mouse.current.leftButton.isPressed))
-        {
-            Vector2 MouseInWorldPosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-
-            float minDistanceFromMouse = float.PositiveInfinity;
-            int indexOfMinDistance = -1;
-
-            for (int i = 0; i < livingEnemies.Length; i++)
-            {
-                float currDistFromMouse = Vector3.Distance(MouseInWorldPosition, livingEnemies[i].transform.position);
-                if (currDistFromMouse > attackLenience) continue;
-                if (minDistanceFromMouse > currDistFromMouse)
-                {
-                    minDistanceFromMouse = currDistFromMouse;
-                    indexOfMinDistance = i;
-                }
-            }
-
-            //Debug.Log($"{mouseDistFromPlayer}");
-
-            if (indexOfMinDistance == -1) return;
-
-            //Debug.Log($"{indexOfMinDistance}");
-            RangedAttack(livingEnemies[indexOfMinDistance], attackIndex);
         }
     }
 
@@ -278,13 +262,13 @@ public class PlayerController : MonoBehaviour
                 facing = VarTypes.Direction.Down;
             }
         }
-        if(Math.Abs(playerVel.x) < Math.Abs(playerVel.y))
+        else
         {
             if (playerVel.y > epsilon)
             {
                 facing = VarTypes.Direction.Up;
             }
-            else if(playerVel.y < -epsilon)
+            else if (playerVel.y < -epsilon)
             {
                 facing = VarTypes.Direction.Down;
             }
@@ -332,24 +316,7 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 currentAcc = playerAcc * moveInput;
     
-        playerVel += deltaTime * currentAcc;
-    
-        if (playerVel.sqrMagnitude > maxSpeed * maxSpeed)
-        {
-            playerVel = playerVel.normalized * maxSpeed;
-        }
-
-        if (moveInput.sqrMagnitude < 0.01)
-        {
-            playerVel = Friction(playerVel, frictionCoefficient);
-        }
-        if(Mathf.Sign(moveInput.x) != Mathf.Sign(playerVel.x))
-        {
-            if(Mathf.Sign(moveInput.y) != Mathf.Sign(playerVel.y))
-            {
-                playerVel = Friction(playerVel, frictionCoefficient);
-            }
-        }
+        playerVel += deltaTime * (currentAcc - Functions.Friction(playerVel, playerAcc / maxSpeed));
     }
     void UpdatePosition()
     {
@@ -364,11 +331,6 @@ public class PlayerController : MonoBehaviour
         transform.SetPositionAndRotation(playerPos, playerTransform.rotation);
     }
 
-    Vector3 Friction(Vector3 vel, float fricCoef)
-    {
-        return vel / fricCoef;
-    }
-
     public void DrawPolygon(int vertexNumber, float radius, Vector3 centerPos, float startWidth, float endWidth)
     {
         lineRenderer.startWidth = startWidth;
@@ -379,8 +341,10 @@ public class PlayerController : MonoBehaviour
 
         for (int i = 0; i < vertexNumber; i++)
         {
-            Matrix4x4 rotationMatrix = new Matrix4x4(new Vector4(Mathf.Cos(angle * i), Mathf.Sin(angle * i), 0, 0),
-                                                     new Vector4(-1 * Mathf.Sin(angle * i), Mathf.Cos(angle * i), 0, 0),
+            float sinAngle = Mathf.Sin(angle * i);
+            float cosAngle = Mathf.Cos(angle * i);
+            Matrix4x4 rotationMatrix = new Matrix4x4(new Vector4(cosAngle, sinAngle, 0, 0),
+                                                     new Vector4(-sinAngle, cosAngle, 0, 0),
                                        new Vector4(0, 0, 1, 0),
                                        new Vector4(0, 0, 0, 1));
             Vector3 initialRelativePosition = new Vector3(0, radius, 0);
@@ -404,30 +368,6 @@ public class PlayerController : MonoBehaviour
         if(health <= 0)
         {
             transform.gameObject.SetActive(false);
-        }
-    }
-
-    public void OnCollision(GameObject @object)
-    {
-        //assuming box collider
-        if (@object.GetComponent<Collider>().GetType() != typeof(BoxCollider2D)) return;
-
-        Collider2D boxCollider2D = @object.GetComponent<Collider2D>();
-        Bounds bounds = boxCollider2D.bounds;
-        float horizontalDisplacement = bounds.extents.x - Math.Abs(playerPos.x - bounds.center.x);
-        float verticalDisplacement = bounds.extents.y - Math.Abs(playerPos.y - bounds.center.y);
-
-        if (horizontalDisplacement > 0) return;
-
-        if (verticalDisplacement > 0) return;
-
-        if (verticalDisplacement < horizontalDisplacement)
-        {
-            playerPos.y += (bounds.center.y - playerPos.y > 0 ? 1 : -1) * (playerPos.y - verticalDisplacement);
-        }
-        else
-        {
-            playerPos.x += (bounds.center.x - playerPos.x > 0 ? 1 : -1) * (playerPos.x - horizontalDisplacement);
         }
     }
 }

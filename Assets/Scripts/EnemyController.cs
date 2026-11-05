@@ -183,7 +183,7 @@ public class EnemyController : MonoBehaviour
             return;
         }
 
-        enemyVel += acceleration * deltaTime * normalizedPlayerDirection;
+        enemyVel += ((acceleration * normalizedPlayerDirection) - Functions.Friction(enemyVel, acceleration/maxSpeed)) * deltaTime;
 
         if (enemyVel.sqrMagnitude > maxSpeed * maxSpeed)
         {
