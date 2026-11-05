@@ -191,10 +191,7 @@ public class EnemyController : MonoBehaviour
             return;
         }
 
-        if(maxSpeed != 0)
-        {
-            enemyVel += ((acceleration * normalizedPlayerDirection) - Functions.Friction(enemyVel, acceleration/maxSpeed)) * deltaTime;
-        }
+        enemyVel += ((acceleration * normalizedPlayerDirection) - Functions.Friction(enemyVel, acceleration/maxSpeed)) * deltaTime;
 
         if (enemyVel.sqrMagnitude > maxSpeed * maxSpeed)
         {
@@ -211,7 +208,6 @@ public class EnemyController : MonoBehaviour
     void UpdatePosition()
     {
         enemyPos += enemyVel * deltaTime;
-        Debug.Log($"Enemy Position: {enemyPos}, Enemy Velocity: {enemyVel}");
 
         for (int i = 0; i < collisionLoops; i++)
         {
