@@ -17,36 +17,32 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class PlayerController : MonoBehaviour
 {
-
     [Header("Movement Settings")]
     [SerializeField] private InputActionReference moveActionReference;
-    [SerializeField] private SpriteAtlas spriteAtlas;
-    [SerializeField] private GameObject playerAttack;
-    [SerializeField] private GameObject GameOverScreen;
+    [SerializeField] private Texture2D playerTexture;
     [SerializeField] private float maxSpeed = 5f;
     [SerializeField] private float playerAcc = 5f;
     [SerializeField] private float frictionCoefficient = 1.01f;
     [SerializeField] private bool useAcceleration = true;
+    [Header("Health Settings")]
+    [SerializeField] private int health = 100;
+    [SerializeField] private int defense = 0;
     [Header("Attack Settings")]
     [SerializeField] private float attackRange = 2.5f;
+    [SerializeField] private GameObject[] RangedAttacks;
+    [SerializeField] private GameObject[] MeleeAttacks;
     [SerializeField] private bool CheatMode = false;
     [SerializeField] private float attackLenience = 0.5f;
     [SerializeField] private float attackCooldown = 0.5f;
     
     
     // PlayerData Values
-    [Header("Health Settings")]
-    [SerializeField] private int health = 100;
-    [SerializeField] private int defense = 0;
-    [SerializeField] private bool canDie = true;
     private InputAction moveAction;
     public VarTypes.Data GetData() => data;
     private VarTypes.Direction facing;
     private VarTypes.Data data;
     private Vector2 moveInputVector2;
     private Vector3 moveInput;
-
-    // PlayerController values
     private Transform playerTransform;
     private Vector3 playerPos;
     private Vector3 playerVel;
@@ -81,7 +77,9 @@ public class PlayerController : MonoBehaviour
         {
             lineRenderer = new GameObject().AddComponent<LineRenderer>();
         }
-    
+
+        playerSprites = functions.SliceGrid(playerTexture, 64, 76);
+
         // Initializing values
         moveInputVector2 = Vector2.zero;
         moveInput = Vector3.zero;
@@ -92,7 +90,6 @@ public class PlayerController : MonoBehaviour
 
         facing = VarTypes.Direction.Down;
 
-        playerSprites = new Sprite[spriteAtlas.spriteCount];
         data.velocity = playerVel;
         data.position = playerPos;
         data.health = health;
@@ -113,6 +110,17 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
+
+        if (Time.time - timeAtLastSpriteUpdate > 0.33f)
+        {
+            timeAtLastSpriteUpdate = Time.time;
+            currentSpriteIndexAdd += animationDirectionMultiplier;
+            if (currentSpriteIndexAdd >= 2 || currentSpriteIndexAdd <= 0)
+            {
+                animationDirectionMultiplier *= -1;
+            }
+        }
+
         // Setting current-frame constants
         deltaTime = Time.deltaTime;
         moveAction = moveActionReference.action;
@@ -120,7 +128,6 @@ public class PlayerController : MonoBehaviour
         HandleInputs();
     
         // Move Input Vector
-    
         moveInputVector2 = moveAction != null ? moveAction.ReadValue<Vector2>() : Vector2.zero;
         moveInput = (Vector3)moveInputVector2;
 
@@ -147,7 +154,7 @@ public class PlayerController : MonoBehaviour
         return livingEnemies;
     }
     
-    void Attack(GameObject enemy)
+    void RangedAttack(GameObject enemy, int attackIndex)
     {
         if (!CheatMode && Time.time - timeAtLastAttack < attackCooldown) return;
 
@@ -212,22 +219,10 @@ public class PlayerController : MonoBehaviour
                 }
 
                 if (indexOfMinDistance == -1) return;
-                if (enemyDistances[indexOfMinDistance] > attackRange) return;
 
-                //Debug.Log($"{indexOfMinDistance}");
-                Attack(livingEnemies[indexOfMinDistance]);
-            }
-        }
-        else
-        {
-            if (Mouse.current.leftButton.isPressed)
-            {
-                Vector2 MouseInWorldPosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-
-                float minDistanceFromMouse = float.PositiveInfinity;
-                float[] distFromMouse = new float[livingEnemies.Length];
-
-                for (int i = 0; i < livingEnemies.Length; i++)
+                bool isRangedAttack = Mouse.current.leftButton.isPressed && CheatMode || Mouse.current.leftButton.wasPressedThisFrame && !CheatMode;
+                bool isMeleeAttack = Mouse.current.rightButton.isPressed && CheatMode || Mouse.current.rightButton.wasPressedThisFrame && !CheatMode;
+                if (isRangedAttack)
                 {
                     RangedAttack(livingEnemies[indexOfMinDistance], attackIndex);
                 }
@@ -235,17 +230,6 @@ public class PlayerController : MonoBehaviour
                 {
                     MeleeAttack(livingEnemies[indexOfMinDistance], attackIndex);
                 }
-
-                //Debug.Log($"{mouseDistFromPlayer}");
-                int? indexOfMinDistanceNullable = Array.IndexOf(distFromMouse, minDistanceFromMouse);
-                int indexOfMinDistance = indexOfMinDistanceNullable == null ? -1 : (int) indexOfMinDistanceNullable;
-
-                if (indexOfMinDistance == -1) return;
-
-                if (enemyDistances[indexOfMinDistance] > attackRange) return;
-
-                //Debug.Log($"{indexOfMinDistance}");
-                Attack(livingEnemies[indexOfMinDistance]);
             }
         }
     }
@@ -264,20 +248,21 @@ public class PlayerController : MonoBehaviour
         UpdatePosition();
         data.velocity = playerVel;
         data.position = playerPos;
+        float epsilon = 0.001f;
 
         if (Math.Abs(playerVel.y) < Math.Abs(playerVel.x))
         {
             if (playerVel.x > epsilon)
             {
-                facing = VarTypes.Direction.Left;
-            }
-            else if (playerVel.x < -epsilon)
-            {
                 facing = VarTypes.Direction.Right;
+            }
+            else if(playerVel.x < -epsilon)
+            {
+                facing = VarTypes.Direction.Left;
             }
             else
             {
-                facing = VarTypes.Direction.Right;
+                facing = VarTypes.Direction.Down;
             }
         }
         else
@@ -319,10 +304,10 @@ public class PlayerController : MonoBehaviour
         {
             currentSprite = playerSprites[0 + currentSpriteIndexAdd];
         }
-        //playerTransform.GetComponent<SpriteRenderer>().sprite = currentSprite;
+        playerTransform.GetComponent<SpriteRenderer>().sprite = currentSprite;
     }
     
-    // Updateing the player's velocity
+    // Updating the player's velocity
     void VelocityMovement()
     {
         // PlayerData in metres per second
