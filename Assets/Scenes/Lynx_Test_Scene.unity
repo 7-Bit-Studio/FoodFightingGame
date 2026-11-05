@@ -763,12 +763,15 @@ MonoBehaviour:
   health: 100
   defense: 0
   acceleration: 15
+  damage: 10
+  attackDelay: 100
   theDrop: {fileID: 0}
   animationDuration: 0.25
   collisionLoops: 1
   isBoss: 0
   textureWidth: 64
   textureHeight: 64
+  timeSinceLastAttack: 0
 --- !u!58 &402682807
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -851,6 +854,7 @@ MonoBehaviour:
   FPSTextElement: {fileID: 390711398}
   SpeedElement: {fileID: 517474262}
   PositionElement: {fileID: 366054922}
+  debugLogging: 0
 --- !u!114 &430895892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -865,12 +869,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Movement
   moveActionReference: {fileID: -1680190386980627800, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   playerTexture: {fileID: 2800000, guid: af3b3368c94950d40b61a4fe601b13ff, type: 3}
+  GameOverScreen: {fileID: 2000466494}
   maxSpeed: 5
   playerAcc: 25
-  frictionCoefficient: 1.05
   useAcceleration: 1
-  health: 100
-  defense: 0
   attackRange: 3
   RangedAttacks:
   - {fileID: 1450978514}
@@ -879,6 +881,9 @@ MonoBehaviour:
   CheatMode: 1
   attackLenience: 0.5
   attackCooldown: 0.2
+  health: 100
+  defense: 0
+  canDie: 0
 --- !u!58 &430895893
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1190,12 +1195,15 @@ MonoBehaviour:
   health: 100
   defense: 0
   acceleration: 15
+  damage: 10
+  attackDelay: 100
   theDrop: {fileID: 0}
   animationDuration: 0.25
   collisionLoops: 1
   isBoss: 0
   textureWidth: 64
   textureHeight: 64
+  timeSinceLastAttack: 0
 --- !u!212 &442814324
 SpriteRenderer:
   serializedVersion: 3
@@ -1343,12 +1351,15 @@ MonoBehaviour:
   health: 100
   defense: 0
   acceleration: 15
+  damage: 10
+  attackDelay: 100
   theDrop: {fileID: 0}
   animationDuration: 0.25
   collisionLoops: 1
   isBoss: 0
   textureWidth: 64
   textureHeight: 64
+  timeSinceLastAttack: 0
 --- !u!212 &500168765
 SpriteRenderer:
   serializedVersion: 3
@@ -1883,12 +1894,15 @@ MonoBehaviour:
   health: 100
   defense: 0
   acceleration: 15
+  damage: 10
+  attackDelay: 100
   theDrop: {fileID: 0}
   animationDuration: 0.25
   collisionLoops: 1
   isBoss: 0
   textureWidth: 64
   textureHeight: 64
+  timeSinceLastAttack: 0
 --- !u!58 &632861096
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2168,12 +2182,15 @@ MonoBehaviour:
   health: 100
   defense: 0
   acceleration: 15
+  damage: 10
+  attackDelay: 100
   theDrop: {fileID: 0}
   animationDuration: 0.25
   collisionLoops: 1
   isBoss: 0
   textureWidth: 128
   textureHeight: 128
+  timeSinceLastAttack: 0
 --- !u!212 &955310670
 SpriteRenderer:
   serializedVersion: 3
@@ -2285,12 +2302,15 @@ MonoBehaviour:
   health: 100
   defense: 0
   acceleration: 15
+  damage: 10
+  attackDelay: 100
   theDrop: {fileID: 0}
   animationDuration: 0.25
   collisionLoops: 1
   isBoss: 0
   textureWidth: 64
   textureHeight: 64
+  timeSinceLastAttack: 0
 --- !u!212 &1159635288
 SpriteRenderer:
   serializedVersion: 3
@@ -2544,6 +2564,7 @@ MonoBehaviour:
   damage: 10
   speed: 20
   maxDistance: 10
+  doesStun: 1
 --- !u!1 &1580270606
 GameObject:
   m_ObjectHideFlags: 0
@@ -2653,6 +2674,7 @@ MonoBehaviour:
   swingSpeed: 119.4
   range: 5
   swingAngle: 45
+  doesStun: 0
 --- !u!1 &1582620831
 GameObject:
   m_ObjectHideFlags: 0
@@ -2936,17 +2958,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30b39334202e93e418ab9ead0d358a79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
-  maxSpeed: 0
+  maxSpeed: 5
   enemyTexture: {fileID: 2800000, guid: c394763c44340034bac61b4bf316566f, type: 3}
   health: 400
   defense: 0
   acceleration: 15
+  damage: 10
+  attackDelay: 100
   theDrop: {fileID: 0}
   animationDuration: 0.25
   collisionLoops: 1
   isBoss: 1
   textureWidth: 128
   textureHeight: 128
+  timeSinceLastAttack: 0
 --- !u!212 &1932830493
 SpriteRenderer:
   serializedVersion: 3
@@ -3055,6 +3080,37 @@ Transform:
   - {fileID: 804254126}
   m_Father: {fileID: 1797274327}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2000466494
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2000466495}
+  m_Layer: 0
+  m_Name: GAME OVER I GUESS
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2000466495
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2000466494}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.1445, y: -0.03866, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2022408131
 GameObject:
   m_ObjectHideFlags: 0
@@ -3127,12 +3183,15 @@ MonoBehaviour:
   health: 100
   defense: 0
   acceleration: 15
+  damage: 10
+  attackDelay: 100
   theDrop: {fileID: 0}
   animationDuration: 0.25
   collisionLoops: 1
   isBoss: 0
   textureWidth: 64
   textureHeight: 64
+  timeSinceLastAttack: 0
 --- !u!212 &2022408134
 SpriteRenderer:
   serializedVersion: 3
@@ -3226,3 +3285,4 @@ SceneRoots:
   - {fileID: 500168766}
   - {fileID: 2022408135}
   - {fileID: 442814325}
+  - {fileID: 2000466495}

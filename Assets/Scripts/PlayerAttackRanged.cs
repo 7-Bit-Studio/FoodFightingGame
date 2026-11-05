@@ -6,6 +6,7 @@ public class PlayerAttackRanged : MonoBehaviour
     [SerializeField] private int damage = 10;
     [SerializeField] private float speed = 20;
     [SerializeField] public float maxDistance = 10;
+    [SerializeField] private bool doesStun = true;
     private Vector3 AttackVel;
     private Transform AttackPos;
     private float deltaTime;
@@ -37,7 +38,7 @@ public class PlayerAttackRanged : MonoBehaviour
 
         if (Vector3.Distance(AttackPos.position, currentTarget.transform.position) < 0.5f)
         {
-            currentTarget.GetComponent<EnemyController>().OnHit(damage);
+            currentTarget.GetComponent<EnemyController>().OnHit(damage, doesStun);
             Kill();
         }
     }

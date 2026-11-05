@@ -21,13 +21,9 @@ public class PlayerController : MonoBehaviour
     [Header("Movement Settings")]
     [SerializeField] private InputActionReference moveActionReference;
     [SerializeField] private Texture2D playerTexture;
-    
-    [SerializeField] private SpriteAtlas spriteAtlas;
-    [SerializeField] private GameObject playerAttack;
     [SerializeField] private GameObject GameOverScreen;
     [SerializeField] private float maxSpeed = 5f;
     [SerializeField] private float playerAcc = 5f;
-    [SerializeField] private float frictionCoefficient = 1.01f;
     [SerializeField] private bool useAcceleration = true;
     [Header("Attack Settings")]
     [SerializeField] private float attackRange = 2.5f;
@@ -111,8 +107,7 @@ public class PlayerController : MonoBehaviour
         GameOverScreen.transform.position = playerPos;
 
         transform.Find("Main Camera").position = new Vector3(0, 0, -10);
-        //GetComponent<SpriteRenderer>().sprite = currentSprite;
-        Debug.Log(playerSprites.Length);
+        GetComponent<SpriteRenderer>().sprite = currentSprite;
     }
 
     // Update is called once per frame
@@ -138,6 +133,7 @@ public class PlayerController : MonoBehaviour
         // Move Input Vector
         moveInputVector2 = moveAction != null ? moveAction.ReadValue<Vector2>() : Vector2.zero;
         moveInput = (Vector3)moveInputVector2;
+        
 
         UpdateMovement();
 
