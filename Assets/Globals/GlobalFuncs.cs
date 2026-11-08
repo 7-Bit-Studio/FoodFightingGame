@@ -6,6 +6,10 @@ namespace Assets.Globals
 {
     public readonly struct Functions
     {
+        public static Vector3 Friction(Vector3 vel, float fricCoef)
+        {
+            return vel * fricCoef;
+        }
         public Sprite[] SliceGrid(Texture2D tex, int cellW, int cellH, float ppu = 100f)
         {
             int cols = tex.width / cellW;
@@ -20,6 +24,36 @@ namespace Assets.Globals
                 }
             }
             return result;
+        }
+
+        public static float DotProduct(Vector3 a, Vector3 b)
+        {
+            return a.x * b.x + a.y * b.y + a.z * b.z;
+        }
+
+        public static float DotProduct(Vector2 a, Vector2 b)
+        {
+            return a.x * b.x + a.y * b.y;
+        }
+
+        public static Vector3 CrossProduct(Vector3 a, Vector3 b)
+        {
+            return new Vector3(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x);
+        }
+
+        public static float AngleBetween(Vector3 a, Vector3 b)
+        {
+            float dot = DotProduct(a, b);
+            float magA = a.magnitude;
+            float magB = b.magnitude;
+            return Mathf.Acos(dot / (magA * magB)) * Mathf.Rad2Deg;
+        }
+
+        public static Vector3 RotationVector(Vector3 from, Vector3 to)
+        {
+            float angle = AngleBetween(from, to);
+            Vector3 axis = CrossProduct(from, to).normalized;
+            return axis * angle;
         }
 
         /// <summary>
@@ -137,7 +171,7 @@ namespace Assets.Globals
             Scene scene;
             GameObject[] gameObjects;
 
-            GameObject returnObject = new();
+            GameObject returnObject = null;
 
             scene = SceneManager.GetActiveScene();
             gameObjects = scene.GetRootGameObjects();
@@ -150,9 +184,10 @@ namespace Assets.Globals
                 }
             }
 
-            if (returnObject.name != SiblingName)
+            if (returnObject == null)
             {
                 Debug.LogError($"No sibling of name {SiblingName} was found");
+                return null;
             }
 
             return returnObject;

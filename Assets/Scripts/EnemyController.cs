@@ -6,6 +6,7 @@ using UnityEngine.U2D;
 
 // Globals
 using Assets.Globals;
+using Unity.VisualScripting;
 
 
 
@@ -17,6 +18,8 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private int health = 100;
     [SerializeField] private int defense = 0;
     [SerializeField] private float acceleration = 0.2f;
+    [SerializeField] private int damage = 10;
+    [SerializeField] private int attackDelay = 100;
     [SerializeField] private GameObject theDrop;
     /// <summary>
     /// How many seconds for each animation frame to last
@@ -26,6 +29,8 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private bool isBoss = false;
     [SerializeField] private int textureWidth = 64;
     [SerializeField] private int textureHeight = 76;
+
+    [SerializeField] private int timeSinceLastAttack = 0;
 
     // EnemyController values
     private Transform enemyTransform;
@@ -52,13 +57,16 @@ public class EnemyController : MonoBehaviour
     private bool isStunned;
     private bool wasJustHit;
     private float hitTime;
-    private GameObject healthBar;
+    //private GameObject healthBar;
     private Transform healthValueTransform;
     private int startHealth;
+
+
 
     private bool isAlive;
     private readonly Functions functions = new();
     private readonly SpriteFilter spriteFilter = new();
+    private bool hasDrop = false;
 
     public VarTypes.Data GetData() => data;
     void Start()
@@ -89,14 +97,20 @@ public class EnemyController : MonoBehaviour
 
         if (isBoss)
         {
-            healthBar = transform.Find("HealthBarBoss").gameObject;
-            healthValueTransform = healthBar.transform.Find("HealthBarInner");
+            //healthBar = transform.Find("HealthBarBoss").gameObject;
+            //healthValueTransform = healthBar.transform.Find("HealthBarInner");
+        }
+
+        if(theDrop != null)
+        {
+            hasDrop = true;
         }
     }
 
     // Update is called once per frame
     void Update()
     {
+        timeSinceLastAttack++;
         if (!transform.gameObject.activeSelf) return;
         playerData = movement.GetData();
         
@@ -106,7 +120,7 @@ public class EnemyController : MonoBehaviour
 
         if (Time.time - timeAtLastSpriteUpdate > animationDuration)
         {
-            currentSprite = enemySprites[currentSpriteIndex];
+            currentSprite = enemySprites[currentSpriteIndex];   
             timeAtLastSpriteUpdate = Time.time;
             GetComponent<SpriteRenderer>().sprite = currentSprite;
             currentSpriteIndex += 1;
@@ -114,15 +128,15 @@ public class EnemyController : MonoBehaviour
         }
 
 
-        if (isBoss)
-        {
+        //if (isBoss)
+        //{
             // if anyone knows of a better way to do this, please let me know
             // no, setting localScale.x to a number doesn't work
             // same with localPosition
-            healthValueTransform.localScale = new Vector3(health * 0.9f / startHealth, healthValueTransform.localScale.y, healthValueTransform.localScale.z);
-            healthValueTransform.localPosition = new Vector3(( 0.9f * ((float)health / startHealth) - 0.9f)/2f, healthValueTransform.localPosition.y, healthValueTransform.localPosition.z);
-        }
-
+        //    healthValueTransform.localScale = new Vector3(health * 0.9f / startHealth, healthValueTransform.localScale.y, healthValueTransform.localScale.z);
+        //    healthValueTransform.localPosition = new Vector3(( 0.9f * ((float)health / startHealth) - 0.9f)/2f, healthValueTransform.localPosition.y, healthValueTransform.localPosition.z);
+        //}
+        
         UpdateMovement();
     }
 
@@ -144,7 +158,10 @@ public class EnemyController : MonoBehaviour
             enemyTransform.gameObject.SetActive(false);
             Debug.Log($"{transform.name} has died!");
             //Drop the relevant item for the enemy
-            theDrop.GetComponent<EnemyDrop>().DropTheShit(transform.position, transform.rotation);
+            if (hasDrop)
+            {
+                theDrop.GetComponent<EnemyDrop>().DropTheShit(transform.position, transform.rotation);
+            }
             isAlive = false;
 
         }
@@ -174,7 +191,7 @@ public class EnemyController : MonoBehaviour
             return;
         }
 
-        enemyVel += acceleration * deltaTime * normalizedPlayerDirection;
+        enemyVel += ((acceleration * normalizedPlayerDirection) - Functions.Friction(enemyVel, acceleration/maxSpeed)) * deltaTime;
 
         if (enemyVel.sqrMagnitude > maxSpeed * maxSpeed)
         {
@@ -266,7 +283,17 @@ public class EnemyController : MonoBehaviour
             // normalizedPlayerDirection is negative to make vector point away from player
             enemyPos += -normalizedPlayerDirection * ((colliderRad + playerColliderRad) - playerDirection.magnitude);
             enemyVel += -normalizedPlayerDirection * ((colliderRad + playerColliderRad) - playerDirection.magnitude);
+
             Debug.Log("Player Collision!");
+
+            PlayerController pController = player.GetComponent<PlayerController>();
+
+            if (timeSinceLastAttack > attackDelay)
+            {
+
+            pController.OnHit(damage);
+                timeSinceLastAttack = 0;
+            }
         }
 
         // leaving enemyTransform.position to keep function looking balanced

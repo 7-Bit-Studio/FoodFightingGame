@@ -1,0 +1,678 @@
+fileFormatVersion: 2
+guid: d39647084a29e4a439bcfe24be059e29
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5120614580741453759
+    second: Weapon cosmetics_0
+  - first:
+      213: 1376396854237841432
+    second: Weapon cosmetics_1
+  - first:
+      213: 7798512459242472846
+    second: Weapon cosmetics_2
+  - first:
+      213: 4480336479406336352
+    second: Weapon cosmetics_3
+  - first:
+      213: -5789644733138057957
+    second: Weapon cosmetics_4
+  - first:
+      213: -4857711421996651058
+    second: Weapon cosmetics_5
+  - first:
+      213: 4342491046392647032
+    second: Weapon cosmetics_6
+  - first:
+      213: 4193353586202421205
+    second: Weapon cosmetics_7
+  - first:
+      213: 5865768560979007682
+    second: Weapon cosmetics_8
+  - first:
+      213: -110128741272574744
+    second: Weapon cosmetics_9
+  - first:
+      213: 9117823984978315136
+    second: Weapon cosmetics_10
+  - first:
+      213: 3382084181382206420
+    second: Weapon cosmetics_11
+  - first:
+      213: 1196751376492305253
+    second: Weapon cosmetics_12
+  - first:
+      213: 1123335626518356870
+    second: Weapon cosmetics_13
+  - first:
+      213: -5325592900438362190
+    second: Weapon cosmetics_14
+  - first:
+      213: -1107878707117324557
+    second: Weapon cosmetics_15
+  - first:
+      213: 7801549556305557286
+    second: Weapon cosmetics_16
+  - first:
+      213: 704618142164144670
+    second: Weapon cosmetics_17
+  - first:
+      213: 5880861658419150429
+    second: Weapon cosmetics_18
+  - first:
+      213: 2652079639883620268
+    second: Weapon cosmetics_19
+  - first:
+      213: 6945677099412486530
+    second: Weapon cosmetics_20
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Weapon cosmetics_0
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 264
+        width: 18
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb7b7ccb4d3101740800000000000000
+      internalID: 5120614580741453759
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon cosmetics_1
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 264
+        width: 18
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 818cfce75a1f91310800000000000000
+      internalID: 1376396854237841432
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon cosmetics_2
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 264
+        width: 18
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e850b9d63c1e93c60800000000000000
+      internalID: 7798512459242472846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon cosmetics_3
+      rect:
+        serializedVersion: 2
+        x: 215
+        y: 264
+        width: 18
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0692d394a4a5d2e30800000000000000
+      internalID: 4480336479406336352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon cosmetics_4
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 200
+        width: 18
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b1548914acc07afa0800000000000000
+      internalID: -5789644733138057957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon cosmetics_5
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 200
+        width: 18
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ecd288ee231f59cb0800000000000000
+      internalID: -4857711421996651058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon cosmetics_6
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 215
+        width: 46
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 87d4c846990a34c30800000000000000
+      internalID: 4342491046392647032
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon cosmetics_7
+      rect:
+        serializedVersion: 2
+        x: 202
+        y: 215
+        width: 46
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d7a43b8ed8c13a30800000000000000
+      internalID: 4193353586202421205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon cosmetics_8
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 151
+        width: 46
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c8dec39d65676150800000000000000
+      internalID: 5865768560979007682
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon cosmetics_9
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 147
+        width: 60
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e423e84e7eb87ef0800000000000000
+      internalID: -110128741272574744
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon cosmetics_10
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 151
+        width: 56
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0874b252b94098e70800000000000000
+      internalID: 9117823984978315136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon cosmetics_11
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 145
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d311c7d4a39fee20800000000000000
+      internalID: 3382084181382206420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon cosmetics_12
+      rect:
+        serializedVersion: 2
+        x: 183
+        y: 151
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56b98484907bb9010800000000000000
+      internalID: 1196751376492305253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon cosmetics_13
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 147
+        width: 60
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 683ea26fcc3e69f00800000000000000
+      internalID: 1123335626518356870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon cosmetics_14
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 87
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b777072971b716b0800000000000000
+      internalID: -5325592900438362190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon cosmetics_15
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 87
+        width: 56
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f68d088f2600a0f0800000000000000
+      internalID: -1107878707117324557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon cosmetics_16
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 91
+        width: 24
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 627f231bcfba44c60800000000000000
+      internalID: 7801549556305557286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon cosmetics_17
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 84
+        width: 10
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e125df1977e47c900800000000000000
+      internalID: 704618142164144670
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon cosmetics_18
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 91
+        width: 24
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d5eb94b25840d9150800000000000000
+      internalID: 5880861658419150429
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon cosmetics_19
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 81
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: caf1f4391641ec420800000000000000
+      internalID: 2652079639883620268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapon cosmetics_20
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 20
+        width: 10
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 289fb0ba580046060800000000000000
+      internalID: 6945677099412486530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Weapon cosmetics_0: 5120614580741453759
+      Weapon cosmetics_1: 1376396854237841432
+      Weapon cosmetics_10: 9117823984978315136
+      Weapon cosmetics_11: 3382084181382206420
+      Weapon cosmetics_12: 1196751376492305253
+      Weapon cosmetics_13: 1123335626518356870
+      Weapon cosmetics_14: -5325592900438362190
+      Weapon cosmetics_15: -1107878707117324557
+      Weapon cosmetics_16: 7801549556305557286
+      Weapon cosmetics_17: 704618142164144670
+      Weapon cosmetics_18: 5880861658419150429
+      Weapon cosmetics_19: 2652079639883620268
+      Weapon cosmetics_2: 7798512459242472846
+      Weapon cosmetics_20: 6945677099412486530
+      Weapon cosmetics_3: 4480336479406336352
+      Weapon cosmetics_4: -5789644733138057957
+      Weapon cosmetics_5: -4857711421996651058
+      Weapon cosmetics_6: 4342491046392647032
+      Weapon cosmetics_7: 4193353586202421205
+      Weapon cosmetics_8: 5865768560979007682
+      Weapon cosmetics_9: -110128741272574744
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
