@@ -64,6 +64,7 @@ public class PlayerController : MonoBehaviour
     private Sprite currentSprite;
     private int currentSpriteIndexAdd;
     private float timeAtLastSpriteUpdate;
+    private float timeAtLastHit;
     private int attackIndex = -1;
     void Awake()
     {
@@ -370,10 +371,13 @@ public class PlayerController : MonoBehaviour
         dealtDamage = Math.Max(0, dealtDamage);
 
         health -= dealtDamage;
+        data.health = health;
+        timeAtLastHit = Time.time;
 
-        if(health <= 0 && canDie)
+        Debug.Log($"Player took {dealtDamage} damage. Health is now {health}. Time since last hit: {Time.time - timeAtLastHit}");
+
+        if (health <= 0 && canDie)
         {
-            
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }

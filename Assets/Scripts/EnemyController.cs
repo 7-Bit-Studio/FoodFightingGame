@@ -17,7 +17,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private int defense = 0;
     [SerializeField] private float acceleration = 0.2f;
     [SerializeField] private int damage = 10;
-    [SerializeField] private int attackDelay = 100;
+    [SerializeField] private float attackDelay = 100;
     [SerializeField] private float PlayerDetectionRadius = 10f;
     [SerializeField] private int collisionLoops = 1;
     [SerializeField] private GameObject theDrop;
@@ -86,6 +86,7 @@ public class EnemyController : MonoBehaviour
         enemySprites = funcInst.SliceGrid(enemyTexture, textureWidth, textureHeight);
         enemySprites = spriteFilter.RemoveEmpty(enemyTexture, enemySprites);
         timeAtLastSpriteUpdate = Time.time;
+        timeAtLastAttack = Time.time;
         currentSpriteIndex = 0;
 
         startHealth = health;
@@ -143,7 +144,7 @@ public class EnemyController : MonoBehaviour
             healthValueTransform.localPosition = new Vector3(( 0.9f * ((float)health / startHealth) - 0.9f)/2f, healthValueTransform.localPosition.y, healthValueTransform.localPosition.z);
         }
         
-        UpdateplayerController();
+        UpdateMovement();
     }
 
     public void OnHit(int damage, bool shouldStun)
@@ -173,7 +174,7 @@ public class EnemyController : MonoBehaviour
 
         }
     }   
-    void UpdateplayerController()
+    void UpdateMovement()
     {
         if (wasJustHit)
         {
@@ -302,9 +303,12 @@ public class EnemyController : MonoBehaviour
         float colliderRad = GetComponent<CircleCollider2D>().radius;
 
         float playerColliderRad = player.GetComponent<CircleCollider2D>().radius;
+        playerDirection = player.GetComponent<PlayerController>().GetData().position - transform.position;
 
         if (playerDirection.magnitude < colliderRad + playerColliderRad)
         {
+            Debug.Log($"{playerDirection}");
+            Debug.Log($"Player Distance: {playerDirection.magnitude}, Player Collider Radius: {playerColliderRad}, Enemy Collider Radius: {colliderRad}, Total Collider Radius: {colliderRad + playerColliderRad}");
             // normalizedPlayerDirection is negative to make vector point away from player
             enemyPos += -normalizedPlayerDirection * ((colliderRad + playerColliderRad) - playerDirection.magnitude);
             enemyVel += -normalizedPlayerDirection * ((colliderRad + playerColliderRad) - playerDirection.magnitude);
@@ -313,10 +317,9 @@ public class EnemyController : MonoBehaviour
 
             if (Time.time - timeAtLastAttack > attackDelay)
             {
-                playerController.OnHit(damage);
                 timeAtLastAttack = Time.time;
+                playerController.OnHit(damage);
             }
-            funcInst.GetSiblingGameObject("Player").GetComponent<PlayerController>().OnHit(damage);
         }
 
         // leaving enemyTransform.position to keep function looking balanced
