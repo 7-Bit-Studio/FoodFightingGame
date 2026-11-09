@@ -45,12 +45,9 @@ public class UIText : MonoBehaviour
     private bool showDebugInfo;
     //private bool showWASDPrompt;
     //private bool wPressed;
-   // private bool aPressed;
+    //private bool aPressed;
     //private bool sPressed;
     //private bool dPressed;
-
-
-    private Transform abovePlayer;
 
     void Loginit_()
     {
@@ -147,7 +144,7 @@ public class UIText : MonoBehaviour
             ScreenInit();
         }
 
-        if (Keyboard.current.altKey.wasReleasedThisFrame)
+        if (Keyboard.current.altKey.wasPressedThisFrame)
         {
             showDebugInfo = !showDebugInfo;
         }
