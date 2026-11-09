@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviour
 
         if(GameOverScreen == null)
         {
-            Debug.LogError("GameOverScreen is not assigned in the inspector.");
+            Debug.LogWarning("GameOverScreen is not assigned in the inspector.");
             GameOverScreen = new GameObject("GameOverScreen");
             GameOverScreen.AddComponent<GameOver>();
             GameOverScreen.SetActive(false);
@@ -114,7 +114,7 @@ public class PlayerController : MonoBehaviour
         GameOverScreen.gameObject.SetActive(false);
         GameOverScreen.transform.position = playerPos;
 
-        transform.Find("Main Camera").position = transform.position + new Vector3(0, 0, -10);
+        transform.Find("Main Camera").position = playerPos + new Vector3(0, 0, -10);
         GetComponent<SpriteRenderer>().sprite = currentSprite;
     }
 

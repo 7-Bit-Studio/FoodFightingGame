@@ -743,6 +743,34 @@ PrefabInstance:
       propertyPath: 'RangedAttacks.Array.data[0]'
       value: 
       objectReference: {fileID: 692459079}
+    - target: {fileID: 6144490647706491528, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6144490647706491528, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7425719652978270075, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
+      propertyPath: m_TargetDisplay
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7425719652978270075, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
+      propertyPath: orthographic size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7425719652978270075, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
+      propertyPath: m_AllowDynamicResolution
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7425719652978270075, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
+      propertyPath: m_NormalizedViewPortRect.width
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7425719652978270075, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
+      propertyPath: m_NormalizedViewPortRect.height
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8244672825021101286, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
       propertyPath: m_Name
       value: Player
@@ -750,6 +778,22 @@ PrefabInstance:
     - target: {fileID: 8244672825021101286, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8389231791685944300, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
+      propertyPath: m_RendererIndex
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8389231791685944300, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
+      propertyPath: m_AllowXRRendering
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8389231791685944300, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
+      propertyPath: m_VolumeLayerMask.m_Bits
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8389231791685944300, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
+      propertyPath: m_RequiresOpaqueTextureOption
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8831837833102331978, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
       propertyPath: m_LocalPosition.x

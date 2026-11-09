@@ -1704,6 +1704,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4116654305359664158, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 322
+      objectReference: {fileID: 0}
     - target: {fileID: 4653339814167236600, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
       propertyPath: GameOverScreen
       value: 
@@ -1716,9 +1720,45 @@ PrefabInstance:
       propertyPath: 'RangedAttacks.Array.data[0]'
       value: 
       objectReference: {fileID: 1450978514}
+    - target: {fileID: 6144490647706491528, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6144490647706491528, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6144490647706491528, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6144490647706491528, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6144490647706491528, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6144490647706491528, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7425719652978270075, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
+      propertyPath: m_TargetDisplay
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8244672825021101286, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 8389231791685944300, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
+      propertyPath: m_RendererIndex
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8389231791685944300, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
+      propertyPath: m_AllowXRRendering
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8831837833102331978, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
       propertyPath: m_LocalPosition.x

@@ -78,7 +78,7 @@ public class UIText : MonoBehaviour
         float margin = 0.05f;
         // -screenWidth/2 and screenHeight/2 to align with the top-left corner
         // 0.95 for a 5% padding margin
-        TopLeftCorner.localPosition = new Vector3(-(screenWidth / 2) * (1 - margin), (1 - margin) * screenHeight / 2);
+        TopLeftCorner.localPosition = new Vector3(-(screenWidth / 2) * (1 - margin), ((1 - margin) * screenHeight/2) + screenHeight/2);
         //abovePlayer.localPosition = new Vector3(-(screenWidth / 2) * (1 - margin), (1 - margin) * screenHeight / 2);
     }
 
