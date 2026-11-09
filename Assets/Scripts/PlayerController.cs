@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour
     private Sprite currentSprite;
     private int currentSpriteIndexAdd;
     private float timeAtLastSpriteUpdate;
-    private int attackIndex;
+    private int attackIndex = -1;
     void Awake()
     {
         // Preliminary checks
@@ -80,6 +80,14 @@ public class PlayerController : MonoBehaviour
         if(lineRenderer == null)
         {
             lineRenderer = new GameObject().AddComponent<LineRenderer>();
+        }
+
+        if(GameOverScreen == null)
+        {
+            Debug.LogError("GameOverScreen is not assigned in the inspector.");
+            GameOverScreen = new GameObject("GameOverScreen");
+            GameOverScreen.AddComponent<GameOver>();
+            GameOverScreen.SetActive(false);
         }
 
         playerSprites = functions.SliceGrid(playerTexture, 64, 76);
@@ -106,7 +114,7 @@ public class PlayerController : MonoBehaviour
         GameOverScreen.gameObject.SetActive(false);
         GameOverScreen.transform.position = playerPos;
 
-        transform.Find("Main Camera").position = new Vector3(0, 0, -10);
+        transform.Find("Main Camera").position = transform.position + new Vector3(0, 0, -10);
         GetComponent<SpriteRenderer>().sprite = currentSprite;
     }
 
@@ -185,11 +193,11 @@ public class PlayerController : MonoBehaviour
         timeAtLastAttack = Time.time;
         GameObject playerAttack = new();
         playerAttack.AddComponent<PlayerAttackMelee>();
-        playerAttack.GetComponent<PlayerAttackMelee>().swingSpeed = MeleeAttacks[0].GetComponent<PlayerAttackMelee>().swingSpeed;
-        playerAttack.GetComponent<PlayerAttackMelee>().swingAngle = MeleeAttacks[0].GetComponent<PlayerAttackMelee>().swingAngle;
+        playerAttack.GetComponent<PlayerAttackMelee>().swingSpeed = MeleeAttacks[attackIndex].GetComponent<PlayerAttackMelee>().swingSpeed;
+        playerAttack.GetComponent<PlayerAttackMelee>().swingAngle = MeleeAttacks[attackIndex].GetComponent<PlayerAttackMelee>().swingAngle;
         playerAttack.AddComponent<SpriteRenderer>();
-        playerAttack.GetComponent<SpriteRenderer>().sprite = MeleeAttacks[0].GetComponent<SpriteRenderer>().sprite;
-        playerAttack.transform.localScale = MeleeAttacks[0].transform.localScale;
+        playerAttack.GetComponent<SpriteRenderer>().sprite = MeleeAttacks[attackIndex].GetComponent<SpriteRenderer>().sprite;
+        playerAttack.transform.localScale = MeleeAttacks[attackIndex].transform.localScale;
         playerAttack.GetComponent<PlayerAttackMelee>().OnAttack(enemy, playerPos);
         //playerAttack.SetActive(true);
         //enemy.GetComponent<EnemyController>().OnHit(damage);
@@ -211,6 +219,10 @@ public class PlayerController : MonoBehaviour
         {
             if (Mouse.current.leftButton.isPressed || Mouse.current.rightButton.isPressed)
             {
+                if(attackIndex == -1)
+                {
+                    attackIndex = 0;
+                }
                 float minDistanceFromMouse = float.PositiveInfinity;
                 int indexOfMinDistance = -1;
                 for (int i = 0; i < livingEnemies.Length; i++)

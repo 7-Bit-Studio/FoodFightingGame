@@ -74,7 +74,7 @@ public class UIText : MonoBehaviour
     {
         screenWidth = Screen.width;
         screenHeight = Screen.height;
-        TopLeftCorner = GetComponent<Transform>().Find("UI").GetChild(0).GetChild(0).GetChild(0);
+        TopLeftCorner = GetComponent<Transform>();
         float margin = 0.05f;
         // -screenWidth/2 and screenHeight/2 to align with the top-left corner
         // 0.95 for a 5% padding margin

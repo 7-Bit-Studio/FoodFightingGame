@@ -199,7 +199,7 @@ public class EnemyController : MonoBehaviour
 
         if(maxSpeed == 0)
         {
-            Debug.LogWarning("Max speed is set to 0. Enemy will not move.");
+            Debug.LogWarning($"{transform.name}: Max speed is set to 0. Enemy will not move.");
             enemyVel = Vector3.zero;
             return;
         }
