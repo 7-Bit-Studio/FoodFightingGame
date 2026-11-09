@@ -15,10 +15,13 @@ public class EnemyDrop : MonoBehaviour
     }
 
     //The code to spawn the item in the world
-    public void DropTheShit(Vector3 pos, Quaternion rotation)
+    public void DropTheShit(Vector3 pos, Quaternion rotation, int itemID)
     {
         //Spawn the object
-        Instantiate(this, pos, rotation);
+        var _ = Instantiate(this, pos, rotation);
+        VarTypes.Item[] items = VarTypes.GetItems();
+
+        _.gameObject.name = $"{items[itemID].name}";
         Debug.Log("Object has Spawned!");
        
     }
@@ -33,11 +36,7 @@ public class EnemyDrop : MonoBehaviour
         count = pInventory.items.Count;
 
         Debug.Log(pInventory.items.Count);
-        pInventory.items.Add(theItem);
-
-        Debug.Log(pInventory.items.Count);
-        Debug.Log(pInventory.items[count]);
-
-        funcInst.Kill(transform.gameObject);
+        pInventory.items.Add(theItem.GetComponent<VarTypes.Item>());
+        Destroy(theItem);
     }
 }

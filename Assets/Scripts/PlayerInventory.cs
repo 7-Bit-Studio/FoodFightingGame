@@ -1,3 +1,4 @@
+using Assets.Globals;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +8,7 @@ using UnityEngine.iOS;
 public class PlayerInventory : MonoBehaviour
 {
 
-    public List<GameObject> items = new List<GameObject>();
+    public List<VarTypes.Item> items = new();
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -21,7 +22,7 @@ public class PlayerInventory : MonoBehaviour
         if (Keyboard.current.hKey.wasReleasedThisFrame)
         {
             Debug.Log(items.Count);
-            foreach (GameObject item in items)
+            foreach (VarTypes.Item item in items)
             {
                 Debug.Log(item.name);
             }

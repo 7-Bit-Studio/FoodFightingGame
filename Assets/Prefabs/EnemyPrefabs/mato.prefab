@@ -119,7 +119,7 @@ MonoBehaviour:
   animationDuration: 0.25
   isBoss: 0
   textureWidth: 64
-  textureHeight: 76
+  textureHeight: 64
 --- !u!58 &434141238252957824
 CircleCollider2D:
   m_ObjectHideFlags: 0

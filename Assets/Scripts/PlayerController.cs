@@ -26,8 +26,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float playerAcc = 5f;
     [Header("Attack Settings")]
     [SerializeField] private float attackRange = 2.5f;
-    [SerializeField] private GameObject[] RangedAttacks;
     [SerializeField] private GameObject[] MeleeAttacks;
+    [SerializeField] private GameObject[] RangedAttacks;
     [SerializeField] private bool CheatMode = false;
     [SerializeField] private float attackLenience = 0.5f;
     [SerializeField] private float attackCooldown = 0.5f;
@@ -105,6 +105,11 @@ public class PlayerController : MonoBehaviour
             GameOverScreen.AddComponent<GameOver>();
             GameOverScreen.SetActive(false);
         }
+        MeleeAttacks[0].GetComponent<PlayerAttackMelee>().range = attackRange;
+        MeleeAttacks[0].GetComponent<PlayerAttackMelee>().doesStun = false;
+
+        RangedAttacks[0].GetComponent<PlayerAttackRanged>().maxDistance = attackRange;
+        RangedAttacks[0].GetComponent<PlayerAttackRanged>().doesStun = true;
 
         playerSprites = funcInst.SliceGrid(playerTexture, 64, 76);
 
@@ -191,8 +196,11 @@ public class PlayerController : MonoBehaviour
         GameObject playerAttack = new();
         playerAttack.AddComponent<PlayerAttackRanged>();
         playerAttack.GetComponent<PlayerAttackRanged>().maxDistance = attackRange;
+        playerAttack.GetComponent<PlayerAttackRanged>().damage = RangedAttacks[attackIndex].GetComponent<PlayerAttackRanged>().damage;
         playerAttack.AddComponent<SpriteRenderer>();
         playerAttack.GetComponent<SpriteRenderer>().sprite = RangedAttacks[attackIndex].GetComponent<SpriteRenderer>().sprite;
+        playerAttack.GetComponent<PlayerAttackRanged>().speed = RangedAttacks[attackIndex].GetComponent<PlayerAttackRanged>().speed;
+        playerAttack.GetComponent<PlayerAttackRanged>().doesStun = RangedAttacks[attackIndex].GetComponent<PlayerAttackRanged>().doesStun;
         playerAttack.transform.localScale = RangedAttacks[attackIndex].transform.localScale;
         playerAttack.GetComponent<PlayerAttackRanged>().OnAttack(enemy, playerPos);
         playerAttack.SetActive(true);
@@ -211,6 +219,8 @@ public class PlayerController : MonoBehaviour
         playerAttack.AddComponent<PlayerAttackMelee>();
         playerAttack.GetComponent<PlayerAttackMelee>().swingSpeed = MeleeAttacks[attackIndex].GetComponent<PlayerAttackMelee>().swingSpeed;
         playerAttack.GetComponent<PlayerAttackMelee>().swingAngle = MeleeAttacks[attackIndex].GetComponent<PlayerAttackMelee>().swingAngle;
+        playerAttack.GetComponent<PlayerAttackMelee>().range = attackRange;
+        playerAttack.GetComponent<PlayerAttackMelee>().doesStun = MeleeAttacks[attackIndex].GetComponent<PlayerAttackMelee>().doesStun;
         playerAttack.AddComponent<SpriteRenderer>();
         playerAttack.GetComponent<SpriteRenderer>().sprite = MeleeAttacks[attackIndex].GetComponent<SpriteRenderer>().sprite;
         playerAttack.transform.localScale = MeleeAttacks[attackIndex].transform.localScale;

@@ -684,6 +684,7 @@ GameObject:
   - component: {fileID: 4348614517689816146}
   - component: {fileID: 8615920454434297348}
   - component: {fileID: 7256647148524855906}
+  - component: {fileID: 3848776795714312463}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -795,11 +796,10 @@ MonoBehaviour:
   GameOverScreen: {fileID: 0}
   maxSpeed: 5
   playerAcc: 25
-  useAcceleration: 1
   attackRange: 3
-  RangedAttacks:
-  - {fileID: 0}
   MeleeAttacks:
+  - {fileID: 0}
+  RangedAttacks:
   - {fileID: 0}
   CheatMode: 1
   attackLenience: 0.5
@@ -807,6 +807,10 @@ MonoBehaviour:
   health: 100
   defense: 0
   canDie: 0
+  dashCooldown: 1
+  dashSpeed: 2
+  playerMeleeAttackPrefab: {fileID: 0}
+  playerRangedAttackPrefab: {fileID: 0}
 --- !u!114 &4348614517689816146
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -970,6 +974,19 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!114 &3848776795714312463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8244672825021101286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 782badbd71097374793d6d5e2ef1a69d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInventory
+  items: []
 --- !u!1 &8250880873921590541
 GameObject:
   m_ObjectHideFlags: 0

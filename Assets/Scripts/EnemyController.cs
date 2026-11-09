@@ -7,13 +7,14 @@ using UnityEngine.U2D;
 // Globals
 using Assets.Globals;
 using Unity.VisualScripting;
+using UnityEngine.UI;
 
 public class EnemyController : MonoBehaviour
 {
     [Header("Physics Settings")]
     [SerializeField] private float maxSpeed = 5f;
     [SerializeField] private Texture2D enemyTexture;
-    [SerializeField] private int health = 100;
+    public int health = 100;
     [SerializeField] private int defense = 0;
     [SerializeField] private float acceleration = 0.2f;
     [SerializeField] private int damage = 10;
@@ -26,6 +27,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private bool isBoss = false;
     [SerializeField] private int textureWidth = 64;
     [SerializeField] private int textureHeight = 76;
+    public int dropItemID = 0;
 
     // EnemyController values
     private Transform enemyTransform;
@@ -49,7 +51,7 @@ public class EnemyController : MonoBehaviour
     private Vector3 playerDirection;
     private Vector3 normalizedPlayerDirection;
     private GameObject player;
-    private bool isStunned;
+    public bool isStunned;
     private bool wasJustHit;
     private float hitTime;
     private GameObject healthBar;
@@ -162,15 +164,16 @@ public class EnemyController : MonoBehaviour
 
         if (health <= 0 && isAlive)
         {
-            enemyTransform.gameObject.SetActive(false);
             Debug.Log($"{transform.name} has died!");
             //Drop the relevant item for the enemy
             if (hasDrop)
             {
-                theDrop.GetComponent<EnemyDrop>().DropTheShit(transform.position, transform.rotation);
+                theDrop.GetComponent<EnemyDrop>().DropTheShit(transform.position, transform.rotation, dropItemID);
             }
             isAlive = false;
 
+            enemyTransform.gameObject.SetActive(false);
+            Destroy(enemyTransform.gameObject, 0.5f);
         }
     }   
     void UpdateMovement()

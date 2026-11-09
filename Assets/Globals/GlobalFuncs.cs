@@ -209,7 +209,7 @@ namespace Assets.Globals
         public void Kill(GameObject gameobject) => Functions.Kill(gameobject);
     }
 
-    public struct VarTypes
+    public class VarTypes
     {
         public enum Direction
         {
@@ -227,5 +227,32 @@ namespace Assets.Globals
             public Direction direction;
             public int health;
         }
+        [Serializable]
+        public struct Item
+        {
+            public string name;
+            public int id;
+        }
+
+        public static Item[] items = {
+            new() {
+                name = "Borgor Shield",
+                id = 0
+            },
+            new() {
+                name = "Ketchup Bottle",
+                id = 1
+            },
+            new() {
+                name = "Example Item 3",
+                id = 2
+            },
+            new(){
+                name = "Example Item 4",
+                id = 3
+            }
+        };
+
+        public static Item[] GetItems(){ return items; }
     }
 }
