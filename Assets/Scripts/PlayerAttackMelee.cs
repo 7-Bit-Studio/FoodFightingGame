@@ -8,6 +8,7 @@ public class PlayerAttackMelee : MonoBehaviour
     [SerializeField] public float swingSpeed = 20;
     [SerializeField] private float range = 5;
     [SerializeField] public float swingAngle = 90;
+    [SerializeField] private bool doesStun = false;
     private float deltaTime;
     private float startRot;
     private bool isAttacking;
@@ -72,36 +73,20 @@ public class PlayerAttackMelee : MonoBehaviour
         }
 
         isAttacking = true;
-        /* distance / speed is equivilant to time
-        *  time * velocity is equivilant to distance
-        *  therefore, (distance / speed) * velocity is the updated relative transform
-        *  and we add the distance to the transform to get the new transform
-        *  by subtracting the start transform of the player's attack, we get the vector
-        *  pointing at where the enemy will be from where the attack started, so the
-        *  attack auto-aims at where the enemy will be, due to lack of fine control
-        *  over direction of projectile from the player
-        */
         Vector3 direction = start - data.position;
         startRot = Mathf.Atan2(-direction.x, direction.y) * Mathf.Rad2Deg - swingAngle / 2;
         AttackAngle = startRot;
         transform.rotation = Quaternion.Euler(0, 0, startRot);
-        //transform.position = start;
-        /*
-        // set Velocity so that attack, y'know, moves
-        AttackVel = direction.normalized * speed;
-        // set position to the player's position
-        startPos = start;
-
-        // update the VarTypes.Data.position clusterfuck (why is VarTypes.Data.position a Transform?????)
-        //                                               fixed!!^ VarTypes.Data.position is now a Vector3
-        //                                               also this never used VarTypes.Data.position lol
-        AttackPos.position = startPos;
-        AttackPos.rotationAmount = Functions.ToQuaternion(AttackVel.normalized);
-        Debug.Log($"{Time.time}: {AttackVel}");
-        */
-
-        // call UpdatePosition to update transform
         UpdatePosition();
+
+        foreach (Collider2D collider in Physics2D.OverlapCircleAll(transform.position, 0.5f))
+        {
+            if (collider.gameObject == enemy)
+            {
+                collider.GetComponent<EnemyController>().OnHit(damage, doesStun);
+                Debug.Log($"Hit enemy {enemy.name} for {damage} damage.");
+            }
+        }
 
         // activate attack so it can move and be seen
         transform.gameObject.SetActive(true);

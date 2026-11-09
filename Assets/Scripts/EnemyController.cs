@@ -8,8 +8,6 @@ using UnityEngine.U2D;
 using Assets.Globals;
 using Unity.VisualScripting;
 
-
-
 public class EnemyController : MonoBehaviour
 {
     [Header("Movement Settings")]
@@ -57,7 +55,7 @@ public class EnemyController : MonoBehaviour
     private bool isStunned;
     private bool wasJustHit;
     private float hitTime;
-    //private GameObject healthBar;
+    private GameObject healthBar;
     private Transform healthValueTransform;
     private int startHealth;
 
@@ -67,7 +65,7 @@ public class EnemyController : MonoBehaviour
     private readonly Functions functions = new();
     private readonly SpriteFilter spriteFilter = new();
     private bool hasDrop = false;
-
+    private bool shouldStunPseudoGlobal = false;
     public VarTypes.Data GetData() => data;
     void Start()
     {
@@ -97,8 +95,8 @@ public class EnemyController : MonoBehaviour
 
         if (isBoss)
         {
-            //healthBar = transform.Find("HealthBarBoss").gameObject;
-            //healthValueTransform = healthBar.transform.Find("HealthBarInner");
+            healthBar = transform.Find("HealthBarBoss").gameObject;
+            healthValueTransform = healthBar.transform.Find("HealthBarInner");
         }
 
         if(theDrop != null)
@@ -128,19 +126,19 @@ public class EnemyController : MonoBehaviour
         }
 
 
-        //if (isBoss)
-        //{
+        if (isBoss)
+        {
             // if anyone knows of a better way to do this, please let me know
             // no, setting localScale.x to a number doesn't work
             // same with localPosition
-        //    healthValueTransform.localScale = new Vector3(health * 0.9f / startHealth, healthValueTransform.localScale.y, healthValueTransform.localScale.z);
-        //    healthValueTransform.localPosition = new Vector3(( 0.9f * ((float)health / startHealth) - 0.9f)/2f, healthValueTransform.localPosition.y, healthValueTransform.localPosition.z);
-        //}
+            healthValueTransform.localScale = new Vector3(health * 0.9f / startHealth, healthValueTransform.localScale.y, healthValueTransform.localScale.z);
+            healthValueTransform.localPosition = new Vector3(( 0.9f * ((float)health / startHealth) - 0.9f)/2f, healthValueTransform.localPosition.y, healthValueTransform.localPosition.z);
+        }
         
         UpdateMovement();
     }
 
-    public void OnHit(int damage)
+    public void OnHit(int damage, bool shouldStun)
     {
         int dealtDamage = damage - defense;
         dealtDamage = dealtDamage < 0 ? 0 : dealtDamage;
@@ -152,8 +150,9 @@ public class EnemyController : MonoBehaviour
         enemyVel = -normalizedPlayerDirection * 3;
         hitTime = Time.time;
         wasJustHit = true;
+        shouldStunPseudoGlobal = shouldStun;
 
-        if(health <= 0 && isAlive)
+        if (health <= 0 && isAlive)
         {
             enemyTransform.gameObject.SetActive(false);
             Debug.Log($"{transform.name} has died!");
@@ -170,10 +169,11 @@ public class EnemyController : MonoBehaviour
     {
         if (wasJustHit)
         {
+            //Debug.Log($"Enemy was just hit. Stunned: {isStunned}, Should Stun: {shouldStunPseudoGlobal}, Time since hit: {Time.time - hitTime}");
             if (Time.time - hitTime > 0.25f)
             {
                 wasJustHit = false;
-                isStunned = true;
+                isStunned = shouldStunPseudoGlobal;
             }
 
 
@@ -183,15 +183,20 @@ public class EnemyController : MonoBehaviour
 
         if (isStunned)
         {
-            if(Time.time - hitTime > 1f) isStunned = false;
+            //Debug.Log($"Enemy is stunned. Stunned: {isStunned}, Should Stun: {shouldStunPseudoGlobal}, Time since hit: {Time.time - hitTime}");
+            if (Time.time - hitTime > 1f)
+            {
+                isStunned = false;
+                enemyVel = Vector3.zero;
+            }
 
-            enemyVel *= 0.95f;
+            enemyVel *= 0.98f;
 
             UpdatePosition();
             return;
         }
 
-        enemyVel += ((acceleration * normalizedPlayerDirection) - Functions.Friction(enemyVel, acceleration/maxSpeed)) * deltaTime;
+        //enemyVel += ((acceleration * normalizedPlayerDirection) - Functions.Friction(enemyVel, acceleration/maxSpeed)) * deltaTime;
 
         if (enemyVel.sqrMagnitude > maxSpeed * maxSpeed)
         {
@@ -208,6 +213,10 @@ public class EnemyController : MonoBehaviour
     void UpdatePosition()
     {
         enemyPos += enemyVel * deltaTime;
+        if (isStunned)
+        {
+            Debug.Log($"Enemy Position: {enemyPos}, Enemy Velocity: {enemyVel}, DeltaTime: {deltaTime}");
+        }
 
         for (int i = 0; i < collisionLoops; i++)
         {

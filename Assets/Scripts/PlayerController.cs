@@ -17,16 +17,14 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class PlayerController : MonoBehaviour
 {
+
     [Header("Movement Settings")]
     [SerializeField] private InputActionReference moveActionReference;
     [SerializeField] private Texture2D playerTexture;
+    [SerializeField] private GameObject GameOverScreen;
     [SerializeField] private float maxSpeed = 5f;
     [SerializeField] private float playerAcc = 5f;
-    [SerializeField] private float frictionCoefficient = 1.01f;
     [SerializeField] private bool useAcceleration = true;
-    [Header("Health Settings")]
-    [SerializeField] private int health = 100;
-    [SerializeField] private int defense = 0;
     [Header("Attack Settings")]
     [SerializeField] private float attackRange = 2.5f;
     [SerializeField] private GameObject[] RangedAttacks;
@@ -37,12 +35,18 @@ public class PlayerController : MonoBehaviour
     
     
     // PlayerData Values
+    [Header("Health Settings")]
+    [SerializeField] private int health = 100;
+    [SerializeField] private int defense = 0;
+    [SerializeField] private bool canDie = true;
     private InputAction moveAction;
     public VarTypes.Data GetData() => data;
     private VarTypes.Direction facing;
     private VarTypes.Data data;
     private Vector2 moveInputVector2;
     private Vector3 moveInput;
+
+    // PlayerController values
     private Transform playerTransform;
     private Vector3 playerPos;
     private Vector3 playerVel;
@@ -103,8 +107,7 @@ public class PlayerController : MonoBehaviour
         GameOverScreen.transform.position = playerPos;
 
         transform.Find("Main Camera").position = new Vector3(0, 0, -10);
-        //GetComponent<SpriteRenderer>().sprite = currentSprite;
-        Debug.Log(playerSprites.Length);
+        GetComponent<SpriteRenderer>().sprite = currentSprite;
     }
 
     // Update is called once per frame
@@ -130,6 +133,7 @@ public class PlayerController : MonoBehaviour
         // Move Input Vector
         moveInputVector2 = moveAction != null ? moveAction.ReadValue<Vector2>() : Vector2.zero;
         moveInput = (Vector3)moveInputVector2;
+        
 
         UpdateMovement();
 
@@ -174,6 +178,7 @@ public class PlayerController : MonoBehaviour
         Vector2 VectorFromPlayerToEnemy = enemy.transform.position - playerPos;
         VectorFromPlayerToEnemy.Normalize();
     }
+
     void MeleeAttack(GameObject enemy, int attackIndex)
     {
         if (!CheatMode && Time.time - timeAtLastAttack < attackCooldown) return;
@@ -191,6 +196,7 @@ public class PlayerController : MonoBehaviour
         Vector2 VectorFromPlayerToEnemy = enemy.transform.position - playerPos;
         VectorFromPlayerToEnemy.Normalize();
     }
+
     void HandleInputs()
     {
         if (Keyboard.current.ctrlKey.isPressed && Keyboard.current.qKey.wasPressedThisFrame)
