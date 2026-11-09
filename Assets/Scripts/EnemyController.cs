@@ -27,7 +27,6 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private int textureWidth = 64;
     [SerializeField] private int textureHeight = 76;
 
-    private int timeSinceLastAttack = 0;
     // EnemyController values
     private Transform enemyTransform;
     private Vector3 enemyPos;
@@ -254,9 +253,9 @@ public class EnemyController : MonoBehaviour
     {
         int arrOffset = 0;
         var objects = FindObjectsByType<EnemyController>();
-        float colliderRad = GetComponent<CircleCollider2D>().radius;
+        float colliderRad = GetComponent<CircleCollider2D>().radius * transform.localScale.x;
 
-        Vector3 colliderOffset = (Vector3)GetComponent<CircleCollider2D>().offset;
+        Vector3 colliderOffset = (Vector3)GetComponent<CircleCollider2D>().offset * transform.localScale.x;
         Vector3 colliderCenter;
         GameObject[] gameObjects = new GameObject[objects.Length];
 
@@ -275,13 +274,13 @@ public class EnemyController : MonoBehaviour
             if (gameObject == null) continue;
             colliderCenter = enemyPos + colliderOffset;
             //Debug.Log($"Checking collision");
-            float otherColliderRad = gameObject.GetComponent<CircleCollider2D>().radius;
-            Vector3 otherColliderCenter = gameObject.transform.position + (Vector3)gameObject.GetComponent<CircleCollider2D>().offset;
+            float otherColliderRad = gameObject.GetComponent<CircleCollider2D>().radius * gameObject.transform.localScale.x;
+            Vector3 otherColliderCenter = gameObject.transform.position + (Vector3)gameObject.GetComponent<CircleCollider2D>().offset * gameObject.transform.localScale.x;
 
             float currentDistance = Vector3.Distance(colliderCenter, otherColliderCenter);
             float minDistance = colliderRad + otherColliderRad;
 
-            if (currentDistance < otherColliderRad + colliderRad)
+            if (currentDistance < minDistance)
             {
                 enemyPos += (colliderCenter - otherColliderCenter) * (minDistance - currentDistance);
                 enemyVel += (colliderCenter - otherColliderCenter) * (minDistance - currentDistance);
@@ -300,18 +299,25 @@ public class EnemyController : MonoBehaviour
     {
         if (!player.GetComponent<CircleCollider2D>().isActiveAndEnabled) return;
 
-        float colliderRad = GetComponent<CircleCollider2D>().radius;
+        Vector3 colliderOffset = (Vector3)GetComponent<CircleCollider2D>().offset * transform.localScale.x;
+        Vector3 colliderCenter;
+        Vector3 playerColliderOffset = (Vector3)player.GetComponent<CircleCollider2D>().offset * player.transform.localScale.x;
+        Vector3 playerColliderCenter;
+        float colliderRad = GetComponent<CircleCollider2D>().radius * transform.localScale.x;
 
-        float playerColliderRad = player.GetComponent<CircleCollider2D>().radius;
-        playerDirection = player.GetComponent<PlayerController>().GetData().position - transform.position;
+        colliderCenter = enemyPos + colliderOffset;
+        playerColliderCenter = player.transform.position + playerColliderOffset;
+        float playerColliderRad = player.GetComponent<CircleCollider2D>().radius * player.transform.localScale.x;
+        float currentDistance = Vector3.Distance(colliderCenter, playerColliderCenter);
+        float minDistance = colliderRad + playerColliderRad;
 
-        if (playerDirection.magnitude < colliderRad + playerColliderRad)
+        if (currentDistance < minDistance)
         {
             Debug.Log($"{playerDirection}");
             Debug.Log($"Player Distance: {playerDirection.magnitude}, Player Collider Radius: {playerColliderRad}, Enemy Collider Radius: {colliderRad}, Total Collider Radius: {colliderRad + playerColliderRad}");
             // normalizedPlayerDirection is negative to make vector point away from player
-            enemyPos += -normalizedPlayerDirection * ((colliderRad + playerColliderRad) - playerDirection.magnitude);
-            enemyVel += -normalizedPlayerDirection * ((colliderRad + playerColliderRad) - playerDirection.magnitude);
+            enemyPos += (colliderCenter - playerColliderCenter) * (minDistance - currentDistance);
+            enemyVel += (colliderCenter - playerColliderCenter) * (minDistance - currentDistance);
 
             Debug.Log("Player Collision!");
 

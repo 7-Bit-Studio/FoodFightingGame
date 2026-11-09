@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.U2D;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.Rendering;
 
 
 [RequireComponent(typeof(Transform))]
@@ -37,6 +38,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int health = 100;
     [SerializeField] private int defense = 0;
     [SerializeField] private bool canDie = true;
+    [SerializeField] private float dashCooldown = 1f;
+    [SerializeField] private float dashSpeed = 2f;
     private InputAction moveAction;
     public VarTypes.Data GetData() => data;
     private VarTypes.Direction facing;
@@ -65,9 +68,13 @@ public class PlayerController : MonoBehaviour
     private int currentSpriteIndexAdd;
     private float timeAtLastSpriteUpdate;
     private float timeAtLastHit;
+    private float timeAtLastDash;
     private int attackIndex = -1;
+    [SerializeField] private GameObject playerMeleeAttackPrefab;
+    [SerializeField] private GameObject playerRangedAttackPrefab;
     void Awake()
     {
+
         // Preliminary checks
         if (moveActionReference == null)
         {
@@ -82,7 +89,16 @@ public class PlayerController : MonoBehaviour
             lineRenderer = new GameObject().AddComponent<LineRenderer>();
         }
 
-        if(GameOverScreen == null)
+        if(MeleeAttacks == null || MeleeAttacks.Length == 0)
+        {
+            MeleeAttacks = new GameObject[] { Instantiate(playerMeleeAttackPrefab) };
+        }
+        if(RangedAttacks == null || RangedAttacks.Length == 0)
+        {
+            RangedAttacks = new GameObject[] { Instantiate(playerRangedAttackPrefab) };
+        }
+
+        if (GameOverScreen == null)
         {
             Debug.LogWarning("GameOverScreen is not assigned in the inspector.");
             GameOverScreen = new GameObject("GameOverScreen");
@@ -211,6 +227,15 @@ public class PlayerController : MonoBehaviour
         {
             string debugImageName = "Hide-the-pain-Harold-large-meme-8_0";
             transform.Find(debugImageName).gameObject.SetActive(!transform.Find(debugImageName).gameObject.activeSelf);
+        }
+
+        if(Time.time - timeAtLastDash > dashCooldown)
+        {
+            if (Keyboard.current.shiftKey.isPressed)
+            {
+                playerVel += dashSpeed * maxSpeed * moveInput;
+                timeAtLastDash = Time.time;
+            }
         }
 
         Vector2 MouseInWorldPosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
