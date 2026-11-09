@@ -14,6 +14,8 @@ public class PlayerAttackMelee : MonoBehaviour
     private bool isAttacking;
     private float AttackAngle;
     private VarTypes.Data playerData;
+    private Functions funcs = new();
+    private FunctionsInstance funcInst = new();
     void Awake()
     {
         //startPos = transform.position;
@@ -25,7 +27,7 @@ public class PlayerAttackMelee : MonoBehaviour
     void Update()
     {
         deltaTime = Time.deltaTime;
-        playerData = Functions.GetSiblingGameObject("Player").GetComponent<PlayerController>().GetData();
+        playerData = funcInst.GetSiblingGameObject("Player").GetComponent<PlayerController>().GetData();
         UpdatePosition();
     }
     void UpdatePosition()
@@ -40,7 +42,7 @@ public class PlayerAttackMelee : MonoBehaviour
             }
             else
             {
-                playerData = Functions.GetSiblingGameObject("Player").GetComponent<PlayerController>().GetData();
+                playerData = funcInst.GetSiblingGameObject("Player").GetComponent<PlayerController>().GetData();
                 AttackAngle += swingSpeed * deltaTime;
                 transform.position = new Vector3(Mathf.Sin(AttackAngle * Mathf.Deg2Rad) * 0.5f + playerData.position.x, -Mathf.Cos(AttackAngle * Mathf.Deg2Rad) * 0.5f + playerData.position.y, 0);
                 transform.localRotation = Quaternion.Euler(0, 0, AttackAngle);

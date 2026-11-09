@@ -14,14 +14,15 @@ public class PlayerAttackRanged : MonoBehaviour
     private float deltaTime;
     private Vector2 startPos;
     private GameObject currentTarget;
-    private SleepTimeout sleepTimeout = new SleepTimeout();
+    private Functions funcs = new();
+    private FunctionsInstance funcInst = new();
     private Vector3 PrevPos;
     private Vector2 AttackDir;
     private Vector2 PrevFrameDir;
     void Awake()
     {
         AttackPos = GetComponent<Transform>();
-        
+
         PrevPos = AttackPos.position;
         AttackPos.gameObject.SetActive(false);
     }
@@ -40,21 +41,21 @@ public class PlayerAttackRanged : MonoBehaviour
 
         transform.SetPositionAndRotation(AttackPos.position, AttackPos.rotation);
 
-        if (Functions.DotProduct(AttackDir, PrevFrameDir) < 0)
+        if (funcInst.DotProduct(AttackDir, PrevFrameDir) < 0)
         {
             currentTarget.GetComponent<EnemyController>().OnHit(damage, doesStun);
-            Kill();
+            funcInst.Kill(transform.gameObject);
         }
 
         if (Vector3.Distance(AttackPos.position, startPos) > maxDistance)
         {
-            Kill();
+            funcInst.Kill(transform.gameObject);
         }
 
         if (Vector3.Distance(AttackPos.position, currentTarget.transform.position) < 0.5f)
         {
             currentTarget.GetComponent<EnemyController>().OnHit(damage, doesStun);
-            Kill();
+            funcInst.Kill(transform.gameObject);
         }
 
         PrevPos = AttackPos.position;
@@ -62,17 +63,12 @@ public class PlayerAttackRanged : MonoBehaviour
         AttackDir = (currentTarget.transform.position - AttackPos.position).normalized;
     }
 
-    void Kill()
-    {
-        Destroy(transform.gameObject);
-    }
-
     public void OnAttack(GameObject enemy, Vector3 start)
     {
         // if targeted enemy is not active, return
         if (!enemy.activeSelf)
         {
-            Kill();
+            funcInst.Kill(transform.gameObject);
             return;
         }
 
@@ -83,7 +79,7 @@ public class PlayerAttackRanged : MonoBehaviour
         float distance = Vector3.Distance(enemy.transform.position, start);
         if(distance > maxDistance)
         {
-            Kill();
+            funcInst.Kill(transform.gameObject);
             return;
         }
 
@@ -115,7 +111,7 @@ public class PlayerAttackRanged : MonoBehaviour
         //                                               fixed!!^ VarTypes.Data.position is now a Vector3
         //                                               also this never used VarTypes.Data.position lol
         AttackPos.position = startPos;
-        AttackPos.rotation = Functions.ToQuaternion(AttackVel.normalized);
+        AttackPos.rotation = funcInst.ToQuaternion(AttackVel.normalized);
         Debug.Log($"{Time.time}: {AttackVel}");
 
         // activate attack so it can move and be seen

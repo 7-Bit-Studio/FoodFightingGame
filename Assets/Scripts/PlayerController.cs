@@ -1,12 +1,12 @@
 // System
 using System;
-// Custom functions and variable types
+using System.Linq;
+// Custom funcs and variable types
 using Assets.Globals;
 // Unity
 using UnityEngine;
 using UnityEngine.U2D;
 using UnityEngine.InputSystem;
-using System.Linq;
 using UnityEngine.SceneManagement;
 
 
@@ -17,14 +17,12 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class PlayerController : MonoBehaviour
 {
-
     [Header("Movement Settings")]
     [SerializeField] private InputActionReference moveActionReference;
     [SerializeField] private Texture2D playerTexture;
     [SerializeField] private GameObject GameOverScreen;
     [SerializeField] private float maxSpeed = 5f;
     [SerializeField] private float playerAcc = 5f;
-    [SerializeField] private bool useAcceleration = true;
     [Header("Attack Settings")]
     [SerializeField] private float attackRange = 2.5f;
     [SerializeField] private GameObject[] RangedAttacks;
@@ -57,7 +55,8 @@ public class PlayerController : MonoBehaviour
     private float[] enemyDistances;
     private LineRenderer lineRenderer;
     private float timeAtLastAttack;
-    private readonly Functions functions = new();
+    private readonly Functions funcs = new();
+    private FunctionsInstance funcInst = new();
     private int animationDirectionMultiplier = 1;
 
     // Player Animation
@@ -90,7 +89,7 @@ public class PlayerController : MonoBehaviour
             GameOverScreen.SetActive(false);
         }
 
-        playerSprites = functions.SliceGrid(playerTexture, 64, 76);
+        playerSprites = funcInst.SliceGrid(playerTexture, 64, 76);
 
         // Initializing values
         moveInputVector2 = Vector2.zero;
@@ -254,14 +253,7 @@ public class PlayerController : MonoBehaviour
 
     void UpdateMovement()
     {
-        if (useAcceleration)
-        {
-            AccelerationMovement();
-        }
-        else
-        {
-            VelocityMovement();
-        }
+        AccelerationMovement();
 
         UpdatePosition();
         data.velocity = playerVel;
@@ -323,14 +315,6 @@ public class PlayerController : MonoBehaviour
             currentSprite = playerSprites[0 + currentSpriteIndexAdd];
         }
         playerTransform.GetComponent<SpriteRenderer>().sprite = currentSprite;
-    }
-    
-    // Updating the player's velocity
-    void VelocityMovement()
-    {
-        // PlayerData in metres per second
-    
-        playerVel = maxSpeed * moveInput;
     }
     
     // Updating the player's acceleration

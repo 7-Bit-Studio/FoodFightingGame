@@ -26,7 +26,8 @@ public class UIText : MonoBehaviour
     //[SerializeField] private TextMeshProUGUI WASDPrompt;
     //[SerializeField] private GameObject promptBackground;
     private Transform TopLeftCorner;
-    private Functions functions;
+    private Functions funcs = new();
+    private FunctionsInstance funcInst = new();
     private PlayerController movement;
     private float fpsLow;
     private float currFPS;
@@ -60,7 +61,6 @@ public class UIText : MonoBehaviour
         if (debugLogging) Loginit_();
         movement = GetComponent<PlayerController>();
         fpsLow = float.PositiveInfinity;
-        functions = new Functions();
         data = movement.GetData();
         playerVel = data.velocity;
         
@@ -123,18 +123,18 @@ public class UIText : MonoBehaviour
             prevPlayerVel2[i + 1] = prevPlayerVel1[i];
         }
 
-        smoothedPlayerVel = functions.AverageOverFrames(prevPlayerVel2, (int)averageDuration);
-        smoothedPlayerVel = functions.Round(smoothedPlayerVel, 2);
+        smoothedPlayerVel = funcInst.AverageOverFrames(prevPlayerVel2, (int)averageDuration);
+        smoothedPlayerVel = funcInst.Round(smoothedPlayerVel, 2);
         
-        roundedFPS = functions.Round(currFPS, 1);
-        playerPos = functions.Round(playerPos, 1) * 10;
+        roundedFPS = funcInst.Round(currFPS, 1);
+        playerPos = funcInst.Round(playerPos, 1) * 10;
 
 
         FPS();
         if (debugLogging) FPSFileWrite();
         SetText(FPSTextElement,$"{roundedFPS}fps");
         SetText(SpeedElement, $"{smoothedPlayerVel.x}, {smoothedPlayerVel.y}");
-        SetText(PositionElement, $"X: {playerPos.x} Y: {playerPos.y}\nT: {functions.Round(Time.timeAsDouble,2)} sec");
+        SetText(PositionElement, $"X: {playerPos.x} Y: {playerPos.y}\nT: {funcInst.Round(Time.timeAsDouble,2)} sec");
 	}
 
     void HandleInputs()

@@ -62,7 +62,8 @@ public class EnemyController : MonoBehaviour
 
 
     private bool isAlive;
-    private readonly Functions functions = new();
+    private Functions funcs = new();
+    private FunctionsInstance funcInst = new();
     private readonly SpriteFilter spriteFilter = new();
     private bool hasDrop = false;
     private bool shouldStunPseudoGlobal = false;
@@ -71,7 +72,7 @@ public class EnemyController : MonoBehaviour
     {
         wasJustHit = false;
         isStunned = false;
-        player = Functions.GetSiblingGameObject("Player");
+        player = funcInst.GetSiblingGameObject("Player");
 
         movement = player.GetComponent<PlayerController>();
 
@@ -84,7 +85,7 @@ public class EnemyController : MonoBehaviour
         data.health = health;
         data.position = enemyPos;
 
-        enemySprites = functions.SliceGrid(enemyTexture, textureWidth, textureHeight);
+        enemySprites = funcInst.SliceGrid(enemyTexture, textureWidth, textureHeight);
         enemySprites = spriteFilter.RemoveEmpty(enemyTexture, enemySprites);
         timeAtLastSpriteUpdate = Time.time;
         currentSpriteIndex = 0;
