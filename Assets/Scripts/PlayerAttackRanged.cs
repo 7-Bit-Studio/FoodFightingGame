@@ -1,5 +1,7 @@
 using UnityEngine;
 using Assets.Globals;
+using UnityEngine.AdaptivePerformance;
+using System.Collections;
 
 public class PlayerAttackRanged : MonoBehaviour
 {
@@ -12,9 +14,15 @@ public class PlayerAttackRanged : MonoBehaviour
     private float deltaTime;
     private Vector2 startPos;
     private GameObject currentTarget;
+    private SleepTimeout sleepTimeout = new SleepTimeout();
+    private Vector3 PrevPos;
+    private Vector2 AttackDir;
+    private Vector2 PrevFrameDir;
     void Awake()
     {
         AttackPos = GetComponent<Transform>();
+        
+        PrevPos = AttackPos.position;
         AttackPos.gameObject.SetActive(false);
     }
 
@@ -26,10 +34,17 @@ public class PlayerAttackRanged : MonoBehaviour
     }
     void UpdatePosition()
     {
+
         AttackPos.position += deltaTime * AttackVel;
         AttackPos.rotation = Quaternion.Euler(new Vector3(0, 0, Mathf.Rad2Deg * Mathf.Atan2(-AttackVel.x, AttackVel.y)));
 
         transform.SetPositionAndRotation(AttackPos.position, AttackPos.rotation);
+
+        if (Functions.DotProduct(AttackDir, PrevFrameDir) < 0)
+        {
+            currentTarget.GetComponent<EnemyController>().OnHit(damage, doesStun);
+            Kill();
+        }
 
         if (Vector3.Distance(AttackPos.position, startPos) > maxDistance)
         {
@@ -41,6 +56,10 @@ public class PlayerAttackRanged : MonoBehaviour
             currentTarget.GetComponent<EnemyController>().OnHit(damage, doesStun);
             Kill();
         }
+
+        PrevPos = AttackPos.position;
+        PrevFrameDir = AttackDir;
+        AttackDir = (currentTarget.transform.position - AttackPos.position).normalized;
     }
 
     void Kill()
@@ -51,7 +70,7 @@ public class PlayerAttackRanged : MonoBehaviour
     public void OnAttack(GameObject enemy, Vector3 start)
     {
         // if targeted enemy is not active, return
-        if (AttackPos.gameObject.activeSelf)
+        if (!enemy.activeSelf)
         {
             Kill();
             return;
@@ -81,6 +100,8 @@ public class PlayerAttackRanged : MonoBehaviour
         *  over direction of projectile from the player
         */
         Vector3 direction = ((distance/speed) * data.velocity) + data.position - start;
+        AttackDir = direction.normalized;
+        PrevFrameDir = AttackDir;
         Debug.Log($"{data.transform.position} vs {data.position}");
         Debug.Log($"Speed: {speed}");
         Debug.Log($"{distance / speed * data.velocity}");
