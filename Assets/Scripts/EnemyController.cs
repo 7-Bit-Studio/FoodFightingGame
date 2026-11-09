@@ -10,7 +10,7 @@ using Unity.VisualScripting;
 
 public class EnemyController : MonoBehaviour
 {
-    [Header("Movement Settings")]
+    [Header("Physics Settings")]
     [SerializeField] private float maxSpeed = 5f;
     [SerializeField] private Texture2D enemyTexture;
     [SerializeField] private int health = 100;
@@ -18,18 +18,16 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private float acceleration = 0.2f;
     [SerializeField] private int damage = 10;
     [SerializeField] private int attackDelay = 100;
-    [SerializeField] private GameObject theDrop;
-    /// <summary>
-    /// How many seconds for each animation frame to last
-    /// </summary>
-    [SerializeField] private float animationDuration = 0.25f;
+    [SerializeField] private float PlayerDetectionRadius = 10f;
     [SerializeField] private int collisionLoops = 1;
+    [SerializeField] private GameObject theDrop;
+    [Header("Animation Settings")]
+    [SerializeField] private float animationDuration = 0.25f;
     [SerializeField] private bool isBoss = false;
     [SerializeField] private int textureWidth = 64;
     [SerializeField] private int textureHeight = 76;
 
-    [SerializeField] private int timeSinceLastAttack = 0;
-
+    private int timeSinceLastAttack = 0;
     // EnemyController values
     private Transform enemyTransform;
     private Vector3 enemyPos;
@@ -39,7 +37,6 @@ public class EnemyController : MonoBehaviour
     private VarTypes.Direction facing;
     private VarTypes.Data data;
     private VarTypes.Data playerData;
-    private PlayerController movement;
 
     private Sprite[] enemySprites;
     private Sprite currentSprite;
@@ -48,6 +45,7 @@ public class EnemyController : MonoBehaviour
     // DeltaTime
     private float deltaTime;
     private float timeAtLastSpriteUpdate;
+    private float timeAtLastAttack;
 
     private Vector3 playerDirection;
     private Vector3 normalizedPlayerDirection;
@@ -68,15 +66,15 @@ public class EnemyController : MonoBehaviour
     private bool hasDrop = false;
     private bool shouldStunPseudoGlobal = false;
     public VarTypes.Data GetData() => data;
+    private PlayerController playerController;
     void Start()
     {
         wasJustHit = false;
         isStunned = false;
         player = funcInst.GetSiblingGameObject("Player");
+        playerController = player.GetComponent<PlayerController>();
 
-        movement = player.GetComponent<PlayerController>();
-
-        playerData = movement.GetData();
+        playerData = playerController.GetData();
 
         enemyTransform = GetComponent<Transform>();
         enemyPos = enemyTransform.position;
@@ -109,12 +107,21 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timeSinceLastAttack++;
         if (!transform.gameObject.activeSelf) return;
-        playerData = movement.GetData();
-        
-        playerDirection = playerData.position - transform.position;
-        normalizedPlayerDirection = playerDirection.normalized;
+        if (health <= 0)
+        {
+            transform.gameObject.SetActive(false);
+            return;
+        }
+
+        playerData = playerController.GetData();
+
+        if(Vector3.Distance(enemyPos, playerData.position) <= PlayerDetectionRadius)
+        {
+            playerDirection = playerData.position - transform.position;
+            normalizedPlayerDirection = playerDirection.normalized;
+        }
+
         deltaTime = Time.deltaTime;
 
         if (Time.time - timeAtLastSpriteUpdate > animationDuration)
@@ -136,7 +143,7 @@ public class EnemyController : MonoBehaviour
             healthValueTransform.localPosition = new Vector3(( 0.9f * ((float)health / startHealth) - 0.9f)/2f, healthValueTransform.localPosition.y, healthValueTransform.localPosition.z);
         }
         
-        UpdateMovement();
+        UpdateplayerController();
     }
 
     public void OnHit(int damage, bool shouldStun)
@@ -166,7 +173,7 @@ public class EnemyController : MonoBehaviour
 
         }
     }   
-    void UpdateMovement()
+    void UpdateplayerController()
     {
         if (wasJustHit)
         {
@@ -304,14 +311,12 @@ public class EnemyController : MonoBehaviour
 
             Debug.Log("Player Collision!");
 
-            PlayerController pController = player.GetComponent<PlayerController>();
-
-            if (timeSinceLastAttack > attackDelay)
+            if (Time.time - timeAtLastAttack > attackDelay)
             {
-
-            pController.OnHit(damage);
-                timeSinceLastAttack = 0;
+                playerController.OnHit(damage);
+                timeAtLastAttack = Time.time;
             }
+            funcInst.GetSiblingGameObject("Player").GetComponent<PlayerController>().OnHit(damage);
         }
 
         // leaving enemyTransform.position to keep function looking balanced
