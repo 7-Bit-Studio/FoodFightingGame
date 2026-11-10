@@ -8,7 +8,6 @@ using UnityEngine;
 using UnityEngine.U2D;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using UnityEngine.Rendering;
 
 
 [RequireComponent(typeof(Transform))]
@@ -26,8 +25,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float playerAcc = 5f;
     [Header("Attack Settings")]
     [SerializeField] private float attackRange = 2.5f;
-    [SerializeField] private GameObject[] MeleeAttacks;
     [SerializeField] private GameObject[] RangedAttacks;
+    [SerializeField] private GameObject[] MeleeAttacks;
     [SerializeField] private bool CheatMode = false;
     [SerializeField] private float attackLenience = 0.5f;
     [SerializeField] private float attackCooldown = 0.5f;
@@ -38,8 +37,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int health = 100;
     [SerializeField] private int defense = 0;
     [SerializeField] private bool canDie = true;
-    [SerializeField] private float dashCooldown = 1f;
-    [SerializeField] private float dashSpeed = 2f;
     private InputAction moveAction;
     public VarTypes.Data GetData() => data;
     private VarTypes.Direction facing;
@@ -67,14 +64,9 @@ public class PlayerController : MonoBehaviour
     private Sprite currentSprite;
     private int currentSpriteIndexAdd;
     private float timeAtLastSpriteUpdate;
-    private float timeAtLastHit;
-    private float timeAtLastDash;
     private int attackIndex = -1;
-    [SerializeField] private GameObject playerMeleeAttackPrefab;
-    [SerializeField] private GameObject playerRangedAttackPrefab;
     void Awake()
     {
-
         // Preliminary checks
         if (moveActionReference == null)
         {
@@ -89,27 +81,13 @@ public class PlayerController : MonoBehaviour
             lineRenderer = new GameObject().AddComponent<LineRenderer>();
         }
 
-        if(MeleeAttacks == null || MeleeAttacks.Length == 0)
-        {
-            MeleeAttacks = new GameObject[] { Instantiate(playerMeleeAttackPrefab) };
-        }
-        if(RangedAttacks == null || RangedAttacks.Length == 0)
-        {
-            RangedAttacks = new GameObject[] { Instantiate(playerRangedAttackPrefab) };
-        }
-
-        if (GameOverScreen == null)
+        if(GameOverScreen == null)
         {
             Debug.LogWarning("GameOverScreen is not assigned in the inspector.");
             GameOverScreen = new GameObject("GameOverScreen");
             GameOverScreen.AddComponent<GameOver>();
             GameOverScreen.SetActive(false);
         }
-        MeleeAttacks[0].GetComponent<PlayerAttackMelee>().range = attackRange;
-        MeleeAttacks[0].GetComponent<PlayerAttackMelee>().doesStun = false;
-
-        RangedAttacks[0].GetComponent<PlayerAttackRanged>().maxDistance = attackRange;
-        RangedAttacks[0].GetComponent<PlayerAttackRanged>().doesStun = true;
 
         playerSprites = funcInst.SliceGrid(playerTexture, 64, 76);
 
@@ -196,11 +174,8 @@ public class PlayerController : MonoBehaviour
         GameObject playerAttack = new();
         playerAttack.AddComponent<PlayerAttackRanged>();
         playerAttack.GetComponent<PlayerAttackRanged>().maxDistance = attackRange;
-        playerAttack.GetComponent<PlayerAttackRanged>().damage = RangedAttacks[attackIndex].GetComponent<PlayerAttackRanged>().damage;
         playerAttack.AddComponent<SpriteRenderer>();
         playerAttack.GetComponent<SpriteRenderer>().sprite = RangedAttacks[attackIndex].GetComponent<SpriteRenderer>().sprite;
-        playerAttack.GetComponent<PlayerAttackRanged>().speed = RangedAttacks[attackIndex].GetComponent<PlayerAttackRanged>().speed;
-        playerAttack.GetComponent<PlayerAttackRanged>().doesStun = RangedAttacks[attackIndex].GetComponent<PlayerAttackRanged>().doesStun;
         playerAttack.transform.localScale = RangedAttacks[attackIndex].transform.localScale;
         playerAttack.GetComponent<PlayerAttackRanged>().OnAttack(enemy, playerPos);
         playerAttack.SetActive(true);
@@ -219,8 +194,6 @@ public class PlayerController : MonoBehaviour
         playerAttack.AddComponent<PlayerAttackMelee>();
         playerAttack.GetComponent<PlayerAttackMelee>().swingSpeed = MeleeAttacks[attackIndex].GetComponent<PlayerAttackMelee>().swingSpeed;
         playerAttack.GetComponent<PlayerAttackMelee>().swingAngle = MeleeAttacks[attackIndex].GetComponent<PlayerAttackMelee>().swingAngle;
-        playerAttack.GetComponent<PlayerAttackMelee>().range = attackRange;
-        playerAttack.GetComponent<PlayerAttackMelee>().doesStun = MeleeAttacks[attackIndex].GetComponent<PlayerAttackMelee>().doesStun;
         playerAttack.AddComponent<SpriteRenderer>();
         playerAttack.GetComponent<SpriteRenderer>().sprite = MeleeAttacks[attackIndex].GetComponent<SpriteRenderer>().sprite;
         playerAttack.transform.localScale = MeleeAttacks[attackIndex].transform.localScale;
@@ -237,15 +210,6 @@ public class PlayerController : MonoBehaviour
         {
             string debugImageName = "Hide-the-pain-Harold-large-meme-8_0";
             transform.Find(debugImageName).gameObject.SetActive(!transform.Find(debugImageName).gameObject.activeSelf);
-        }
-
-        if(Time.time - timeAtLastDash > dashCooldown)
-        {
-            if (Keyboard.current.shiftKey.isPressed)
-            {
-                playerVel += dashSpeed * maxSpeed * moveInput;
-                timeAtLastDash = Time.time;
-            }
         }
 
         Vector2 MouseInWorldPosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
@@ -406,13 +370,10 @@ public class PlayerController : MonoBehaviour
         dealtDamage = Math.Max(0, dealtDamage);
 
         health -= dealtDamage;
-        data.health = health;
-        timeAtLastHit = Time.time;
 
-        Debug.Log($"Player took {dealtDamage} damage. Health is now {health}. Time since last hit: {Time.time - timeAtLastHit}");
-
-        if (health <= 0 && canDie)
+        if(health <= 0 && canDie)
         {
+            
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }

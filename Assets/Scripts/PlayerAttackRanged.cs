@@ -5,10 +5,10 @@ using System.Collections;
 
 public class PlayerAttackRanged : MonoBehaviour
 {
-    public int damage = 10;
-    public float speed = 20;
-    public float maxDistance = 10;
-    public bool doesStun = true;
+    [SerializeField] private int damage = 10;
+    [SerializeField] private float speed = 20;
+    [SerializeField] public float maxDistance = 10;
+    [SerializeField] private bool doesStun = true;
     private Vector3 AttackVel;
     private Transform AttackPos;
     private float deltaTime;
@@ -19,7 +19,6 @@ public class PlayerAttackRanged : MonoBehaviour
     private Vector3 PrevPos;
     private Vector2 AttackDir;
     private Vector2 PrevFrameDir;
-    private EnemyController enemy;
     void Awake()
     {
         AttackPos = GetComponent<Transform>();
@@ -41,12 +40,10 @@ public class PlayerAttackRanged : MonoBehaviour
         AttackPos.rotation = Quaternion.Euler(new Vector3(0, 0, Mathf.Rad2Deg * Mathf.Atan2(-AttackVel.x, AttackVel.y)));
 
         transform.SetPositionAndRotation(AttackPos.position, AttackPos.rotation);
-        
-        enemy = currentTarget.GetComponent<EnemyController>();
 
         if (funcInst.DotProduct(AttackDir, PrevFrameDir) < 0)
         {
-            enemy.OnHit(damage, doesStun);
+            currentTarget.GetComponent<EnemyController>().OnHit(damage, doesStun);
             funcInst.Kill(transform.gameObject);
         }
 
@@ -57,7 +54,7 @@ public class PlayerAttackRanged : MonoBehaviour
 
         if (Vector3.Distance(AttackPos.position, currentTarget.transform.position) < 0.5f)
         {
-            enemy.OnHit(damage, doesStun);
+            currentTarget.GetComponent<EnemyController>().OnHit(damage, doesStun);
             funcInst.Kill(transform.gameObject);
         }
 

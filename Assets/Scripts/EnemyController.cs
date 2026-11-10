@@ -7,18 +7,17 @@ using UnityEngine.U2D;
 // Globals
 using Assets.Globals;
 using Unity.VisualScripting;
-using UnityEngine.UI;
 
 public class EnemyController : MonoBehaviour
 {
     [Header("Physics Settings")]
     [SerializeField] private float maxSpeed = 5f;
     [SerializeField] private Texture2D enemyTexture;
-    public int health = 100;
+    [SerializeField] private int health = 100;
     [SerializeField] private int defense = 0;
     [SerializeField] private float acceleration = 0.2f;
     [SerializeField] private int damage = 10;
-    [SerializeField] private float attackDelay = 100;
+    [SerializeField] private int attackDelay = 100;
     [SerializeField] private float PlayerDetectionRadius = 10f;
     [SerializeField] private int collisionLoops = 1;
     [SerializeField] private GameObject theDrop;
@@ -27,8 +26,8 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private bool isBoss = false;
     [SerializeField] private int textureWidth = 64;
     [SerializeField] private int textureHeight = 76;
-    public int dropItemID = 0;
 
+    private int timeSinceLastAttack = 0;
     // EnemyController values
     private Transform enemyTransform;
     private Vector3 enemyPos;
@@ -51,7 +50,7 @@ public class EnemyController : MonoBehaviour
     private Vector3 playerDirection;
     private Vector3 normalizedPlayerDirection;
     private GameObject player;
-    public bool isStunned;
+    private bool isStunned;
     private bool wasJustHit;
     private float hitTime;
     private GameObject healthBar;
@@ -87,7 +86,6 @@ public class EnemyController : MonoBehaviour
         enemySprites = funcInst.SliceGrid(enemyTexture, textureWidth, textureHeight);
         enemySprites = spriteFilter.RemoveEmpty(enemyTexture, enemySprites);
         timeAtLastSpriteUpdate = Time.time;
-        timeAtLastAttack = Time.time;
         currentSpriteIndex = 0;
 
         startHealth = health;
@@ -145,7 +143,7 @@ public class EnemyController : MonoBehaviour
             healthValueTransform.localPosition = new Vector3(( 0.9f * ((float)health / startHealth) - 0.9f)/2f, healthValueTransform.localPosition.y, healthValueTransform.localPosition.z);
         }
         
-        UpdateMovement();
+        UpdateplayerController();
     }
 
     public void OnHit(int damage, bool shouldStun)
@@ -164,19 +162,18 @@ public class EnemyController : MonoBehaviour
 
         if (health <= 0 && isAlive)
         {
+            enemyTransform.gameObject.SetActive(false);
             Debug.Log($"{transform.name} has died!");
             //Drop the relevant item for the enemy
             if (hasDrop)
             {
-                theDrop.GetComponent<EnemyDrop>().DropTheShit(transform.position, transform.rotation, dropItemID);
+                theDrop.GetComponent<EnemyDrop>().DropTheShit(transform.position, transform.rotation);
             }
             isAlive = false;
 
-            enemyTransform.gameObject.SetActive(false);
-            Destroy(enemyTransform.gameObject, 0.5f);
         }
     }   
-    void UpdateMovement()
+    void UpdateplayerController()
     {
         if (wasJustHit)
         {
@@ -256,9 +253,9 @@ public class EnemyController : MonoBehaviour
     {
         int arrOffset = 0;
         var objects = FindObjectsByType<EnemyController>();
-        float colliderRad = GetComponent<CircleCollider2D>().radius * transform.localScale.x;
+        float colliderRad = GetComponent<CircleCollider2D>().radius;
 
-        Vector3 colliderOffset = (Vector3)GetComponent<CircleCollider2D>().offset * transform.localScale.x;
+        Vector3 colliderOffset = (Vector3)GetComponent<CircleCollider2D>().offset;
         Vector3 colliderCenter;
         GameObject[] gameObjects = new GameObject[objects.Length];
 
@@ -277,13 +274,13 @@ public class EnemyController : MonoBehaviour
             if (gameObject == null) continue;
             colliderCenter = enemyPos + colliderOffset;
             //Debug.Log($"Checking collision");
-            float otherColliderRad = gameObject.GetComponent<CircleCollider2D>().radius * gameObject.transform.localScale.x;
-            Vector3 otherColliderCenter = gameObject.transform.position + (Vector3)gameObject.GetComponent<CircleCollider2D>().offset * gameObject.transform.localScale.x;
+            float otherColliderRad = gameObject.GetComponent<CircleCollider2D>().radius;
+            Vector3 otherColliderCenter = gameObject.transform.position + (Vector3)gameObject.GetComponent<CircleCollider2D>().offset;
 
             float currentDistance = Vector3.Distance(colliderCenter, otherColliderCenter);
             float minDistance = colliderRad + otherColliderRad;
 
-            if (currentDistance < minDistance)
+            if (currentDistance < otherColliderRad + colliderRad)
             {
                 enemyPos += (colliderCenter - otherColliderCenter) * (minDistance - currentDistance);
                 enemyVel += (colliderCenter - otherColliderCenter) * (minDistance - currentDistance);
@@ -302,33 +299,24 @@ public class EnemyController : MonoBehaviour
     {
         if (!player.GetComponent<CircleCollider2D>().isActiveAndEnabled) return;
 
-        Vector3 colliderOffset = (Vector3)GetComponent<CircleCollider2D>().offset * transform.localScale.x;
-        Vector3 colliderCenter;
-        Vector3 playerColliderOffset = (Vector3)player.GetComponent<CircleCollider2D>().offset * player.transform.localScale.x;
-        Vector3 playerColliderCenter;
-        float colliderRad = GetComponent<CircleCollider2D>().radius * transform.localScale.x;
+        float colliderRad = GetComponent<CircleCollider2D>().radius;
 
-        colliderCenter = enemyPos + colliderOffset;
-        playerColliderCenter = player.transform.position + playerColliderOffset;
-        float playerColliderRad = player.GetComponent<CircleCollider2D>().radius * player.transform.localScale.x;
-        float currentDistance = Vector3.Distance(colliderCenter, playerColliderCenter);
-        float minDistance = colliderRad + playerColliderRad;
+        float playerColliderRad = player.GetComponent<CircleCollider2D>().radius;
 
-        if (currentDistance < minDistance)
+        if (playerDirection.magnitude < colliderRad + playerColliderRad)
         {
-            Debug.Log($"{playerDirection}");
-            Debug.Log($"Player Distance: {playerDirection.magnitude}, Player Collider Radius: {playerColliderRad}, Enemy Collider Radius: {colliderRad}, Total Collider Radius: {colliderRad + playerColliderRad}");
             // normalizedPlayerDirection is negative to make vector point away from player
-            enemyPos += (colliderCenter - playerColliderCenter) * (minDistance - currentDistance);
-            enemyVel += (colliderCenter - playerColliderCenter) * (minDistance - currentDistance);
+            enemyPos += -normalizedPlayerDirection * ((colliderRad + playerColliderRad) - playerDirection.magnitude);
+            enemyVel += -normalizedPlayerDirection * ((colliderRad + playerColliderRad) - playerDirection.magnitude);
 
             Debug.Log("Player Collision!");
 
             if (Time.time - timeAtLastAttack > attackDelay)
             {
-                timeAtLastAttack = Time.time;
                 playerController.OnHit(damage);
+                timeAtLastAttack = Time.time;
             }
+            funcInst.GetSiblingGameObject("Player").GetComponent<PlayerController>().OnHit(damage);
         }
 
         // leaving enemyTransform.position to keep function looking balanced

@@ -106,20 +106,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30b39334202e93e418ab9ead0d358a79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
-  maxSpeed: 3
+  maxSpeed: 5
   enemyTexture: {fileID: 2800000, guid: 3a930fff8cd3a134b9e9d6233f4bd552, type: 3}
-  health: 20
+  health: 100
   defense: 0
   acceleration: 15
-  damage: 2
+  damage: 10
   attackDelay: 100
-  PlayerDetectionRadius: 10
-  collisionLoops: 1
   theDrop: {fileID: 635679829543661334, guid: 3bb3630668b794b4f8528e7c95474a15, type: 3}
   animationDuration: 0.25
+  collisionLoops: 1
   isBoss: 0
   textureWidth: 64
-  textureHeight: 64
+  textureHeight: 76
+  timeSinceLastAttack: 0
 --- !u!58 &434141238252957824
 CircleCollider2D:
   m_ObjectHideFlags: 0
