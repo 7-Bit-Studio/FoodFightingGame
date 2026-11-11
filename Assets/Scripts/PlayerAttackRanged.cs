@@ -38,7 +38,7 @@ public class PlayerAttackRanged : MonoBehaviour
     {
         if(currentTarget == null)
         {
-            funcInst.Kill(transform.gameObject);
+            Kill();
             return;
         }
         AttackPos.position += deltaTime * AttackVel;
@@ -51,18 +51,18 @@ public class PlayerAttackRanged : MonoBehaviour
         if (funcInst.DotProduct(AttackDir, PrevFrameDir) < 0)
         {
             enemy.OnHit(damage, doesStun);
-            funcInst.Kill(transform.gameObject);
+            Kill();
         }
 
         if (Vector3.Distance(AttackPos.position, startPos) > maxDistance)
         {
-            funcInst.Kill(transform.gameObject);
+            Kill();
         }
 
         if (Vector3.Distance(AttackPos.position, currentTarget.transform.position) < 0.5f)
         {
             enemy.OnHit(damage, doesStun);
-            funcInst.Kill(transform.gameObject);
+            Kill();
         }
 
         PrevPos = AttackPos.position;
@@ -75,7 +75,7 @@ public class PlayerAttackRanged : MonoBehaviour
         // if targeted enemy is not active, return
         if (!enemy.activeSelf)
         {
-            funcInst.Kill(transform.gameObject);
+            Kill();
             return;
         }
 
@@ -86,7 +86,7 @@ public class PlayerAttackRanged : MonoBehaviour
         float distance = Vector3.Distance(enemy.transform.position, start);
         if(distance > maxDistance)
         {
-            funcInst.Kill(transform.gameObject);
+            Kill();
             return;
         }
 
@@ -118,12 +118,16 @@ public class PlayerAttackRanged : MonoBehaviour
         //                                               fixed!!^ VarTypes.Data.position is now a Vector3
         //                                               also this never used VarTypes.Data.position lol
         AttackPos.SetPositionAndRotation(startPos, funcInst.ToQuaternion(AttackVel.normalized));
-        Debug.Log($"{Time.time}: {AttackVel}");
+        //Debug.Log($"{Time.time}: {AttackVel}");
 
         // activate attack so it can move and be seen
         transform.gameObject.SetActive(true);
 
         // call UpdatePosition to update transform
         UpdatePosition();
+    }
+    private void Kill()
+    {
+        funcInst.Kill(transform.gameObject);
     }
 }

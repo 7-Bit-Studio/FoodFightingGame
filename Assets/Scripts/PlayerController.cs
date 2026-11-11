@@ -183,36 +183,59 @@ public class PlayerController : MonoBehaviour
     VarTypes.EnemyData[] GetNearbyEnemies()
     {
         EnemyController[] enemies = FindObjectsByType<EnemyController>();
-        List<VarTypes.EnemyData> livingEnemiesList = new();
+        VarTypes.EnemyData[] livingEnemiesList = new VarTypes.EnemyData[enemies.Length];
         if (enemies.Length == 0)
         {
             return livingEnemiesList.ToArray();
         }
 
+        //Debug.Log(enemies.Length);
+        VarTypes.EnemyData currentEnemy = new VarTypes.EnemyData();
+        int numOfRealEnemies = 0;
+        int currentIndex = 0;
         foreach (EnemyController enemy in enemies)
         {
             if (enemy.isFarAway) continue;
-            livingEnemiesList.Append(new VarTypes.EnemyData(enemy.gameObject, Vector3.Distance(transform.position, enemy.transform.position)));
+            if (enemy == null) continue;
+            numOfRealEnemies++;
+            //Debug.Log($"{enemy.name} is not far away");
+            currentEnemy.gameObject = enemy.gameObject;
+            currentEnemy.distance = Vector3.Distance(this.transform.position, enemy.transform.position);
+
+            livingEnemiesList[currentIndex] = currentEnemy;
+            currentIndex++;
         }
 
-        VarTypes.EnemyData[] nearbyLivingEnemies = livingEnemiesList.ToArray();
-        
+        VarTypes.EnemyData[] nearbyLivingEnemies = new VarTypes.EnemyData[numOfRealEnemies];
+        for (int i = 0; i < numOfRealEnemies; i++)
+        {
+            nearbyLivingEnemies[i] = livingEnemiesList[i];
+        }
 
         return nearbyLivingEnemies;
     }
 
     VarTypes.EnemyData[] GetNearbyLivingEnemies()
     {
-        EnemyController[] nearbyEnemies = GetNearbyEnemies().Select(d => d.gameObject).ToArray().Select(g => g.GetComponent<EnemyController>()).ToArray();
-        List<VarTypes.EnemyData> livingEnemiesList = new();
+        VarTypes.EnemyData[] enemyDatas = GetNearbyEnemies();
+        EnemyController[] nearbyEnemies = new EnemyController[enemyDatas.Length];
+        for(int i = 0; i < enemyDatas.Length; i++)
+        {
+            nearbyEnemies[i] = enemyDatas[i].gameObject.GetComponent<EnemyController>();
+        }
+        VarTypes.EnemyData[] livingEnemiesList = new VarTypes.EnemyData[enemyDatas.Length];
         if(nearbyEnemies.Length == 0)
         {
-            return livingEnemiesList.ToArray();
+            return livingEnemiesList;
         }
 
-        foreach(EnemyController enemy in nearbyEnemies)
+        EnemyController enemy;
+        for (int i = 0; i < nearbyEnemies.Length; i++)
         {
-            livingEnemiesList.Append(new VarTypes.EnemyData(enemy.gameObject, Vector3.Distance(transform.position, enemy.transform.position)));
+            enemy = nearbyEnemies[i];
+
+
+            livingEnemiesList[i] = new VarTypes.EnemyData(enemy.gameObject, Vector3.Distance(transform.position, enemy.transform.position));
         }
 
         VarTypes.EnemyData[] nearbyLivingEnemies = livingEnemiesList.ToArray();
@@ -222,7 +245,11 @@ public class PlayerController : MonoBehaviour
     
     void RangedAttack(GameObject enemy, int attackIndex)
     {
-        if (!cheatMode && Time.time - timeAtLastAttack < attackCooldown) return;
+        if (!cheatMode && Time.time - timeAtLastAttack < attackCooldown)
+        {
+            Debug.LogAssertion("not enough time, dumbass");
+            return;
+        }
 
         timeAtLastAttack = Time.time;
 
@@ -284,10 +311,12 @@ public class PlayerController : MonoBehaviour
         {
             if (Mouse.current.leftButton.isPressed || Mouse.current.rightButton.isPressed)
             {
+                //Debug.LogAssertion("Player Attacked!");
                 if(attackIndex == -1)
                 {
                     attackIndex = 0;
                 }
+                //Debug.LogAssertion($"{attackIndex}");
                 float minDistanceFromMouse = float.PositiveInfinity;
                 int indexOfMinDistance = -1;
                 for (int i = 0; i < nearbyLivingEnemies.Length; i++)
@@ -301,7 +330,8 @@ public class PlayerController : MonoBehaviour
                         indexOfMinDistance = i;
                     }
                 }
-
+                //Debug.LogAssertion($"{indexOfMinDistance}");
+                //Debug.LogAssertion($"{minDistanceFromMouse}");
                 if (indexOfMinDistance == -1) return;
 
                 bool isRangedAttack = Mouse.current.leftButton.isPressed && cheatMode || Mouse.current.leftButton.wasPressedThisFrame && !cheatMode;
@@ -440,7 +470,7 @@ public class PlayerController : MonoBehaviour
         data.health = health;
         timeAtLastHit = Time.time;
 
-        Debug.Log($"Player took {dealtDamage} damage. Health is now {health}. Time since last hit: {Time.time - timeAtLastHit}");
+        //Debug.Log($"Player took {dealtDamage} damage. Health is now {health}. Time since last hit: {Time.time - timeAtLastHit}");
 
         if (health <= 0 && canDie && !cheatMode)
         {

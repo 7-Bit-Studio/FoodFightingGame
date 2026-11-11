@@ -242,6 +242,11 @@ namespace Assets.Globals
         {
             public string name;
             public int id;
+            public Item(string name, int id)
+            {
+                this.name = name;
+                this.id = id;
+            }
         }
 
         public struct EnemyData

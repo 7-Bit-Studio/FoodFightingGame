@@ -1,10 +1,10 @@
 using Assets.Globals;
 using System;
 using System.Collections.Generic;
+using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.iOS;
-using Assets.Globals;
 
 public class PlayerInventory : MonoBehaviour
 {
@@ -14,6 +14,23 @@ public class PlayerInventory : MonoBehaviour
     {
         items.Clear();
         Debug.Log("list count = " + items.Count);
+    }
+
+    public void AddItemToInventory(VarTypes.Item item)
+    {
+        AddItemToInventory(item.id);
+    }
+
+    public void AddItemToInventory(int itemID)
+    {
+        for(int i = 0; i < GlobalVars.items.Length; i++)
+        {
+            if (GlobalVars.items[i].id == itemID)
+            {
+                AddItemToInventory(GlobalVars.items[i]);
+                break;
+            }
+        }
     }
 
     // Update is called once per frame

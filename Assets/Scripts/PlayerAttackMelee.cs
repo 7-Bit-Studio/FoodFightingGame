@@ -41,7 +41,7 @@ public class PlayerAttackMelee : MonoBehaviour
         {
             if (Mathf.Abs(startRot - AttackAngle) > swingAngle)
             {
-                Debug.Log($"Attack finished. Angle: {startRot - AttackAngle}");
+                //Debug.Log($"Attack finished. Angle: {startRot - AttackAngle}");
                 Destroy(transform.gameObject);
             }
             else
@@ -50,8 +50,8 @@ public class PlayerAttackMelee : MonoBehaviour
                 AttackAngle += swingSpeed * deltaTime;
                 transform.position = new Vector3(Mathf.Sin(AttackAngle * Mathf.Deg2Rad) * 0.5f * range + playerData.position.x, -Mathf.Cos(AttackAngle * Mathf.Deg2Rad) * 0.5f * range + playerData.position.y, 0);
                 transform.localRotation = Quaternion.Euler(0, 0, AttackAngle);
-                Debug.Log($"Attacking. Angle: {startRot - AttackAngle}");
-                Debug.Log($"{startRot} vs {AttackAngle}");
+                //Debug.Log($"Attacking. Angle: {startRot - AttackAngle}");
+                //Debug.Log($"{startRot} vs {AttackAngle}");
             }
         }
     }
@@ -62,11 +62,11 @@ public class PlayerAttackMelee : MonoBehaviour
         // if targeted enemy is not active, return
         if (!enemy.activeSelf)
         {
-            funcInst.Kill(transform.gameObject);
+            Kill();
         }
         if(transform.gameObject.activeSelf)
         {
-            funcInst.Kill(transform.gameObject);
+            Kill();
         }
         //startTime = Time.time;
 
@@ -81,8 +81,8 @@ public class PlayerAttackMelee : MonoBehaviour
 
         if(distance > range)
         {
-            Debug.Log($"Enemy is out of range. Distance: {distance}, Range: {range}");
-            Destroy(transform.gameObject);
+            //Debug.Log($"Enemy is out of range. Distance: {distance}, Range: {range}");
+            Kill();
             return;
         }
 
@@ -99,10 +99,14 @@ public class PlayerAttackMelee : MonoBehaviour
             if (!collider.gameObject.CompareTag("Enemy")) continue;
 
             collider.GetComponent<EnemyController>().OnHit(damage, doesStun);
-            Debug.Log($"Hit enemy {enemy.name} for {damage} damage.");
+            //Debug.Log($"Hit enemy {enemy.name} for {damage} damage.");
         }
 
         // activate attack so it can move and be seen
         transform.gameObject.SetActive(true);
+    }
+    private void Kill()
+    {
+        funcInst.Kill(transform.gameObject);
     }
 }
