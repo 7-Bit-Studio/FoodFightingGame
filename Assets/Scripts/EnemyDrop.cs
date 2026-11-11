@@ -1,12 +1,14 @@
 using Assets.Globals;
+using Unity.VisualScripting;
 using UnityEngine;
 public class EnemyDrop : MonoBehaviour
 {
     [SerializeField] private GameObject theItem;
     [SerializeField] private PlayerInventory pInventory;
-    private int count;
+    public int itemID;
     private readonly Functions funcs = new();
     private readonly FunctionsInstance funcInst = new();
+    
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -15,29 +17,39 @@ public class EnemyDrop : MonoBehaviour
     }
 
     //The code to spawn the item in the world
-    public void DropTheShit(Vector3 pos, Quaternion rotation)
+    public void DropTheShit(Vector3 position, Quaternion rotation, int itemID)
     {
         //Spawn the object
-        Instantiate(this, pos, rotation);
-        Debug.Log("Object has Spawned!");
+        GameObject droppedItem = new GameObject("Dropped Item", typeof(EnemyDrop), typeof(CircleCollider2D), typeof(Rigidbody2D));
+        GameObject sprite = new GameObject("Sprite", typeof(SpriteRenderer));
+
+        sprite.transform.parent = droppedItem.transform;
+        sprite.GetComponent<SpriteRenderer>().sprite = gameObject.GetComponent<SpriteRenderer>().sprite;
+        sprite.transform.localScale = Vector3.one / 2;
+
+        droppedItem.GetComponent<EnemyDrop>().itemID = itemID;
+        droppedItem.GetComponent<CircleCollider2D>().radius = gameObject.GetComponent<CircleCollider2D>().radius * 0.5f;
+        droppedItem.GetComponent<CircleCollider2D>().isTrigger = true;
+        droppedItem.GetComponent<Rigidbody2D>().gravityScale = 0;
+        droppedItem.tag = "Item";
+
+        droppedItem.transform.SetPositionAndRotation(position, rotation);
+        droppedItem.name = $"{GlobalVars.items[itemID].name}";
+        //Debug.Log("Object has Spawned!");
        
     }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log("Collided!!");
         if (collision.GetComponent<PlayerController>() == null) { return; }
-        Debug.Log("Trigger Detected!");
+
+        //collision.GetComponent<PlayerInventory>().AddItemToInventory(itemID);
 
         pInventory = collision.GetComponent<PlayerInventory>();
 
-        count = pInventory.items.Count;
-
-        Debug.Log(pInventory.items.Count);
-        pInventory.items.Add(theItem);
-
-        Debug.Log(pInventory.items.Count);
-        Debug.Log(pInventory.items[count]);
-
-        funcInst.Kill(transform.gameObject);
+        //Debug.Log(pInventory.items.Count);
+        pInventory.items.Add(GlobalVars.items[itemID]);
+        Destroy(this.gameObject);
     }
 }

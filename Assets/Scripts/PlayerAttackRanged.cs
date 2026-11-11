@@ -5,20 +5,21 @@ using System.Collections;
 
 public class PlayerAttackRanged : MonoBehaviour
 {
-    [SerializeField] private int damage = 10;
-    [SerializeField] private float speed = 20;
-    [SerializeField] public float maxDistance = 10;
-    [SerializeField] private bool doesStun = true;
+    public int damage = 10;
+    public float speed = 20;
+    public float maxDistance = 10;
+    public bool doesStun = true;
     private Vector3 AttackVel;
     private Transform AttackPos;
     private float deltaTime;
     private Vector2 startPos;
     private GameObject currentTarget;
-    private Functions funcs = new();
-    private FunctionsInstance funcInst = new();
+    private readonly Functions funcs = new();
+    private readonly FunctionsInstance funcInst = new();
     private Vector3 PrevPos;
     private Vector2 AttackDir;
     private Vector2 PrevFrameDir;
+    private EnemyController enemy;
     void Awake()
     {
         AttackPos = GetComponent<Transform>();
@@ -35,27 +36,33 @@ public class PlayerAttackRanged : MonoBehaviour
     }
     void UpdatePosition()
     {
-
+        if(currentTarget == null)
+        {
+            Kill();
+            return;
+        }
         AttackPos.position += deltaTime * AttackVel;
         AttackPos.rotation = Quaternion.Euler(new Vector3(0, 0, Mathf.Rad2Deg * Mathf.Atan2(-AttackVel.x, AttackVel.y)));
 
         transform.SetPositionAndRotation(AttackPos.position, AttackPos.rotation);
+        
+        enemy = currentTarget.GetComponent<EnemyController>();
 
         if (funcInst.DotProduct(AttackDir, PrevFrameDir) < 0)
         {
-            currentTarget.GetComponent<EnemyController>().OnHit(damage, doesStun);
-            funcInst.Kill(transform.gameObject);
+            enemy.OnHit(damage, doesStun);
+            Kill();
         }
 
         if (Vector3.Distance(AttackPos.position, startPos) > maxDistance)
         {
-            funcInst.Kill(transform.gameObject);
+            Kill();
         }
 
         if (Vector3.Distance(AttackPos.position, currentTarget.transform.position) < 0.5f)
         {
-            currentTarget.GetComponent<EnemyController>().OnHit(damage, doesStun);
-            funcInst.Kill(transform.gameObject);
+            enemy.OnHit(damage, doesStun);
+            Kill();
         }
 
         PrevPos = AttackPos.position;
@@ -68,7 +75,7 @@ public class PlayerAttackRanged : MonoBehaviour
         // if targeted enemy is not active, return
         if (!enemy.activeSelf)
         {
-            funcInst.Kill(transform.gameObject);
+            Kill();
             return;
         }
 
@@ -79,7 +86,7 @@ public class PlayerAttackRanged : MonoBehaviour
         float distance = Vector3.Distance(enemy.transform.position, start);
         if(distance > maxDistance)
         {
-            funcInst.Kill(transform.gameObject);
+            Kill();
             return;
         }
 
@@ -98,9 +105,9 @@ public class PlayerAttackRanged : MonoBehaviour
         Vector3 direction = ((distance/speed) * data.velocity) + data.position - start;
         AttackDir = direction.normalized;
         PrevFrameDir = AttackDir;
-        Debug.Log($"{data.transform.position} vs {data.position}");
-        Debug.Log($"Speed: {speed}");
-        Debug.Log($"{distance / speed * data.velocity}");
+        //Debug.Log($"{data.transform.position} vs {data.position}");
+        //Debug.Log($"Speed: {speed}");
+        //Debug.Log($"{distance / speed * data.velocity}");
 
         // set Velocity so that attack, y'know, moves
         AttackVel = direction.normalized * speed;
@@ -110,14 +117,17 @@ public class PlayerAttackRanged : MonoBehaviour
         // update the VarTypes.Data.position clusterfuck (why is VarTypes.Data.position a Transform?????)
         //                                               fixed!!^ VarTypes.Data.position is now a Vector3
         //                                               also this never used VarTypes.Data.position lol
-        AttackPos.position = startPos;
-        AttackPos.rotation = funcInst.ToQuaternion(AttackVel.normalized);
-        Debug.Log($"{Time.time}: {AttackVel}");
+        AttackPos.SetPositionAndRotation(startPos, funcInst.ToQuaternion(AttackVel.normalized));
+        //Debug.Log($"{Time.time}: {AttackVel}");
 
         // activate attack so it can move and be seen
         transform.gameObject.SetActive(true);
 
         // call UpdatePosition to update transform
         UpdatePosition();
+    }
+    private void Kill()
+    {
+        funcInst.Kill(transform.gameObject);
     }
 }

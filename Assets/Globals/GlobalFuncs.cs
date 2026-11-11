@@ -10,6 +10,15 @@ namespace Assets.Globals
     /// </summary>
     public readonly struct Functions
     {
+        // Source - https://stackoverflow.com/a/35167170
+        // Posted by Fattie, modified by community. See post 'Timeline' for change history
+        // Retrieved 2026-11-10, License - CC BY-SA 4.0
+
+        public static bool HasComponent<T>(GameObject obj) where T : Component
+        {
+            return obj.GetComponent<T>() != null;
+        }
+
         public static Vector3 Friction(Vector3 vel, float fricCoef)
         {
             return vel * fricCoef;
@@ -180,6 +189,7 @@ namespace Assets.Globals
     /// </summary>
     public readonly struct FunctionsInstance
     {
+        public bool HasComponent<T>(GameObject obj) where T : Component => Functions.HasComponent<T>(obj);
         public Vector3 Friction(Vector3 vel, float fricCoef) => Functions.Friction(vel, fricCoef);
 
         public Sprite[] SliceGrid(Texture2D tex, int cellW, int cellH, float ppu = 100f) => Functions.SliceGrid(tex, cellW, cellH, ppu);
@@ -209,7 +219,7 @@ namespace Assets.Globals
         public void Kill(GameObject gameobject) => Functions.Kill(gameobject);
     }
 
-    public struct VarTypes
+    public class VarTypes
     {
         public enum Direction
         {
@@ -227,5 +237,50 @@ namespace Assets.Globals
             public Direction direction;
             public int health;
         }
+        [Serializable]
+        public struct Item
+        {
+            public string name;
+            public int id;
+            public Item(string name, int id)
+            {
+                this.name = name;
+                this.id = id;
+            }
+        }
+
+        public struct EnemyData
+        {
+            public GameObject gameObject;
+            public float distance;
+            public EnemyData(GameObject gameObject, float distance)
+            {
+                this.gameObject = gameObject;
+                this.distance = distance;
+            }
+        }
+
+    }
+
+    public class GlobalVars
+    {
+        public static VarTypes.Item[] items = {
+            new() {
+                name = "Borgor Shield",
+                id = 0
+            },
+            new() {
+                name = "Ketchup Bottle",
+                id = 1
+            },
+            new() {
+                name = "Example Item 3",
+                id = 2
+            },
+            new(){
+                name = "Example Item 4",
+                id = 3
+            }
+        };
     }
 }
