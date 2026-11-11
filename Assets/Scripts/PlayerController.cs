@@ -1,6 +1,7 @@
 // System
 using System;
 using System.Linq;
+using System.Collections.Generic;
 // Custom funcs and variable types
 using Assets.Globals;
 // Unity
@@ -9,6 +10,7 @@ using UnityEngine.U2D;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.Rendering;
+using Unity.VisualScripting;
 
 
 [RequireComponent(typeof(Transform))]
@@ -28,10 +30,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float attackRange = 2.5f;
     [SerializeField] private GameObject[] MeleeAttacks;
     [SerializeField] private GameObject[] RangedAttacks;
-    [SerializeField] private bool CheatMode = false;
+    [SerializeField] private bool cheatMode = false;
     [SerializeField] private float attackLenience = 0.5f;
     [SerializeField] private float attackCooldown = 0.5f;
-    
     
     // PlayerData Values
     [Header("Health Settings")]
@@ -46,6 +47,7 @@ public class PlayerController : MonoBehaviour
     private VarTypes.Data data;
     private Vector2 moveInputVector2;
     private Vector3 moveInput;
+    private int baseMult = 1;
 
     // PlayerController values
     private Transform playerTransform;
@@ -54,12 +56,11 @@ public class PlayerController : MonoBehaviour
 
     // DeltaTime
     private float deltaTime;
-    private GameObject[] livingEnemies;
-    private float[] enemyDistances;
+    private VarTypes.EnemyData[] nearbyLivingEnemies;
     private LineRenderer lineRenderer;
     private float timeAtLastAttack;
     private readonly Functions funcs = new();
-    private FunctionsInstance funcInst = new();
+    private readonly FunctionsInstance funcInst = new();
     private int animationDirectionMultiplier = 1;
 
     // Player Animation
@@ -70,11 +71,11 @@ public class PlayerController : MonoBehaviour
     private float timeAtLastHit;
     private float timeAtLastDash;
     private int attackIndex = -1;
+    public VarTypes.Item[] inventory;
     [SerializeField] private GameObject playerMeleeAttackPrefab;
     [SerializeField] private GameObject playerRangedAttackPrefab;
     void Awake()
     {
-
         // Preliminary checks
         if (moveActionReference == null)
         {
@@ -86,7 +87,7 @@ public class PlayerController : MonoBehaviour
 
         if(lineRenderer == null)
         {
-            lineRenderer = new GameObject().AddComponent<LineRenderer>();
+            lineRenderer = new GameObject("linerenderer").AddComponent<LineRenderer>();
         }
 
         if(MeleeAttacks == null || MeleeAttacks.Length == 0)
@@ -101,8 +102,7 @@ public class PlayerController : MonoBehaviour
         if (GameOverScreen == null)
         {
             Debug.LogWarning("GameOverScreen is not assigned in the inspector.");
-            GameOverScreen = new GameObject("GameOverScreen");
-            GameOverScreen.AddComponent<GameOver>();
+            GameOverScreen = new GameObject("GameOverScreen", typeof(GameOver));
             GameOverScreen.SetActive(false);
         }
         MeleeAttacks[0].GetComponent<PlayerAttackMelee>().range = attackRange;
@@ -142,6 +142,14 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
+        if(cheatMode)
+        {
+            baseMult = 1000;
+        }
+        if(!cheatMode)
+        {
+            baseMult = 1;
+        }
 
         if (Time.time - timeAtLastSpriteUpdate > 0.33f)
         {
@@ -162,42 +170,65 @@ public class PlayerController : MonoBehaviour
         // Move Input Vector
         moveInputVector2 = moveAction != null ? moveAction.ReadValue<Vector2>() : Vector2.zero;
         moveInput = (Vector3)moveInputVector2;
-        
+
+        inventory = GlobalVars.items;
 
         UpdateMovement();
 
         UpdatePlayerFacingDirection();
-        livingEnemies = GetLivingEnemies();
+        nearbyLivingEnemies = GetNearbyLivingEnemies();
         DrawCircle(attackRange, transform.position, 0.01f);
     }
 
-    GameObject[] GetLivingEnemies()
+    VarTypes.EnemyData[] GetNearbyEnemies()
     {
         EnemyController[] enemies = FindObjectsByType<EnemyController>();
-        GameObject[] livingEnemies = new GameObject[enemies.Length];
-        enemyDistances = new float[enemies.Length];
-
-        for (int i = 0; i < enemies.Length; i++)
+        List<VarTypes.EnemyData> livingEnemiesList = new();
+        if (enemies.Length == 0)
         {
-            EnemyController enemy = enemies[i];
-            livingEnemies[i] = enemy.gameObject;
-            enemyDistances[i] = Vector3.Distance(transform.position, enemy.transform.position);
+            return livingEnemiesList.ToArray();
         }
 
-        return livingEnemies;
+        foreach (EnemyController enemy in enemies)
+        {
+            if (enemy.isFarAway) continue;
+            livingEnemiesList.Append(new VarTypes.EnemyData(enemy.gameObject, Vector3.Distance(transform.position, enemy.transform.position)));
+        }
+
+        VarTypes.EnemyData[] nearbyLivingEnemies = livingEnemiesList.ToArray();
+        
+
+        return nearbyLivingEnemies;
+    }
+
+    VarTypes.EnemyData[] GetNearbyLivingEnemies()
+    {
+        EnemyController[] nearbyEnemies = GetNearbyEnemies().Select(d => d.gameObject).ToArray().Select(g => g.GetComponent<EnemyController>()).ToArray();
+        List<VarTypes.EnemyData> livingEnemiesList = new();
+        if(nearbyEnemies.Length == 0)
+        {
+            return livingEnemiesList.ToArray();
+        }
+
+        foreach(EnemyController enemy in nearbyEnemies)
+        {
+            livingEnemiesList.Append(new VarTypes.EnemyData(enemy.gameObject, Vector3.Distance(transform.position, enemy.transform.position)));
+        }
+
+        VarTypes.EnemyData[] nearbyLivingEnemies = livingEnemiesList.ToArray();
+
+        return nearbyLivingEnemies;
     }
     
     void RangedAttack(GameObject enemy, int attackIndex)
     {
-        if (!CheatMode && Time.time - timeAtLastAttack < attackCooldown) return;
+        if (!cheatMode && Time.time - timeAtLastAttack < attackCooldown) return;
 
         timeAtLastAttack = Time.time;
 
-        GameObject playerAttack = new();
-        playerAttack.AddComponent<PlayerAttackRanged>();
-        playerAttack.GetComponent<PlayerAttackRanged>().maxDistance = attackRange;
-        playerAttack.GetComponent<PlayerAttackRanged>().damage = RangedAttacks[attackIndex].GetComponent<PlayerAttackRanged>().damage;
-        playerAttack.AddComponent<SpriteRenderer>();
+        GameObject playerAttack = new GameObject("Ranged Attack", typeof(PlayerAttackRanged), typeof(SpriteRenderer));
+        playerAttack.GetComponent<PlayerAttackRanged>().maxDistance = baseMult * attackRange;
+        playerAttack.GetComponent<PlayerAttackRanged>().damage = baseMult * RangedAttacks[attackIndex].GetComponent<PlayerAttackRanged>().damage;
         playerAttack.GetComponent<SpriteRenderer>().sprite = RangedAttacks[attackIndex].GetComponent<SpriteRenderer>().sprite;
         playerAttack.GetComponent<PlayerAttackRanged>().speed = RangedAttacks[attackIndex].GetComponent<PlayerAttackRanged>().speed;
         playerAttack.GetComponent<PlayerAttackRanged>().doesStun = RangedAttacks[attackIndex].GetComponent<PlayerAttackRanged>().doesStun;
@@ -213,16 +244,15 @@ public class PlayerController : MonoBehaviour
 
     void MeleeAttack(GameObject enemy, int attackIndex)
     {
-        if (!CheatMode && Time.time - timeAtLastAttack < attackCooldown) return;
+        if (!cheatMode && Time.time - timeAtLastAttack < attackCooldown) return;
         timeAtLastAttack = Time.time;
-        GameObject playerAttack = new();
-        playerAttack.AddComponent<PlayerAttackMelee>();
+        GameObject playerAttack = new GameObject("Melee Attack", typeof(PlayerAttackMelee), typeof(SpriteRenderer));
         playerAttack.GetComponent<PlayerAttackMelee>().swingSpeed = MeleeAttacks[attackIndex].GetComponent<PlayerAttackMelee>().swingSpeed;
         playerAttack.GetComponent<PlayerAttackMelee>().swingAngle = MeleeAttacks[attackIndex].GetComponent<PlayerAttackMelee>().swingAngle;
-        playerAttack.GetComponent<PlayerAttackMelee>().range = attackRange;
+        playerAttack.GetComponent<PlayerAttackMelee>().range = baseMult * attackRange;
         playerAttack.GetComponent<PlayerAttackMelee>().doesStun = MeleeAttacks[attackIndex].GetComponent<PlayerAttackMelee>().doesStun;
-        playerAttack.AddComponent<SpriteRenderer>();
         playerAttack.GetComponent<SpriteRenderer>().sprite = MeleeAttacks[attackIndex].GetComponent<SpriteRenderer>().sprite;
+        playerAttack.GetComponent<PlayerAttackMelee>().damage = baseMult * MeleeAttacks[attackIndex].GetComponent<PlayerAttackMelee>().damage;
         playerAttack.transform.localScale = MeleeAttacks[attackIndex].transform.localScale;
         playerAttack.GetComponent<PlayerAttackMelee>().OnAttack(enemy, playerPos);
         //playerAttack.SetActive(true);
@@ -250,7 +280,7 @@ public class PlayerController : MonoBehaviour
 
         Vector2 MouseInWorldPosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
         float MouseDistanceFromPlayer = Vector2.Distance(MouseInWorldPosition, playerPos);
-        if (MouseDistanceFromPlayer <= attackRange)
+        if (MouseDistanceFromPlayer <= baseMult * attackRange)
         {
             if (Mouse.current.leftButton.isPressed || Mouse.current.rightButton.isPressed)
             {
@@ -260,10 +290,11 @@ public class PlayerController : MonoBehaviour
                 }
                 float minDistanceFromMouse = float.PositiveInfinity;
                 int indexOfMinDistance = -1;
-                for (int i = 0; i < livingEnemies.Length; i++)
+                for (int i = 0; i < nearbyLivingEnemies.Length; i++)
                 {
-                    float currDistFromMouse = Vector3.Distance(MouseInWorldPosition, livingEnemies[i].transform.position);
-                    if (currDistFromMouse > attackLenience) continue;
+                    float currDistFromMouse = Vector3.Distance(MouseInWorldPosition, nearbyLivingEnemies[i].gameObject.transform.position);
+                    if (currDistFromMouse > baseMult * attackLenience) continue;
+                    if (nearbyLivingEnemies[i].distance > attackRange) continue;
                     if (minDistanceFromMouse > currDistFromMouse)
                     {
                         minDistanceFromMouse = currDistFromMouse;
@@ -273,15 +304,15 @@ public class PlayerController : MonoBehaviour
 
                 if (indexOfMinDistance == -1) return;
 
-                bool isRangedAttack = Mouse.current.leftButton.isPressed && CheatMode || Mouse.current.leftButton.wasPressedThisFrame && !CheatMode;
-                bool isMeleeAttack = Mouse.current.rightButton.isPressed && CheatMode || Mouse.current.rightButton.wasPressedThisFrame && !CheatMode;
+                bool isRangedAttack = Mouse.current.leftButton.isPressed && cheatMode || Mouse.current.leftButton.wasPressedThisFrame && !cheatMode;
+                bool isMeleeAttack = Mouse.current.rightButton.isPressed && cheatMode || Mouse.current.rightButton.wasPressedThisFrame && !cheatMode;
                 if (isRangedAttack)
                 {
-                    RangedAttack(livingEnemies[indexOfMinDistance], attackIndex);
+                    RangedAttack(nearbyLivingEnemies[indexOfMinDistance].gameObject, attackIndex);
                 }
                 if (isMeleeAttack)
                 {
-                    MeleeAttack(livingEnemies[indexOfMinDistance], attackIndex);
+                    MeleeAttack(nearbyLivingEnemies[indexOfMinDistance].gameObject, attackIndex);
                 }
             }
         }
@@ -411,7 +442,7 @@ public class PlayerController : MonoBehaviour
 
         Debug.Log($"Player took {dealtDamage} damage. Health is now {health}. Time since last hit: {Time.time - timeAtLastHit}");
 
-        if (health <= 0 && canDie)
+        if (health <= 0 && canDie && !cheatMode)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }

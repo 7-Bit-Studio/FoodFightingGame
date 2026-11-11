@@ -8,6 +8,7 @@ using UnityEngine.U2D;
 using Assets.Globals;
 using Unity.VisualScripting;
 using UnityEngine.UI;
+using UnityEngine.Rendering;
 
 public class EnemyController : MonoBehaviour
 {
@@ -19,7 +20,6 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private float acceleration = 0.2f;
     [SerializeField] private int damage = 10;
     [SerializeField] private float attackDelay = 100;
-    [SerializeField] private float PlayerDetectionRadius = 10f;
     [SerializeField] private int collisionLoops = 1;
     [SerializeField] private GameObject theDrop;
     [Header("Animation Settings")]
@@ -27,7 +27,10 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private bool isBoss = false;
     [SerializeField] private int textureWidth = 64;
     [SerializeField] private int textureHeight = 76;
+    [SerializeField] private float enterDetectionRadius = 10f;
+    [SerializeField] private float exitDetectionRadius = 15f;
     public int dropItemID = 0;
+    private bool hasDetectedPlayer = false;
 
     // EnemyController values
     private Transform enemyTransform;
@@ -57,7 +60,7 @@ public class EnemyController : MonoBehaviour
     private GameObject healthBar;
     private Transform healthValueTransform;
     private int startHealth;
-
+    public bool isFarAway = false;
 
 
     private bool isAlive;
@@ -112,23 +115,43 @@ public class EnemyController : MonoBehaviour
         if (!transform.gameObject.activeSelf) return;
         if (health <= 0)
         {
-            transform.gameObject.SetActive(false);
+            Kill();
             return;
         }
 
-        playerData = playerController.GetData();
+        Vector2 ScreenPos = Camera.main.WorldToScreenPoint(enemyPos);
+        ScreenPos.x /= Camera.main.pixelWidth;
+        ScreenPos.y /= Camera.main.pixelHeight;
+        ScreenPos *= 2;
+        ScreenPos -= Vector2.one;
 
-        if(Vector3.Distance(enemyPos, playerData.position) <= PlayerDetectionRadius)
-        {
-            playerDirection = playerData.position - transform.position;
-            normalizedPlayerDirection = playerDirection.normalized;
-        }
+        Debug.Log($"Screen Position: {ScreenPos}");
+        if (Mathf.Abs(ScreenPos.x) > 3 || Mathf.Abs(ScreenPos.y) > 3) isFarAway = true;
+        else isFarAway = false;
+
+
+        if (isFarAway) return;
+
+        playerData = playerController.GetData();
 
         deltaTime = Time.deltaTime;
 
+        if (Vector3.Distance(enemyPos, playerData.position) < enterDetectionRadius)
+        {
+            playerDirection = playerData.position - transform.position;
+            normalizedPlayerDirection = playerDirection.normalized;
+            hasDetectedPlayer = true;
+        }
+        
+        if (Vector3.Distance(enemyPos, playerData.position) > exitDetectionRadius)
+        {
+            hasDetectedPlayer = false;
+        }
+
+
         if (Time.time - timeAtLastSpriteUpdate > animationDuration)
         {
-            currentSprite = enemySprites[currentSpriteIndex];   
+            currentSprite = enemySprites[currentSpriteIndex];
             timeAtLastSpriteUpdate = Time.time;
             GetComponent<SpriteRenderer>().sprite = currentSprite;
             currentSpriteIndex += 1;
@@ -142,9 +165,9 @@ public class EnemyController : MonoBehaviour
             // no, setting localScale.x to a number doesn't work
             // same with localPosition
             healthValueTransform.localScale = new Vector3(health * 0.9f / startHealth, healthValueTransform.localScale.y, healthValueTransform.localScale.z);
-            healthValueTransform.localPosition = new Vector3(( 0.9f * ((float)health / startHealth) - 0.9f)/2f, healthValueTransform.localPosition.y, healthValueTransform.localPosition.z);
+            healthValueTransform.localPosition = new Vector3((0.9f * ((float)health / startHealth) - 0.9f) / 2f, healthValueTransform.localPosition.y, healthValueTransform.localPosition.z);
         }
-        
+
         UpdateMovement();
     }
 
@@ -155,7 +178,7 @@ public class EnemyController : MonoBehaviour
 
         health -= dealtDamage;
 
-        Debug.Log($"{transform.name} was hit for {damage} damage!");
+        //Debug.Log($"{transform.name} was hit for {damage} damage!");
 
         enemyVel = -normalizedPlayerDirection * 3;
         hitTime = Time.time;
@@ -164,18 +187,22 @@ public class EnemyController : MonoBehaviour
 
         if (health <= 0 && isAlive)
         {
-            Debug.Log($"{transform.name} has died!");
+            //Debug.Log($"{transform.name} has died!");
             //Drop the relevant item for the enemy
-            if (hasDrop)
-            {
-                theDrop.GetComponent<EnemyDrop>().DropTheShit(transform.position, transform.rotation, dropItemID);
-            }
-            isAlive = false;
-
-            enemyTransform.gameObject.SetActive(false);
-            Destroy(enemyTransform.gameObject, 0.5f);
+            Kill();
         }
-    }   
+    }
+    void Kill()
+    {
+        if (hasDrop)
+        {
+            theDrop.GetComponent<EnemyDrop>().DropTheShit(transform.position, transform.rotation, theDrop.GetComponent<EnemyDrop>().itemID);
+        }
+        isAlive = false;
+
+        enemyTransform.gameObject.SetActive(false);
+        Destroy(enemyTransform.gameObject, 0.5f);
+    }
     void UpdateMovement()
     {
         if (wasJustHit)
@@ -210,16 +237,19 @@ public class EnemyController : MonoBehaviour
 
         if(maxSpeed == 0)
         {
-            Debug.LogWarning($"{transform.name}: Max speed is set to 0. Enemy will not move.");
+            //Debug.LogWarning($"{transform.name}: Max speed is set to 0. Enemy will not move.");
             enemyVel = Vector3.zero;
             return;
         }
 
-        enemyVel += ((acceleration * normalizedPlayerDirection) - Functions.Friction(enemyVel, acceleration/maxSpeed)) * deltaTime;
-
-        if (enemyVel.sqrMagnitude > maxSpeed * maxSpeed)
+        
+        if(hasDetectedPlayer)
         {
-            enemyVel = enemyVel.normalized * maxSpeed;
+            enemyVel += ((acceleration * normalizedPlayerDirection) - Functions.Friction(enemyVel, acceleration/maxSpeed)) * deltaTime;
+        }
+        else
+        {
+            enemyVel -= Functions.Friction(enemyVel, acceleration / maxSpeed) * deltaTime;
         }
 
         data.velocity = enemyVel;
@@ -287,7 +317,7 @@ public class EnemyController : MonoBehaviour
             {
                 enemyPos += (colliderCenter - otherColliderCenter) * (minDistance - currentDistance);
                 enemyVel += (colliderCenter - otherColliderCenter) * (minDistance - currentDistance);
-                Debug.Log("Collision!");
+                //Debug.Log("Collision!");
             }
 
             // leaving enemyTransform.position to keep function looking balanced

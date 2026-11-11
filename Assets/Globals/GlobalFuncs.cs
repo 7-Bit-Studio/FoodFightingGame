@@ -10,6 +10,15 @@ namespace Assets.Globals
     /// </summary>
     public readonly struct Functions
     {
+        // Source - https://stackoverflow.com/a/35167170
+        // Posted by Fattie, modified by community. See post 'Timeline' for change history
+        // Retrieved 2026-11-10, License - CC BY-SA 4.0
+
+        public static bool HasComponent<T>(GameObject obj) where T : Component
+        {
+            return obj.GetComponent<T>() != null;
+        }
+
         public static Vector3 Friction(Vector3 vel, float fricCoef)
         {
             return vel * fricCoef;
@@ -180,6 +189,7 @@ namespace Assets.Globals
     /// </summary>
     public readonly struct FunctionsInstance
     {
+        public bool HasComponent<T>(GameObject obj) where T : Component => Functions.HasComponent<T>(obj);
         public Vector3 Friction(Vector3 vel, float fricCoef) => Functions.Friction(vel, fricCoef);
 
         public Sprite[] SliceGrid(Texture2D tex, int cellW, int cellH, float ppu = 100f) => Functions.SliceGrid(tex, cellW, cellH, ppu);
@@ -234,7 +244,22 @@ namespace Assets.Globals
             public int id;
         }
 
-        public static Item[] items = {
+        public struct EnemyData
+        {
+            public GameObject gameObject;
+            public float distance;
+            public EnemyData(GameObject gameObject, float distance)
+            {
+                this.gameObject = gameObject;
+                this.distance = distance;
+            }
+        }
+
+    }
+
+    public class GlobalVars
+    {
+        public static VarTypes.Item[] items = {
             new() {
                 name = "Borgor Shield",
                 id = 0
@@ -252,7 +277,5 @@ namespace Assets.Globals
                 id = 3
             }
         };
-
-        public static Item[] GetItems(){ return items; }
     }
 }

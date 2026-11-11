@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 9005301812023351134}
   m_Layer: 0
   m_Name: garlic
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -113,13 +113,17 @@ MonoBehaviour:
   acceleration: 15
   damage: 10
   attackDelay: 100
-  PlayerDetectionRadius: 10
   collisionLoops: 1
   theDrop: {fileID: 0}
   animationDuration: 0.25
   isBoss: 0
   textureWidth: 128
   textureHeight: 128
+  enterDetectionRadius: 10
+  exitDetectionRadius: 15
+  dropItemID: 0
+  isStunned: 0
+  isFarAway: 0
 --- !u!58 &9005301812023351134
 CircleCollider2D:
   m_ObjectHideFlags: 0

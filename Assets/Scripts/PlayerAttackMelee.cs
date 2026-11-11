@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 
 public class PlayerAttackMelee : MonoBehaviour
 {
-    [SerializeField] private int damage = 10;
+    public int damage = 10;
     public float swingSpeed = 20;
     public float range = 5;
     public float swingAngle = 90;
@@ -96,11 +96,10 @@ public class PlayerAttackMelee : MonoBehaviour
 
         foreach (Collider2D collider in Physics2D.OverlapCircleAll(transform.position, range))
         {
-            if (collider.gameObject == enemy)
-            {
-                collider.GetComponent<EnemyController>().OnHit(damage, doesStun);
-                Debug.Log($"Hit enemy {enemy.name} for {damage} damage.");
-            }
+            if (!collider.gameObject.CompareTag("Enemy")) continue;
+
+            collider.GetComponent<EnemyController>().OnHit(damage, doesStun);
+            Debug.Log($"Hit enemy {enemy.name} for {damage} damage.");
         }
 
         // activate attack so it can move and be seen

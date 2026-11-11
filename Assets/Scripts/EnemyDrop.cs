@@ -1,12 +1,14 @@
 using Assets.Globals;
+using Unity.VisualScripting;
 using UnityEngine;
 public class EnemyDrop : MonoBehaviour
 {
     [SerializeField] private GameObject theItem;
     [SerializeField] private PlayerInventory pInventory;
-    private int count;
+    public int itemID;
     private readonly Functions funcs = new();
     private readonly FunctionsInstance funcInst = new();
+    
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -15,13 +17,35 @@ public class EnemyDrop : MonoBehaviour
     }
 
     //The code to spawn the item in the world
-    public void DropTheShit(Vector3 pos, Quaternion rotation, int itemID)
+    public void DropTheShit(Vector3 position, Quaternion rotation, int itemID)
     {
         //Spawn the object
-        var _ = Instantiate(this, pos, rotation);
-        VarTypes.Item[] items = VarTypes.GetItems();
+        GameObject droppedItem = new GameObject("Dropped Item", typeof(EnemyDrop), typeof(CircleCollider2D));
+        GameObject sprite;
+        if (droppedItem.transform.childCount == 0)
+        {
+            sprite = new GameObject("Sprite", typeof(SpriteRenderer));
+        }
+        else
+        {
+            sprite = droppedItem.transform.Find("Sprite").gameObject;
+        }
 
-        _.gameObject.name = $"{items[itemID].name}";
+        if (!funcInst.HasComponent<SpriteRenderer>(sprite))
+        {
+            sprite.AddComponent<SpriteRenderer>();
+        }
+
+        sprite.GetComponent<SpriteRenderer>().sprite = gameObject.GetComponent<SpriteRenderer>().sprite;
+        sprite.transform.localScale = Vector3.one / 2;
+        sprite.transform.parent = droppedItem.transform;
+
+        droppedItem.GetComponent<EnemyDrop>().itemID = itemID;
+        droppedItem.GetComponent<CircleCollider2D>().radius = gameObject.GetComponent<CircleCollider2D>().radius;
+        droppedItem.tag = "Item";
+
+        droppedItem.transform.SetPositionAndRotation(position, rotation);
+        droppedItem.name = $"{GlobalVars.items[itemID].name}";
         Debug.Log("Object has Spawned!");
        
     }
@@ -33,10 +57,8 @@ public class EnemyDrop : MonoBehaviour
 
         pInventory = collision.GetComponent<PlayerInventory>();
 
-        count = pInventory.items.Count;
-
         Debug.Log(pInventory.items.Count);
-        pInventory.items.Add(theItem.GetComponent<VarTypes.Item>());
-        Destroy(theItem);
+        pInventory.items.Add(GlobalVars.items[itemID]);
+        Destroy(this.gameObject);
     }
 }

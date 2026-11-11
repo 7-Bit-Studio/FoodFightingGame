@@ -4,6 +4,8 @@ using Assets.Globals;
 public class SpawnEnemy : MonoBehaviour
 {
 	[SerializeField] private GameObject[] PossibleEnemies;
+    [SerializeField] private bool randomizeSpawnDelay = true;
+    [SerializeField] private bool randomizeSpawnPosition = true;
     [SerializeField] private float spawnIntervalMin = 0.5f;
     [SerializeField] private float spawnIntervalMax = 2f;
     [SerializeField] private float spawnRadius = 5f;
@@ -31,15 +33,32 @@ public class SpawnEnemy : MonoBehaviour
     }
 
 	void DoSpawnEnemy()
-	{
+    {
         int randomIndex = Random.Range(0, PossibleEnemies.Length);
-        GameObject enemyPrefab = new GameObject();
+        float angle = Random.Range(0f, 2f * Mathf.PI);
+        float distance = Random.Range(0f, spawnRadius);
+
+        if (randomizeSpawnDelay)
+        {
+            nextSpawnTime = Random.Range(spawnIntervalMin, spawnIntervalMax) + Time.time;
+        }
+        else
+        {
+            nextSpawnTime = spawnIntervalMax + Time.time;
+        }
+
+        if (!randomizeSpawnPosition)
+        {
+            angle = 0f;
+            distance = 0f;
+        }
+
+        GameObject enemyPrefab;
         enemyPrefab = Instantiate(PossibleEnemies[randomIndex], transform.position, Quaternion.identity);
-        float randomAngle = Random.Range(0f, 2f * Mathf.PI);
-        float randomDistance = Random.Range(0f, 1f);
-        randomDistance = Mathf.Sqrt(randomDistance) * spawnRadius;
-        enemyPrefab.transform.position += new Vector3(randomDistance * Mathf.Cos(randomAngle), randomDistance * Mathf.Sin(randomAngle), 0);
+        enemyPrefab.tag = "Enemy";
+        enemyPrefab.name = $"{PossibleEnemies[randomIndex].name}";
+        distance = Mathf.Sqrt(distance) * spawnRadius;
+        enemyPrefab.transform.position += new Vector3(distance * Mathf.Cos(angle), distance * Mathf.Sin(angle), 0);
         enemyPrefab.GetComponent<EnemyController>().isStunned = false;
-        nextSpawnTime = Random.Range(spawnIntervalMin, spawnIntervalMax) + Time.time;
     }
 }

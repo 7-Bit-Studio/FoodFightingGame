@@ -801,7 +801,7 @@ MonoBehaviour:
   - {fileID: 0}
   RangedAttacks:
   - {fileID: 0}
-  CheatMode: 1
+  cheatMode: 1
   attackLenience: 0.5
   attackCooldown: 0.2
   health: 100
@@ -809,6 +809,7 @@ MonoBehaviour:
   canDie: 0
   dashCooldown: 1
   dashSpeed: 2
+  inventory: []
   playerMeleeAttackPrefab: {fileID: 0}
   playerRangedAttackPrefab: {fileID: 0}
 --- !u!114 &4348614517689816146
