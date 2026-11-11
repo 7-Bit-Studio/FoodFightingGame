@@ -8,6 +8,8 @@ public class EnemyDrop : MonoBehaviour
     public int itemID;
     private readonly Functions funcs = new();
     private readonly FunctionsInstance funcInst = new();
+
+
     
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -20,7 +22,7 @@ public class EnemyDrop : MonoBehaviour
     public void DropTheShit(Vector3 position, Quaternion rotation, int itemID)
     {
         //Spawn the object
-        GameObject droppedItem = new GameObject("Dropped Item", typeof(EnemyDrop), typeof(CircleCollider2D));
+        GameObject droppedItem = new GameObject("Dropped Item", typeof(EnemyDrop), typeof(CircleCollider2D), typeof(Rigidbody2D));
         GameObject sprite;
         if (droppedItem.transform.childCount == 0)
         {
@@ -41,8 +43,11 @@ public class EnemyDrop : MonoBehaviour
         sprite.transform.parent = droppedItem.transform;
 
         droppedItem.GetComponent<EnemyDrop>().itemID = itemID;
-        droppedItem.GetComponent<CircleCollider2D>().radius = gameObject.GetComponent<CircleCollider2D>().radius;
+        droppedItem.GetComponent<CircleCollider2D>().radius = gameObject.GetComponent<CircleCollider2D>().radius/2;
         droppedItem.tag = "Item";
+
+        droppedItem.GetComponent<CircleCollider2D>().isTrigger = true;
+        droppedItem.GetComponent<Rigidbody2D>().gravityScale = 0;
 
         droppedItem.transform.SetPositionAndRotation(position, rotation);
         droppedItem.name = $"{GlobalVars.items[itemID].name}";
@@ -52,13 +57,15 @@ public class EnemyDrop : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.GetComponent<PlayerController>() == null) { return; }
         Debug.Log("Trigger Detected!");
+        if (collision.GetComponent<PlayerController>() == null) { Debug.Log("Returned"); return;  }
 
+        Debug.Log("Player Detected!");
         pInventory = collision.GetComponent<PlayerInventory>();
 
         Debug.Log(pInventory.items.Count);
         pInventory.items.Add(GlobalVars.items[itemID]);
         Destroy(this.gameObject);
     }
+
 }

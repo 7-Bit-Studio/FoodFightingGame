@@ -2100,6 +2100,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
+--- !u!1 &512674393 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1744228542935970917, guid: a4b68448cfa1d134eac1472e8e149c4d, type: 3}
+  m_PrefabInstance: {fileID: 5397293681898338441}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &518718264
 GameObject:
   m_ObjectHideFlags: 0
@@ -2701,9 +2706,41 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4653339814167236600, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
+      propertyPath: GameOverScreen
+      value: 
+      objectReference: {fileID: 2000466494}
+    - target: {fileID: 4653339814167236600, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
+      propertyPath: playerMeleeAttackPrefab
+      value: 
+      objectReference: {fileID: 3171536019915728846, guid: e6cf78dd2a422634fb3e1fec4f6c89e7, type: 3}
+    - target: {fileID: 4653339814167236600, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
+      propertyPath: playerRangedAttackPrefab
+      value: 
+      objectReference: {fileID: 1744228542935970917, guid: a4b68448cfa1d134eac1472e8e149c4d, type: 3}
+    - target: {fileID: 4653339814167236600, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
+      propertyPath: 'MeleeAttacks.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1515247800}
+    - target: {fileID: 4653339814167236600, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
+      propertyPath: 'RangedAttacks.Array.data[0]'
+      value: 
+      objectReference: {fileID: 512674393}
     - target: {fileID: 8244672825021101286, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 8615920454434297348, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
+      propertyPath: m_Radius
+      value: 0.36100322
+      objectReference: {fileID: 0}
+    - target: {fileID: 8615920454434297348, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
+      propertyPath: m_Offset.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8615920454434297348, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
+      propertyPath: m_Offset.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8831837833102331978, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6011,6 +6048,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
+--- !u!1 &1515247800 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3171536019915728846, guid: e6cf78dd2a422634fb3e1fec4f6c89e7, type: 3}
+  m_PrefabInstance: {fileID: 6496789966545680242}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1580450110
 GameObject:
   m_ObjectHideFlags: 0
@@ -7974,6 +8016,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8757862529093199861, guid: 160fd9d42b543d44689a63c8e55577fe, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
