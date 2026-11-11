@@ -8,12 +8,7 @@ using Assets.Globals;
 
 public class PlayerInventory : MonoBehaviour
 {
-
-<<<<<<< Updated upstream
     public List<VarTypes.Item> items = new();
-=======
-    public List<VarTypes.Item> items = new List<VarTypes.Item>();
->>>>>>> Stashed changes
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
