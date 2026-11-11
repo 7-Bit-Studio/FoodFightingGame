@@ -35,6 +35,7 @@ public class CraftingMenu : MonoBehaviour
         if (!showCraftingMenu )
         {
             CMenu.gameObject.SetActive(false);
+            
         }
         else if ( showCraftingMenu )
         {
@@ -51,6 +52,7 @@ public class CraftingMenu : MonoBehaviour
         if (Keyboard.current.cKey.wasReleasedThisFrame)
         {
             showCraftingMenu = !showCraftingMenu;
+            
         }
     }
 }

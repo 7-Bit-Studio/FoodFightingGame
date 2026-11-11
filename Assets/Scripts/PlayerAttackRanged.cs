@@ -5,17 +5,17 @@ using System.Collections;
 
 public class PlayerAttackRanged : MonoBehaviour
 {
-    [SerializeField] private int damage = 10;
-    [SerializeField] private float speed = 20;
+    [SerializeField] public int damage = 10;
+    [SerializeField] public float speed = 20;
     [SerializeField] public float maxDistance = 10;
-    [SerializeField] private bool doesStun = true;
+    [SerializeField] public bool doesStun = true;
     private Vector3 AttackVel;
     private Transform AttackPos;
     private float deltaTime;
     private Vector2 startPos;
     private GameObject currentTarget;
-    private Functions funcs = new();
-    private FunctionsInstance funcInst = new();
+    private readonly Functions funcs = new();
+    private readonly FunctionsInstance funcInst = new();
     private Vector3 PrevPos;
     private Vector2 AttackDir;
     private Vector2 PrevFrameDir;
@@ -35,7 +35,11 @@ public class PlayerAttackRanged : MonoBehaviour
     }
     void UpdatePosition()
     {
-
+        if(currentTarget == null)
+        {
+            funcInst.Kill(transform.gameObject);
+            return;
+        }
         AttackPos.position += deltaTime * AttackVel;
         AttackPos.rotation = Quaternion.Euler(new Vector3(0, 0, Mathf.Rad2Deg * Mathf.Atan2(-AttackVel.x, AttackVel.y)));
 
@@ -98,9 +102,9 @@ public class PlayerAttackRanged : MonoBehaviour
         Vector3 direction = ((distance/speed) * data.velocity) + data.position - start;
         AttackDir = direction.normalized;
         PrevFrameDir = AttackDir;
-        Debug.Log($"{data.transform.position} vs {data.position}");
-        Debug.Log($"Speed: {speed}");
-        Debug.Log($"{distance / speed * data.velocity}");
+        //Debug.Log($"{data.transform.position} vs {data.position}");
+        //Debug.Log($"Speed: {speed}");
+        //Debug.Log($"{distance / speed * data.velocity}");
 
         // set Velocity so that attack, y'know, moves
         AttackVel = direction.normalized * speed;
@@ -110,8 +114,7 @@ public class PlayerAttackRanged : MonoBehaviour
         // update the VarTypes.Data.position clusterfuck (why is VarTypes.Data.position a Transform?????)
         //                                               fixed!!^ VarTypes.Data.position is now a Vector3
         //                                               also this never used VarTypes.Data.position lol
-        AttackPos.position = startPos;
-        AttackPos.rotation = funcInst.ToQuaternion(AttackVel.normalized);
+        AttackPos.SetPositionAndRotation(startPos, funcInst.ToQuaternion(AttackVel.normalized));
         Debug.Log($"{Time.time}: {AttackVel}");
 
         // activate attack so it can move and be seen
