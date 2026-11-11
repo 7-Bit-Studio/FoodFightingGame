@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour
     private VarTypes.EnemyData[] nearbyLivingEnemies;
     private LineRenderer lineRenderer;
     private float timeAtLastAttack;
-    private readonly Functions funcs = new();
+    private readonly Functions funcs = new();   
     private readonly FunctionsInstance funcInst = new();
     private int animationDirectionMultiplier = 1;
 

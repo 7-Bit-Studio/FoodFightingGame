@@ -5,10 +5,10 @@ using System.Collections;
 
 public class PlayerAttackRanged : MonoBehaviour
 {
-    [SerializeField] private int damage = 10;
-    [SerializeField] private float speed = 20;
+    [SerializeField] public int damage = 10;
+    [SerializeField] public float speed = 20;
     [SerializeField] public float maxDistance = 10;
-    [SerializeField] private bool doesStun = true;
+    [SerializeField] public bool doesStun = true;
     private Vector3 AttackVel;
     private Transform AttackPos;
     private float deltaTime;
