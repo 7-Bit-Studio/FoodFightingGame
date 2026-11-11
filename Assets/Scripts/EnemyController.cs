@@ -125,8 +125,11 @@ public class EnemyController : MonoBehaviour
         ScreenPos *= 2;
         ScreenPos -= Vector2.one;
 
-        Debug.Log($"Screen Position: {ScreenPos}");
-        if (Mathf.Abs(ScreenPos.x) > 3 || Mathf.Abs(ScreenPos.y) > 3) isFarAway = true;
+        //Debug.Log($"Screen Position: {ScreenPos}");
+        if (Mathf.Abs(ScreenPos.x) > 3 || Mathf.Abs(ScreenPos.y) > 3)
+        {
+            isFarAway = true;
+        }
         else isFarAway = false;
 
 
@@ -264,7 +267,7 @@ public class EnemyController : MonoBehaviour
         enemyPos += enemyVel * deltaTime;
         if (isStunned)
         {
-            Debug.Log($"Enemy Position: {enemyPos}, Enemy Velocity: {enemyVel}, DeltaTime: {deltaTime}");
+            //Debug.Log($"Enemy Position: {enemyPos}, Enemy Velocity: {enemyVel}, DeltaTime: {deltaTime}");
         }
 
         for (int i = 0; i < collisionLoops; i++)
@@ -346,13 +349,13 @@ public class EnemyController : MonoBehaviour
 
         if (currentDistance < minDistance)
         {
-            Debug.Log($"{playerDirection}");
-            Debug.Log($"Player Distance: {playerDirection.magnitude}, Player Collider Radius: {playerColliderRad}, Enemy Collider Radius: {colliderRad}, Total Collider Radius: {colliderRad + playerColliderRad}");
+            //Debug.Log($"{playerDirection}");
+            //Debug.Log($"Player Distance: {playerDirection.magnitude}, Player Collider Radius: {playerColliderRad}, Enemy Collider Radius: {colliderRad}, Total Collider Radius: {colliderRad + playerColliderRad}");
             // normalizedPlayerDirection is negative to make vector point away from player
             enemyPos += (colliderCenter - playerColliderCenter) * (minDistance - currentDistance);
             enemyVel += (colliderCenter - playerColliderCenter) * (minDistance - currentDistance);
 
-            Debug.Log("Player Collision!");
+            //Debug.Log("Player Collision!");
 
             if (Time.time - timeAtLastAttack > attackDelay)
             {
