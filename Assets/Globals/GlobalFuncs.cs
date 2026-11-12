@@ -1,3 +1,4 @@
+using NUnit.Framework;
 using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -242,6 +243,8 @@ namespace Assets.Globals
         {
             public string name;
             public int id;
+            public Sprite sprite;
+
         }
 
         public struct EnemyData
@@ -262,11 +265,13 @@ namespace Assets.Globals
         public static VarTypes.Item[] items = {
             new() {
                 name = "Borgor Shield",
-                id = 0
+                id = 0,
+                sprite = Resources.LoadAll<Sprite>("Sprites/Items/Weapons")[16]
             },
             new() {
                 name = "Ketchup Bottle",
-                id = 1
+                id = 1,
+                sprite = Resources.LoadAll<Sprite>("Sprites/Items/Weapons")[2]
             },
             new() {
                 name = "Example Item 3",

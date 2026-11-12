@@ -24,7 +24,8 @@ public class PlayerInventory : MonoBehaviour
             Debug.Log(items.Count);
             foreach (VarTypes.Item item in items)
             {
-                Debug.Log(item);
+                Debug.Log(item.name);
+                Debug.Log(item.sprite);
             }
         }
     }
