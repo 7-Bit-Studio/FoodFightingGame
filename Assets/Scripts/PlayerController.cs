@@ -48,7 +48,6 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveInputVector2;
     private Vector3 moveInput;
     private int baseMult = 1;
-    public bool canMove = true;
 
     // PlayerController values
     private Transform playerTransform;
@@ -60,7 +59,7 @@ public class PlayerController : MonoBehaviour
     private VarTypes.EnemyData[] nearbyLivingEnemies;
     private LineRenderer lineRenderer;
     private float timeAtLastAttack;
-    private readonly Functions funcs = new();   
+    private readonly Functions funcs = new();
     private readonly FunctionsInstance funcInst = new();
     private int animationDirectionMultiplier = 1;
 
@@ -70,7 +69,7 @@ public class PlayerController : MonoBehaviour
     private int currentSpriteIndexAdd;
     private float timeAtLastSpriteUpdate;
     private float timeAtLastHit;
-    [SerializeField] private float timeAtLastDash;
+    private float timeAtLastDash;
     private int attackIndex = -1;
     public VarTypes.Item[] inventory;
     [SerializeField] private GameObject playerMeleeAttackPrefab;
@@ -133,7 +132,7 @@ public class PlayerController : MonoBehaviour
         lineRenderer.startColor = Color.black;
         lineRenderer.endColor = Color.black;
 
-        GameOverScreen.gameObject.SetActive(false);
+        GameOverScreen.SetActive(false);
         GameOverScreen.transform.position = playerPos;
 
         transform.Find("Main Camera").position = playerPos + new Vector3(0, 0, -10);
@@ -170,9 +169,7 @@ public class PlayerController : MonoBehaviour
     
         // Move Input Vector
         moveInputVector2 = moveAction != null ? moveAction.ReadValue<Vector2>() : Vector2.zero;
-        if (canMove) moveInput = (Vector3)moveInputVector2;
-        else moveInput = Vector3.zero;
-
+        moveInput = (Vector3)moveInputVector2;
 
         inventory = GlobalVars.items;
 
@@ -183,39 +180,62 @@ public class PlayerController : MonoBehaviour
         DrawCircle(attackRange, transform.position, 0.01f);
     }
 
-   VarTypes.EnemyData[] GetNearbyEnemies()
+    VarTypes.EnemyData[] GetNearbyEnemies()
     {
         EnemyController[] enemies = FindObjectsByType<EnemyController>();
-        List<VarTypes.EnemyData> livingEnemiesList = new();
+        VarTypes.EnemyData[] livingEnemiesList = new VarTypes.EnemyData[enemies.Length];
         if (enemies.Length == 0)
         {
             return livingEnemiesList.ToArray();
         }
 
+        //Debug.Log(enemies.Length);
+        VarTypes.EnemyData currentEnemy = new VarTypes.EnemyData();
+        int numOfRealEnemies = 0;
+        int currentIndex = 0;
         foreach (EnemyController enemy in enemies)
         {
             if (enemy.isFarAway) continue;
-            livingEnemiesList.Append(new VarTypes.EnemyData(enemy.gameObject, Vector3.Distance(transform.position, enemy.transform.position)));
+            if (enemy == null) continue;
+            numOfRealEnemies++;
+            //Debug.Log($"{enemy.name} is not far away");
+            currentEnemy.gameObject = enemy.gameObject;
+            currentEnemy.distance = Vector3.Distance(this.transform.position, enemy.transform.position);
+
+            livingEnemiesList[currentIndex] = currentEnemy;
+            currentIndex++;
         }
 
-        VarTypes.EnemyData[] nearbyLivingEnemies = livingEnemiesList.ToArray();
-        
+        VarTypes.EnemyData[] nearbyLivingEnemies = new VarTypes.EnemyData[numOfRealEnemies];
+        for (int i = 0; i < numOfRealEnemies; i++)
+        {
+            nearbyLivingEnemies[i] = livingEnemiesList[i];
+        }
 
         return nearbyLivingEnemies;
     }
 
-    public VarTypes.EnemyData[] GetNearbyLivingEnemies()
+    VarTypes.EnemyData[] GetNearbyLivingEnemies()
     {
-        EnemyController[] nearbyEnemies = GetNearbyEnemies().Select(d => d.gameObject).ToArray().Select(g => g.GetComponent<EnemyController>()).ToArray();
-        List<VarTypes.EnemyData> livingEnemiesList = new();
+        VarTypes.EnemyData[] enemyDatas = GetNearbyEnemies();
+        EnemyController[] nearbyEnemies = new EnemyController[enemyDatas.Length];
+        for(int i = 0; i < enemyDatas.Length; i++)
+        {
+            nearbyEnemies[i] = enemyDatas[i].gameObject.GetComponent<EnemyController>();
+        }
+        VarTypes.EnemyData[] livingEnemiesList = new VarTypes.EnemyData[enemyDatas.Length];
         if(nearbyEnemies.Length == 0)
         {
-            return livingEnemiesList.ToArray();
+            return livingEnemiesList;
         }
 
-        foreach(EnemyController enemy in nearbyEnemies)
+        EnemyController enemy;
+        for (int i = 0; i < nearbyEnemies.Length; i++)
         {
-            livingEnemiesList.Append(new VarTypes.EnemyData(enemy.gameObject, Vector3.Distance(transform.position, enemy.transform.position)));
+            enemy = nearbyEnemies[i];
+
+
+            livingEnemiesList[i] = new VarTypes.EnemyData(enemy.gameObject, Vector3.Distance(transform.position, enemy.transform.position));
         }
 
         VarTypes.EnemyData[] nearbyLivingEnemies = livingEnemiesList.ToArray();
@@ -225,7 +245,11 @@ public class PlayerController : MonoBehaviour
     
     void RangedAttack(GameObject enemy, int attackIndex)
     {
-        if (!cheatMode && Time.time - timeAtLastAttack < attackCooldown) return;
+        if (!cheatMode && Time.time - timeAtLastAttack < attackCooldown)
+        {
+            Debug.LogAssertion("not enough time, dumbass");
+            return;
+        }
 
         timeAtLastAttack = Time.time;
 
@@ -266,63 +290,62 @@ public class PlayerController : MonoBehaviour
 
     void HandleInputs()
     {
-        if (canMove) 
+        if (Keyboard.current.ctrlKey.isPressed && Keyboard.current.qKey.wasPressedThisFrame)
         {
-            if (Keyboard.current.ctrlKey.isPressed && Keyboard.current.qKey.wasPressedThisFrame)
-            {
-                string debugImageName = "Hide-the-pain-Harold-large-meme-8_0";
-                transform.Find(debugImageName).gameObject.SetActive(!transform.Find(debugImageName).gameObject.activeSelf);
-            }
+            string debugImageName = "Hide-the-pain-Harold-large-meme-8_0";
+            transform.Find(debugImageName).gameObject.SetActive(!transform.Find(debugImageName).gameObject.activeSelf);
+        }
 
-            if(Time.time - timeAtLastDash > dashCooldown)
+        if(Time.time - timeAtLastDash > dashCooldown)
+        {
+            if (Keyboard.current.shiftKey.isPressed)
             {
-                if (Keyboard.current.shiftKey.isPressed)
+                playerVel += dashSpeed * maxSpeed * moveInput;
+                timeAtLastDash = Time.time;
+            }
+        }
+
+        Vector2 MouseInWorldPosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        float MouseDistanceFromPlayer = Vector2.Distance(MouseInWorldPosition, playerPos);
+        if (MouseDistanceFromPlayer <= baseMult * attackRange)
+        {
+            if (Mouse.current.leftButton.isPressed || Mouse.current.rightButton.isPressed)
+            {
+                //Debug.LogAssertion("Player Attacked!");
+                if(attackIndex == -1)
                 {
-                    Debug.Log("Dashed");
-                    playerVel += dashSpeed * maxSpeed * moveInput;
-                    timeAtLastDash = Time.time;
+                    attackIndex = 0;
                 }
-            }
-
-            Vector2 MouseInWorldPosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-            float MouseDistanceFromPlayer = Vector2.Distance(MouseInWorldPosition, playerPos);
-            if (MouseDistanceFromPlayer <= baseMult * attackRange)
-            {
-                if (Mouse.current.leftButton.isPressed || Mouse.current.rightButton.isPressed)
+                //Debug.LogAssertion($"{attackIndex}");
+                float minDistanceFromMouse = float.PositiveInfinity;
+                int indexOfMinDistance = -1;
+                for (int i = 0; i < nearbyLivingEnemies.Length; i++)
                 {
-                    if (attackIndex == -1)
+                    float currDistFromMouse = Vector3.Distance(MouseInWorldPosition, nearbyLivingEnemies[i].gameObject.transform.position);
+                    if (currDistFromMouse > baseMult * attackLenience) continue;
+                    if (nearbyLivingEnemies[i].distance > attackRange) continue;
+                    if (minDistanceFromMouse > currDistFromMouse)
                     {
-                        attackIndex = 0;
-                    }
-                    float minDistanceFromMouse = float.PositiveInfinity;
-                    int indexOfMinDistance = -1;
-                    for (int i = 0; i < nearbyLivingEnemies.Length; i++)
-                    {
-                        float currDistFromMouse = Vector3.Distance(MouseInWorldPosition, nearbyLivingEnemies[i].gameObject.transform.position);
-                        if (currDistFromMouse > baseMult * attackLenience) continue;
-                        if (nearbyLivingEnemies[i].distance > attackRange) continue;
-                        if (minDistanceFromMouse > currDistFromMouse)
-                        {
-                            minDistanceFromMouse = currDistFromMouse;
-                            indexOfMinDistance = i;
-                        }
-                    }
-
-                    if (indexOfMinDistance == -1) return;
-
-                    bool isRangedAttack = Mouse.current.leftButton.isPressed && cheatMode || Mouse.current.leftButton.wasPressedThisFrame && !cheatMode;
-                    bool isMeleeAttack = Mouse.current.rightButton.isPressed && cheatMode || Mouse.current.rightButton.wasPressedThisFrame && !cheatMode;
-                    if (isRangedAttack)
-                    {
-                        RangedAttack(nearbyLivingEnemies[indexOfMinDistance].gameObject, attackIndex);
-                    }
-                    if (isMeleeAttack)
-                    {
-                        MeleeAttack(nearbyLivingEnemies[indexOfMinDistance].gameObject, attackIndex);
+                        minDistanceFromMouse = currDistFromMouse;
+                        indexOfMinDistance = i;
                     }
                 }
+                //Debug.LogAssertion($"{indexOfMinDistance}");
+                //Debug.LogAssertion($"{minDistanceFromMouse}");
+                if (indexOfMinDistance == -1) return;
+
+                bool isRangedAttack = Mouse.current.leftButton.isPressed && cheatMode || Mouse.current.leftButton.wasPressedThisFrame && !cheatMode;
+                bool isMeleeAttack = Mouse.current.rightButton.isPressed && cheatMode || Mouse.current.rightButton.wasPressedThisFrame && !cheatMode;
+                if (isRangedAttack)
+                {
+                    RangedAttack(nearbyLivingEnemies[indexOfMinDistance].gameObject, attackIndex);
+                }
+                if (isMeleeAttack)
+                {
+                    MeleeAttack(nearbyLivingEnemies[indexOfMinDistance].gameObject, attackIndex);
+                }
             }
-        } else { return; }
+        }
     }
 
     void UpdateMovement()
@@ -447,7 +470,7 @@ public class PlayerController : MonoBehaviour
         data.health = health;
         timeAtLastHit = Time.time;
 
-        Debug.Log($"Player took {dealtDamage} damage. Health is now {health}. Time since last hit: {Time.time - timeAtLastHit}");
+        //Debug.Log($"Player took {dealtDamage} damage. Health is now {health}. Time since last hit: {Time.time - timeAtLastHit}");
 
         if (health <= 0 && canDie && !cheatMode)
         {

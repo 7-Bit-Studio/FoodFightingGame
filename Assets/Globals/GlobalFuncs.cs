@@ -244,7 +244,12 @@ namespace Assets.Globals
             public string name;
             public int id;
             public Sprite sprite;
-
+            public Item(string name, int id, Sprite sprite)
+            {
+                this.name = name;
+                this.id = id;
+                this.sprite = sprite;
+            }
         }
 
         public struct EnemyData
