@@ -798,10 +798,10 @@ MonoBehaviour:
   playerAcc: 25
   attackRange: 3
   MeleeAttacks:
-  - {fileID: 0}
+  - {fileID: 7630142083507068408, guid: 4a956b52682e04f42b317562539c0fe8, type: 3}
   RangedAttacks:
-  - {fileID: 0}
-  cheatMode: 1
+  - {fileID: 1744228542935970917, guid: a4b68448cfa1d134eac1472e8e149c4d, type: 3}
+  cheatMode: 0
   attackLenience: 0.5
   attackCooldown: 0.2
   health: 100
@@ -810,8 +810,8 @@ MonoBehaviour:
   dashCooldown: 1
   dashSpeed: 2
   inventory: []
-  playerMeleeAttackPrefab: {fileID: 0}
-  playerRangedAttackPrefab: {fileID: 0}
+  playerMeleeAttackPrefab: {fileID: 3171536019915728846, guid: e6cf78dd2a422634fb3e1fec4f6c89e7, type: 3}
+  playerRangedAttackPrefab: {fileID: 1744228542935970917, guid: a4b68448cfa1d134eac1472e8e149c4d, type: 3}
 --- !u!114 &4348614517689816146
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -987,7 +987,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 782badbd71097374793d6d5e2ef1a69d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInventory
-  items: []
+  inventory: []
 --- !u!1 &8250880873921590541
 GameObject:
   m_ObjectHideFlags: 0

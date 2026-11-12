@@ -60,5 +60,6 @@ public class SpawnEnemy : MonoBehaviour
         distance = Mathf.Sqrt(distance) * spawnRadius;
         enemyPrefab.transform.position += new Vector3(distance * Mathf.Cos(angle), distance * Mathf.Sin(angle), 0);
         enemyPrefab.GetComponent<EnemyController>().isStunned = false;
+        enemyPrefab.GetComponent<EnemyController>().enemyAttack = PossibleEnemies[randomIndex].GetComponent<EnemyController>().enemyAttack;
     }
 }

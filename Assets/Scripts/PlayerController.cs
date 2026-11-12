@@ -247,7 +247,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!cheatMode && Time.time - timeAtLastAttack < attackCooldown)
         {
-            Debug.LogAssertion("not enough time, dumbass");
+            Debug.Log("not enough time, dumbass");
             return;
         }
 
@@ -273,7 +273,9 @@ public class PlayerController : MonoBehaviour
     {
         if (!cheatMode && Time.time - timeAtLastAttack < attackCooldown) return;
         timeAtLastAttack = Time.time;
-        GameObject playerAttack = new GameObject("Melee Attack", typeof(PlayerAttackMelee), typeof(SpriteRenderer));
+        GameObject playerAttack;
+        playerAttack = Instantiate(playerMeleeAttackPrefab);
+        //playerAttack = new GameObject("Melee Attack", typeof(PlayerAttackMelee), typeof(SpriteRenderer));
         playerAttack.GetComponent<PlayerAttackMelee>().swingSpeed = MeleeAttacks[attackIndex].GetComponent<PlayerAttackMelee>().swingSpeed;
         playerAttack.GetComponent<PlayerAttackMelee>().swingAngle = MeleeAttacks[attackIndex].GetComponent<PlayerAttackMelee>().swingAngle;
         playerAttack.GetComponent<PlayerAttackMelee>().range = baseMult * attackRange;
@@ -470,7 +472,7 @@ public class PlayerController : MonoBehaviour
         data.health = health;
         timeAtLastHit = Time.time;
 
-        //Debug.Log($"Player took {dealtDamage} damage. Health is now {health}. Time since last hit: {Time.time - timeAtLastHit}");
+        Debug.Log($"Player took {dealtDamage} damage. Health is now {health}. Time since last hit: {Time.time - timeAtLastHit}");
 
         if (health <= 0 && canDie && !cheatMode)
         {

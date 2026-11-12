@@ -46,7 +46,6 @@ public class PlayerAttackMelee : MonoBehaviour
             }
             else
             {
-                playerData = player.GetData();
                 AttackAngle += swingSpeed * deltaTime;
                 transform.position = new Vector3(Mathf.Sin(AttackAngle * Mathf.Deg2Rad) * 0.5f * range + playerData.position.x, -Mathf.Cos(AttackAngle * Mathf.Deg2Rad) * 0.5f * range + playerData.position.y, 0);
                 transform.localRotation = Quaternion.Euler(0, 0, AttackAngle);
@@ -94,16 +93,14 @@ public class PlayerAttackMelee : MonoBehaviour
         transform.localScale *= range;
         UpdatePosition();
 
-        foreach (Collider2D collider in Physics2D.OverlapCircleAll(transform.position, range))
-        {
-            if (!collider.gameObject.CompareTag("Enemy")) continue;
-
-            collider.GetComponent<EnemyController>().OnHit(damage, doesStun);
-            //Debug.Log($"Hit enemy {enemy.name} for {damage} damage.");
-        }
-
         // activate attack so it can move and be seen
         transform.gameObject.SetActive(true);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.GetComponent<EnemyController>() == null) return;
+        collision.gameObject.GetComponent<EnemyController>().OnHit(damage, doesStun);
     }
     private void Kill()
     {

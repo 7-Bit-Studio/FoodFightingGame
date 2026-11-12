@@ -20,11 +20,12 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
-    public Inventory[] inventory = new Inventory[GlobalVars.items.Length];
+    public Inventory[] inventory;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        for(int i = 0; i < GlobalVars.items.Length; i++)
+        inventory = new Inventory[GlobalVars.items.Length];
+        for (int i = 0; i < GlobalVars.items.Length; i++)
         {
             inventory[i].item = GlobalVars.items[i];
             inventory[i].count = 0;

@@ -18,8 +18,6 @@ public class EnemyController : MonoBehaviour
     public int health = 100;
     [SerializeField] private int defense = 0;
     [SerializeField] private float acceleration = 0.2f;
-    [SerializeField] private int damage = 10;
-    [SerializeField] private float attackDelay = 100;
     [SerializeField] private int collisionLoops = 1;
     [SerializeField] private GameObject theDrop;
     [Header("Animation Settings")]
@@ -29,6 +27,14 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private int textureHeight = 76;
     [SerializeField] private float enterDetectionRadius = 10f;
     [SerializeField] private float exitDetectionRadius = 15f;
+    [Header("Enemy Attack Settings")]
+    [SerializeField] private int damage = 10;
+    [SerializeField] private float attackDelay = 0.5f;
+    public Texture2D enemyAttack;
+    [SerializeField] private bool doesAttackAffectEnemySprite = false;
+    [SerializeField] private bool doesAttackKillEnemy = false;
+
+    private Texture2D currentEnemyTexture;
     public int dropItemID = 0;
     private bool hasDetectedPlayer = false;
 
@@ -69,6 +75,7 @@ public class EnemyController : MonoBehaviour
     private readonly SpriteFilter spriteFilter = new();
     private bool hasDrop = false;
     private bool shouldStunPseudoGlobal = false;
+    private bool isAttacking = false;
     public VarTypes.Data GetData() => data;
     private PlayerController playerController;
     void Start()
@@ -87,10 +94,11 @@ public class EnemyController : MonoBehaviour
         data.health = health;
         data.position = enemyPos;
 
-        enemySprites = funcInst.SliceGrid(enemyTexture, textureWidth, textureHeight);
-        enemySprites = spriteFilter.RemoveEmpty(enemyTexture, enemySprites);
+        currentEnemyTexture = enemyTexture;
+        InitializeSprites();
+
         timeAtLastSpriteUpdate = Time.time;
-        timeAtLastAttack = Time.time;
+        timeAtLastAttack = 0f;
         currentSpriteIndex = 0;
 
         startHealth = health;
@@ -107,6 +115,14 @@ public class EnemyController : MonoBehaviour
         {
             hasDrop = true;
         }
+    }
+
+    void InitializeSprites()
+    {
+        enemySprites = funcInst.SliceGrid(currentEnemyTexture, textureWidth, textureHeight);
+        enemySprites = spriteFilter.RemoveEmpty(currentEnemyTexture, enemySprites);
+        currentSpriteIndex = 0;
+        timeAtLastSpriteUpdate = Time.time;
     }
 
     // Update is called once per frame
@@ -208,6 +224,18 @@ public class EnemyController : MonoBehaviour
     }
     void UpdateMovement()
     {
+        if (isAttacking)
+        {
+            if (doesAttackKillEnemy)
+            {
+                if (currentSpriteIndex + 1 >= enemySprites.Length)
+                {
+                    DoAttack(damage);
+                    Kill();
+                }
+            }
+        }
+
         if (wasJustHit)
         {
             //Debug.Log($"Enemy was just hit. Stunned: {isStunned}, Should Stun: {shouldStunPseudoGlobal}, Time since hit: {Time.time - hitTime}");
@@ -259,6 +287,8 @@ public class EnemyController : MonoBehaviour
         data.position = enemyPos;
         data.transform = enemyTransform;
 
+        //if(isAttacking && doesAttackAffectEnemySprite && )
+
         UpdatePosition();
     }
 
@@ -297,7 +327,7 @@ public class EnemyController : MonoBehaviour
 
         for(int i = 0; i < objects.Length; i++)
         {
-            if (objects[i].name == transform.name)
+            if (objects[i].gameObject == gameObject)
             {
                 arrOffset = 1;
                 continue;
@@ -355,13 +385,9 @@ public class EnemyController : MonoBehaviour
             enemyPos += (colliderCenter - playerColliderCenter) * (minDistance - currentDistance);
             enemyVel += (colliderCenter - playerColliderCenter) * (minDistance - currentDistance);
 
-            //Debug.Log("Player Collision!");
+            StartAttackAnimation();
 
-            if (Time.time - timeAtLastAttack > attackDelay)
-            {
-                timeAtLastAttack = Time.time;
-                playerController.OnHit(damage);
-            }
+            Debug.Log("Player Collision!");
         }
 
         // leaving enemyTransform.position to keep function looking balanced
@@ -375,5 +401,22 @@ public class EnemyController : MonoBehaviour
     {
         EnemyCollision();
         PlayerCollision();
+    }
+
+    void StartAttackAnimation()
+    {
+        if (isAttacking) return;
+        isAttacking = true;
+        if (doesAttackAffectEnemySprite)
+        {
+            currentEnemyTexture = enemyAttack;
+            InitializeSprites();
+        }
+    }
+
+    void DoAttack(int damage)
+    {
+            timeAtLastAttack = Time.time;
+            playerController.OnHit(damage);
     }
 }
