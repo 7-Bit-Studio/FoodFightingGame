@@ -11,6 +11,7 @@ public class CraftingMenu : MonoBehaviour
     private int screenHeight;
 
     private bool showCraftingMenu;
+    public bool active;
 
     void ScreenInit()
     {
@@ -23,6 +24,7 @@ public class CraftingMenu : MonoBehaviour
     void InitializeVars()
     {
         showCraftingMenu = false;
+        active = false;
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -60,13 +62,9 @@ public class CraftingMenu : MonoBehaviour
         {
             showCraftingMenu = !showCraftingMenu;
             pController.canMove = !pController.canMove;
+            active = !active;
             Debug.Log("C Key Pressed");
-            foreach (VarTypes.EnemyData enemy in pController.GetNearbyLivingEnemies())
-            {
-                Debug.Log(enemy.gameObject.name);
-                enemy.gameObject.SetActive(false);
-                
-            }
+            
             
         }
     }

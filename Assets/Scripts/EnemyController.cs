@@ -54,6 +54,7 @@ public class EnemyController : MonoBehaviour
     private Vector3 playerDirection;
     private Vector3 normalizedPlayerDirection;
     private GameObject player;
+    private CraftingMenu cMenu;
     public bool isStunned;
     private bool wasJustHit;
     private float hitTime;
@@ -61,6 +62,7 @@ public class EnemyController : MonoBehaviour
     private Transform healthValueTransform;
     private int startHealth;
     public bool isFarAway = false;
+    private bool canMove;
 
 
     private bool isAlive;
@@ -77,6 +79,7 @@ public class EnemyController : MonoBehaviour
         isStunned = false;
         player = funcInst.GetSiblingGameObject("Player");
         playerController = player.GetComponent<PlayerController>();
+        cMenu = player.GetComponent<CraftingMenu>();
 
         playerData = playerController.GetData();
 
@@ -96,6 +99,8 @@ public class EnemyController : MonoBehaviour
         startHealth = health;
 
         isAlive = true;
+
+        canMove = true;
 
         if (isBoss)
         {
@@ -118,6 +123,8 @@ public class EnemyController : MonoBehaviour
             Kill();
             return;
         }
+
+        canMove = !cMenu.active;
 
         Vector2 ScreenPos = Camera.main.WorldToScreenPoint(enemyPos);
         ScreenPos.x /= Camera.main.pixelWidth;
@@ -205,58 +212,62 @@ public class EnemyController : MonoBehaviour
     }
     void UpdateMovement()
     {
-        if (wasJustHit)
+
+        if (canMove)
         {
-            //Debug.Log($"Enemy was just hit. Stunned: {isStunned}, Should Stun: {shouldStunPseudoGlobal}, Time since hit: {Time.time - hitTime}");
-            if (Time.time - hitTime > 0.25f)
+            if (wasJustHit)
             {
-                wasJustHit = false;
-                isStunned = shouldStunPseudoGlobal;
+                //Debug.Log($"Enemy was just hit. Stunned: {isStunned}, Should Stun: {shouldStunPseudoGlobal}, Time since hit: {Time.time - hitTime}");
+                if (Time.time - hitTime > 0.25f)
+                {
+                    wasJustHit = false;
+                    isStunned = shouldStunPseudoGlobal;
+                }
+
+
+                UpdatePosition();
+                return;
+            }
+
+            if (isStunned)
+            {
+                //Debug.Log($"Enemy is stunned. Stunned: {isStunned}, Should Stun: {shouldStunPseudoGlobal}, Time since hit: {Time.time - hitTime}");
+                if (Time.time - hitTime > 1f)
+                {
+                    isStunned = false;
+                    enemyVel = Vector3.zero;
+                }
+
+                enemyVel *= 0.98f;
+
+                UpdatePosition();
+                return;
             }
 
 
-            UpdatePosition();
-            return;
-        }
-
-        if (isStunned)
-        {
-            //Debug.Log($"Enemy is stunned. Stunned: {isStunned}, Should Stun: {shouldStunPseudoGlobal}, Time since hit: {Time.time - hitTime}");
-            if (Time.time - hitTime > 1f)
+            if (maxSpeed == 0)
             {
-                isStunned = false;
+                //Debug.LogWarning($"{transform.name}: Max speed is set to 0. Enemy will not move.");
                 enemyVel = Vector3.zero;
+                return;
             }
 
-            enemyVel *= 0.98f;
+
+            if (hasDetectedPlayer)
+            {
+                enemyVel += ((acceleration * normalizedPlayerDirection) - Functions.Friction(enemyVel, acceleration / maxSpeed)) * deltaTime;
+            }
+            else
+            {
+                enemyVel -= Functions.Friction(enemyVel, acceleration / maxSpeed) * deltaTime;
+            }
+
+            data.velocity = enemyVel;
+            data.position = enemyPos;
+            data.transform = enemyTransform;
 
             UpdatePosition();
-            return;
         }
-
-
-        if(maxSpeed == 0)
-        {
-            //Debug.LogWarning($"{transform.name}: Max speed is set to 0. Enemy will not move.");
-            enemyVel = Vector3.zero;
-            return;
-        }
-
-        
-        if(hasDetectedPlayer)
-        {
-            enemyVel += ((acceleration * normalizedPlayerDirection) - Functions.Friction(enemyVel, acceleration/maxSpeed)) * deltaTime;
-        }
-        else
-        {
-            enemyVel -= Functions.Friction(enemyVel, acceleration / maxSpeed) * deltaTime;
-        }
-
-        data.velocity = enemyVel;
-        data.position = enemyPos;
-        data.transform = enemyTransform;
-
-        UpdatePosition();
     }
 
     void UpdatePosition()
