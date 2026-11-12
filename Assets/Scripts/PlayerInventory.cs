@@ -32,6 +32,7 @@ public class PlayerInventory : MonoBehaviour
     }
     public void AddItemToInventory(int itemID)
     {
+        inventory[itemID].count++;
     }
     // Update is called once per frame
     void Update()
