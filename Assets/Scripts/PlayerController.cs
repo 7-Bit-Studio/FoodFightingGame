@@ -132,7 +132,7 @@ public class PlayerController : MonoBehaviour
         lineRenderer.startColor = Color.black;
         lineRenderer.endColor = Color.black;
 
-        GameOverScreen.gameObject.SetActive(false);
+        GameOverScreen.SetActive(false);
         GameOverScreen.transform.position = playerPos;
 
         transform.Find("Main Camera").position = playerPos + new Vector3(0, 0, -10);
