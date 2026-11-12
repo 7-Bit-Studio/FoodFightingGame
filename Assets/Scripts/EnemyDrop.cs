@@ -49,7 +49,7 @@ public class EnemyDrop : MonoBehaviour
         pInventory = collision.GetComponent<PlayerInventory>();
 
         //Debug.Log(pInventory.items.Count);
-        pInventory.items.Add(GlobalVars.items[itemID]);
+        pInventory.AddItemToInventory(itemID);
         Destroy(this.gameObject);
     }
 }
