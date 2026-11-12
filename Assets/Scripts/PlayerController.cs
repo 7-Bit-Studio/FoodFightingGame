@@ -48,6 +48,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveInputVector2;
     private Vector3 moveInput;
     private int baseMult = 1;
+    public bool canMove = true;
 
     // PlayerController values
     private Transform playerTransform;
@@ -69,7 +70,7 @@ public class PlayerController : MonoBehaviour
     private int currentSpriteIndexAdd;
     private float timeAtLastSpriteUpdate;
     private float timeAtLastHit;
-    private float timeAtLastDash;
+    [SerializeField] private float timeAtLastDash;
     private int attackIndex = -1;
     public VarTypes.Item[] inventory;
     [SerializeField] private GameObject playerMeleeAttackPrefab;
@@ -169,7 +170,9 @@ public class PlayerController : MonoBehaviour
     
         // Move Input Vector
         moveInputVector2 = moveAction != null ? moveAction.ReadValue<Vector2>() : Vector2.zero;
-        moveInput = (Vector3)moveInputVector2;
+        if (canMove) moveInput = (Vector3)moveInputVector2;
+        else moveInput = Vector3.zero;
+
 
         inventory = GlobalVars.items;
 
@@ -180,7 +183,7 @@ public class PlayerController : MonoBehaviour
         DrawCircle(attackRange, transform.position, 0.01f);
     }
 
-    VarTypes.EnemyData[] GetNearbyEnemies()
+   VarTypes.EnemyData[] GetNearbyEnemies()
     {
         EnemyController[] enemies = FindObjectsByType<EnemyController>();
         List<VarTypes.EnemyData> livingEnemiesList = new();
@@ -201,7 +204,7 @@ public class PlayerController : MonoBehaviour
         return nearbyLivingEnemies;
     }
 
-    VarTypes.EnemyData[] GetNearbyLivingEnemies()
+    public VarTypes.EnemyData[] GetNearbyLivingEnemies()
     {
         EnemyController[] nearbyEnemies = GetNearbyEnemies().Select(d => d.gameObject).ToArray().Select(g => g.GetComponent<EnemyController>()).ToArray();
         List<VarTypes.EnemyData> livingEnemiesList = new();
@@ -263,59 +266,63 @@ public class PlayerController : MonoBehaviour
 
     void HandleInputs()
     {
-        if (Keyboard.current.ctrlKey.isPressed && Keyboard.current.qKey.wasPressedThisFrame)
+        if (canMove) 
         {
-            string debugImageName = "Hide-the-pain-Harold-large-meme-8_0";
-            transform.Find(debugImageName).gameObject.SetActive(!transform.Find(debugImageName).gameObject.activeSelf);
-        }
-
-        if(Time.time - timeAtLastDash > dashCooldown)
-        {
-            if (Keyboard.current.shiftKey.isPressed)
+            if (Keyboard.current.ctrlKey.isPressed && Keyboard.current.qKey.wasPressedThisFrame)
             {
-                playerVel += dashSpeed * maxSpeed * moveInput;
-                timeAtLastDash = Time.time;
+                string debugImageName = "Hide-the-pain-Harold-large-meme-8_0";
+                transform.Find(debugImageName).gameObject.SetActive(!transform.Find(debugImageName).gameObject.activeSelf);
             }
-        }
 
-        Vector2 MouseInWorldPosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-        float MouseDistanceFromPlayer = Vector2.Distance(MouseInWorldPosition, playerPos);
-        if (MouseDistanceFromPlayer <= baseMult * attackRange)
-        {
-            if (Mouse.current.leftButton.isPressed || Mouse.current.rightButton.isPressed)
+            if(Time.time - timeAtLastDash > dashCooldown)
             {
-                if(attackIndex == -1)
+                if (Keyboard.current.shiftKey.isPressed)
                 {
-                    attackIndex = 0;
+                    Debug.Log("Dashed");
+                    playerVel += dashSpeed * maxSpeed * moveInput;
+                    timeAtLastDash = Time.time;
                 }
-                float minDistanceFromMouse = float.PositiveInfinity;
-                int indexOfMinDistance = -1;
-                for (int i = 0; i < nearbyLivingEnemies.Length; i++)
+            }
+
+            Vector2 MouseInWorldPosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+            float MouseDistanceFromPlayer = Vector2.Distance(MouseInWorldPosition, playerPos);
+            if (MouseDistanceFromPlayer <= baseMult * attackRange)
+            {
+                if (Mouse.current.leftButton.isPressed || Mouse.current.rightButton.isPressed)
                 {
-                    float currDistFromMouse = Vector3.Distance(MouseInWorldPosition, nearbyLivingEnemies[i].gameObject.transform.position);
-                    if (currDistFromMouse > baseMult * attackLenience) continue;
-                    if (nearbyLivingEnemies[i].distance > attackRange) continue;
-                    if (minDistanceFromMouse > currDistFromMouse)
+                    if (attackIndex == -1)
                     {
-                        minDistanceFromMouse = currDistFromMouse;
-                        indexOfMinDistance = i;
+                        attackIndex = 0;
+                    }
+                    float minDistanceFromMouse = float.PositiveInfinity;
+                    int indexOfMinDistance = -1;
+                    for (int i = 0; i < nearbyLivingEnemies.Length; i++)
+                    {
+                        float currDistFromMouse = Vector3.Distance(MouseInWorldPosition, nearbyLivingEnemies[i].gameObject.transform.position);
+                        if (currDistFromMouse > baseMult * attackLenience) continue;
+                        if (nearbyLivingEnemies[i].distance > attackRange) continue;
+                        if (minDistanceFromMouse > currDistFromMouse)
+                        {
+                            minDistanceFromMouse = currDistFromMouse;
+                            indexOfMinDistance = i;
+                        }
+                    }
+
+                    if (indexOfMinDistance == -1) return;
+
+                    bool isRangedAttack = Mouse.current.leftButton.isPressed && cheatMode || Mouse.current.leftButton.wasPressedThisFrame && !cheatMode;
+                    bool isMeleeAttack = Mouse.current.rightButton.isPressed && cheatMode || Mouse.current.rightButton.wasPressedThisFrame && !cheatMode;
+                    if (isRangedAttack)
+                    {
+                        RangedAttack(nearbyLivingEnemies[indexOfMinDistance].gameObject, attackIndex);
+                    }
+                    if (isMeleeAttack)
+                    {
+                        MeleeAttack(nearbyLivingEnemies[indexOfMinDistance].gameObject, attackIndex);
                     }
                 }
-
-                if (indexOfMinDistance == -1) return;
-
-                bool isRangedAttack = Mouse.current.leftButton.isPressed && cheatMode || Mouse.current.leftButton.wasPressedThisFrame && !cheatMode;
-                bool isMeleeAttack = Mouse.current.rightButton.isPressed && cheatMode || Mouse.current.rightButton.wasPressedThisFrame && !cheatMode;
-                if (isRangedAttack)
-                {
-                    RangedAttack(nearbyLivingEnemies[indexOfMinDistance].gameObject, attackIndex);
-                }
-                if (isMeleeAttack)
-                {
-                    MeleeAttack(nearbyLivingEnemies[indexOfMinDistance].gameObject, attackIndex);
-                }
             }
-        }
+        } else { return; }
     }
 
     void UpdateMovement()

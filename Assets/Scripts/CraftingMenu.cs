@@ -1,9 +1,12 @@
+using Assets.Globals;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class CraftingMenu : MonoBehaviour
 {
     [SerializeField] private GameObject CMenu;
+
+    private PlayerController pController;
     private int screenWidth;
     private int screenHeight;
 
@@ -13,6 +16,7 @@ public class CraftingMenu : MonoBehaviour
     {
         screenWidth = Screen.width;
         screenHeight = Screen.height;
+        pController = GetComponent<PlayerController>();
    
     }
 
@@ -25,6 +29,7 @@ public class CraftingMenu : MonoBehaviour
     {
         ScreenInit();
         InitializeVars();
+        
     }
 
     // Update is called once per frame
@@ -36,10 +41,12 @@ public class CraftingMenu : MonoBehaviour
         {
             CMenu.gameObject.SetActive(false);
             
+            
         }
         else if ( showCraftingMenu )
         {
             CMenu.gameObject.SetActive(true);
+            
         }
     }
 
@@ -52,6 +59,14 @@ public class CraftingMenu : MonoBehaviour
         if (Keyboard.current.cKey.wasReleasedThisFrame)
         {
             showCraftingMenu = !showCraftingMenu;
+            pController.canMove = !pController.canMove;
+            Debug.Log("C Key Pressed");
+            foreach (VarTypes.EnemyData enemy in pController.GetNearbyLivingEnemies())
+            {
+                Debug.Log(enemy.gameObject.name);
+                enemy.gameObject.SetActive(false);
+                
+            }
             
         }
     }

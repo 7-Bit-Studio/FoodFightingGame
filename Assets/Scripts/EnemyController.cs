@@ -125,7 +125,7 @@ public class EnemyController : MonoBehaviour
         ScreenPos *= 2;
         ScreenPos -= Vector2.one;
 
-        Debug.Log($"Screen Position: {ScreenPos}");
+        //Debug.Log($"Screen Position: {ScreenPos}");
         if (Mathf.Abs(ScreenPos.x) > 3 || Mathf.Abs(ScreenPos.y) > 3) isFarAway = true;
         else isFarAway = false;
 

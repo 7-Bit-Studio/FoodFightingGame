@@ -379,6 +379,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
+--- !u!1 &41233646 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2959332173247929219, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
+  m_PrefabInstance: {fileID: 557836478}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &49860545
 GameObject:
   m_ObjectHideFlags: 0
@@ -2393,6 +2398,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: borgor
       objectReference: {fileID: 0}
+    - target: {fileID: 6641752044445219646, guid: ef3ee71160b7f3344a68baa7b86c31c8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7320844496663257633, guid: ef3ee71160b7f3344a68baa7b86c31c8, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.2762942
@@ -2706,6 +2715,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2825336099165148266, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2825336099165148266, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2825336099165148266, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2825336099165148266, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.27
+      objectReference: {fileID: 0}
+    - target: {fileID: 2959332173247929219, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4653339814167236600, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
+      propertyPath: canDie
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4653339814167236600, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
       propertyPath: GameOverScreen
       value: 
@@ -2729,6 +2762,10 @@ PrefabInstance:
     - target: {fileID: 8244672825021101286, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 8244672825021101286, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8615920454434297348, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
       propertyPath: m_Radius
@@ -2785,7 +2822,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8244672825021101286, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
+      insertIndex: 4
+      addedObject: {fileID: 1301489815}
   m_SourcePrefab: {fileID: 100100000, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
 --- !u!1 &592015910
 GameObject:
@@ -3087,6 +3127,10 @@ PrefabInstance:
     - target: {fileID: 6897453992437839744, guid: b82da8ab7e8330b4b8a988e7961cc966, type: 3}
       propertyPath: m_Name
       value: mato
+      objectReference: {fileID: 0}
+    - target: {fileID: 6897453992437839744, guid: b82da8ab7e8330b4b8a988e7961cc966, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4851,6 +4895,24 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
+--- !u!1 &1301489806 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8244672825021101286, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
+  m_PrefabInstance: {fileID: 557836478}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1301489815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1301489806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff9050500a3df404f9fef8b8f6a6bec1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CraftingMenu
+  CMenu: {fileID: 41233646}
 --- !u!1 &1303018271
 GameObject:
   m_ObjectHideFlags: 0
@@ -7174,6 +7236,10 @@ PrefabInstance:
     - target: {fileID: 2135436929630368813, guid: 9fa6a5cfb984e654dbc7391d94787b8a, type: 3}
       propertyPath: m_Name
       value: cheesy
+      objectReference: {fileID: 0}
+    - target: {fileID: 2135436929630368813, guid: 9fa6a5cfb984e654dbc7391d94787b8a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4658508233401639613, guid: 9fa6a5cfb984e654dbc7391d94787b8a, type: 3}
       propertyPath: m_LocalPosition.x
