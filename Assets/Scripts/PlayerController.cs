@@ -311,8 +311,18 @@ public class PlayerController : MonoBehaviour
         {
             if (Mouse.current.leftButton.isPressed || Mouse.current.rightButton.isPressed)
             {
+<<<<<<< Updated upstream
                 //Debug.LogAssertion("Player Attacked!");
                 if(attackIndex == -1)
+=======
+                Debug.Log("Left Button Pressed");
+                Vector2 MouseInWorldPosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+
+                float minDistanceFromMouse = float.PositiveInfinity;
+                float[] distFromMouse = new float[livingEnemies.Length];
+
+                for (int i = 0; i < livingEnemies.Length; i++)
+>>>>>>> Stashed changes
                 {
                     attackIndex = 0;
                 }
@@ -357,6 +367,7 @@ public class PlayerController : MonoBehaviour
         data.position = playerPos;
         float epsilon = 0.001f;
 
+<<<<<<< Updated upstream
         if (Math.Abs(playerVel.y) < Math.Abs(playerVel.x))
         {
             if (playerVel.x > epsilon)
@@ -387,6 +398,30 @@ public class PlayerController : MonoBehaviour
                 facing = VarTypes.Direction.Down;
             }
         }
+=======
+        //if (Math.Abs(playerVel.y) < Math.Abs(playerVel.x))
+        //{
+        //    if (playerVel.x > 0)
+         //   {
+        //        facing = VarTypes.Direction.Left;
+        //    }
+        //    else
+        //    {
+        //        facing = VarTypes.Direction.Right;
+        //    }
+        //}
+        //if(Math.Abs(playerVel.x) < Math.Abs(playerVel.y))
+        //{
+        //    if (playerVel.y > 0)
+        //    {
+        //        facing = VarTypes.Direction.Up;
+        //    }
+        //    else
+        //    {
+        //        facing = VarTypes.Direction.Down;
+         //   }
+        //}
+>>>>>>> Stashed changes
 
         data.direction = facing;
         GameOverScreen.transform.position = playerPos;
