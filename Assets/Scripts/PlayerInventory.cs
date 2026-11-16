@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.iOS;
+
 
 public class PlayerInventory : MonoBehaviour
 {
