@@ -218,7 +218,6 @@ public class EnemyController : MonoBehaviour
             theDrop.GetComponent<EnemyDrop>().DropTheShit(transform.position, transform.rotation, theDrop.GetComponent<EnemyDrop>().itemID);
         }
         isAlive = false;
-
         enemyTransform.gameObject.SetActive(false);
         Destroy(enemyTransform.gameObject, 0.5f);
     }

@@ -277,14 +277,6 @@ namespace Assets.Globals
                 name = "Ketchup Bottle",
                 id = 1,
                 sprite = Resources.LoadAll<Sprite>("Sprites/Items/Weapons")[2]
-            },
-            new() {
-                name = "Example Item 3",
-                id = 2
-            },
-            new(){
-                name = "Example Item 4",
-                id = 3
             }
         };
     }

@@ -132,13 +132,9 @@ PrefabInstance:
       value: 329.1
       objectReference: {fileID: 0}
     - target: {fileID: 4653339814167236600, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
-      propertyPath: GameOverScreen
-      value: 
-      objectReference: {fileID: 2850584105115319379, guid: 57e6e473957dcfd46bb14201ba90c504, type: 3}
-    - target: {fileID: 4653339814167236600, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
-      propertyPath: playerMeleeAttackPrefab
-      value: 
-      objectReference: {fileID: 7630142083507068408, guid: 4a956b52682e04f42b317562539c0fe8, type: 3}
+      propertyPath: cheatMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8244672825021101286, guid: a82afe73fc6228d45aa30ea90472e944, type: 3}
       propertyPath: m_Name
       value: Player
@@ -807,6 +803,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5204768689142976445, guid: 96fec238f49cabd49b3f6da684c0f387, type: 3}
+      propertyPath: spawnIntervalMin
+      value: 0.05
+      objectReference: {fileID: 0}
     - target: {fileID: 7377928468226482571, guid: 96fec238f49cabd49b3f6da684c0f387, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1017,14 +1017,6 @@ PrefabInstance:
     - target: {fileID: 4652908098717005807, guid: 0d643fbadc47e08429e5d224f37e0b61, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4699778653247313751, guid: 0d643fbadc47e08429e5d224f37e0b61, type: 3}
-      propertyPath: m_Offset.x
-      value: -0.02
-      objectReference: {fileID: 0}
-    - target: {fileID: 4699778653247313751, guid: 0d643fbadc47e08429e5d224f37e0b61, type: 3}
-      propertyPath: m_Offset.y
-      value: -0.14
       objectReference: {fileID: 0}
     - target: {fileID: 8319133568348624070, guid: 0d643fbadc47e08429e5d224f37e0b61, type: 3}
       propertyPath: m_Name
