@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: db8ec750a1e60a04c9913140ff76f550
+guid: 990fe9cafe5765f48940ab92732374c0
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4143255939498360446
-    second: Tilemap dirt and stone path_0
+      213: 887745498539668929
+    second: Tile maps_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -102,11 +102,11 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Tilemap dirt and stone path_0
+      name: Tile maps_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 144
+        y: 192
         width: 48
         height: 48
       alignment: 0
@@ -117,14 +117,124 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e7eb357335dcf7930800000000000000
-      internalID: 4143255939498360446
+      spriteID: 1c5b863d3d7e15c00800000000000000
+      internalID: 887745498539668929
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tilemap dirt and stone path_1
+      name: Tile maps_1
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 192
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c403561a80fc9a14a830939136151c95
+      internalID: 843390101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tile maps_2
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 192
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7d73ae4fd380be4d992011420a87a4a
+      internalID: -1741714769
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tile maps_3
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 192
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24a924cdc9bd20b47a5c4b5da6afef8a
+      internalID: -146898049
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tile maps_4
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 192
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a24127d5340bef44be97f95936ddbed
+      internalID: 1866077833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tile maps_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 144
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ecc25d0e4c0fd3341b7b04f7a8c6e493
+      internalID: 930433397
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tile maps_6
       rect:
         serializedVersion: 2
         x: 48
@@ -139,14 +249,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3617f7f0d4e1ab640847fc40c8ee3a48
-      internalID: -1260235946
+      spriteID: 523b6438f6b176545a588cb947e7e201
+      internalID: -1502940157
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tilemap dirt and stone path_2
+      name: Tile maps_7
       rect:
         serializedVersion: 2
         x: 96
@@ -161,14 +271,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bb2965887125592499d3b7e4ca739a83
-      internalID: -344740559
+      spriteID: 739a4f6dd16346a4db2dd38055fa51e2
+      internalID: -764622766
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tilemap dirt and stone path_3
+      name: Tile maps_8
       rect:
         serializedVersion: 2
         x: 144
@@ -183,14 +293,36 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 23cffcd52621b0a48a0fe13d0885a8a6
-      internalID: 1255619168
+      spriteID: 53167f202e9c55b489d90066e31272b5
+      internalID: 1218127453
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tilemap dirt and stone path_4
+      name: Tile maps_9
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 144
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 812a2ae5a6475cd4d969207825c09ddb
+      internalID: 495091609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tile maps_10
       rect:
         serializedVersion: 2
         x: 0
@@ -205,14 +337,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: feaea5f99eb1b404abebb81c316ef310
-      internalID: 1084944139
+      spriteID: cbff45a58dce1804d8008096afdc8685
+      internalID: 908760655
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tilemap dirt and stone path_5
+      name: Tile maps_11
       rect:
         serializedVersion: 2
         x: 48
@@ -227,14 +359,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 317ac70e9d5116648b1b976ad291cec7
-      internalID: 206576827
+      spriteID: d9ef13c2d1b0aec44bbb3a120f4e92a0
+      internalID: -72402224
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tilemap dirt and stone path_6
+      name: Tile maps_12
       rect:
         serializedVersion: 2
         x: 96
@@ -249,14 +381,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7b7e621c0841bf041955d16b1116da2e
-      internalID: 1202968151
+      spriteID: 61d48ff4e02291847accc57d9e62f374
+      internalID: -2075491486
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tilemap dirt and stone path_7
+      name: Tile maps_13
       rect:
         serializedVersion: 2
         x: 144
@@ -271,14 +403,36 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c6fc3f2b1ab72234b94571d9610c1831
-      internalID: 861761452
+      spriteID: fb280aab01a87a448855ae177da4a487
+      internalID: -1574397228
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tilemap dirt and stone path_8
+      name: Tile maps_14
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 96
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8fbc3b64853881a4f913bd0ce3021c3b
+      internalID: 188979053
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tile maps_15
       rect:
         serializedVersion: 2
         x: 0
@@ -293,14 +447,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1f8f4c2163ddd7e4f944560c6576763c
-      internalID: 1608923270
+      spriteID: ee296ea47fd102e4687ea955b4d0681b
+      internalID: -317963356
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tilemap dirt and stone path_9
+      name: Tile maps_16
       rect:
         serializedVersion: 2
         x: 48
@@ -315,14 +469,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2ec9f6b401e88eb43bbc18c0c806bc0e
-      internalID: -1670931567
+      spriteID: 11a49af29f347ee49adfb934942043fe
+      internalID: 1118897680
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tilemap dirt and stone path_10
+      name: Tile maps_17
       rect:
         serializedVersion: 2
         x: 96
@@ -337,14 +491,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b1edc16ce776e934bb638fc82132940d
-      internalID: -66376180
+      spriteID: 4dc27ad812ef6424483c40546d6ace36
+      internalID: -838665417
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tilemap dirt and stone path_11
+      name: Tile maps_18
       rect:
         serializedVersion: 2
         x: 144
@@ -359,14 +513,36 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b1c68f7ef8a845f4ab5406195c1fb930
-      internalID: -2026198937
+      spriteID: f00920132d004e34ca9cdf384865cb63
+      internalID: -265318471
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tilemap dirt and stone path_12
+      name: Tile maps_19
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 48
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d7687a841d13894e951430f84f670ac
+      internalID: -60466213
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tile maps_20
       rect:
         serializedVersion: 2
         x: 0
@@ -381,14 +557,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ea2e8276712a8ac41908b4fd2b9ace87
-      internalID: -1342351202
+      spriteID: 4d8201a4f9d18c146957010568cd4ea5
+      internalID: -1274992653
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tilemap dirt and stone path_13
+      name: Tile maps_21
       rect:
         serializedVersion: 2
         x: 48
@@ -403,8 +579,74 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 11a39e11fa2bf27458b625f5eb6ecc59
-      internalID: -2035885635
+      spriteID: 9a7cc686f74982d44911af63b9becb66
+      internalID: 2089196261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tile maps_22
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d67ac40e8221f1045b0e789ded06fec7
+      internalID: -1829394330
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tile maps_23
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 0
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76413cbfa1c0ddf4d97fe6cde9901bf8
+      internalID: 1718055150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tile maps_24
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af0aa91bf53b97b48aef28d5a914f650
+      internalID: -1443446345
       vertices: []
       indices: 
       edges: []
@@ -413,7 +655,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: f01572bb1afe096408e7416ba58887ab
+    spriteID: 3709d77cb7b8e834797d66f5406b91d8
     internalID: 0
     vertices: []
     indices: 
@@ -425,20 +667,31 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":48.0,"y":48.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Tilemap dirt and stone path_0: 4143255939498360446
-      Tilemap dirt and stone path_1: -1260235946
-      Tilemap dirt and stone path_10: -66376180
-      Tilemap dirt and stone path_11: -2026198937
-      Tilemap dirt and stone path_12: -1342351202
-      Tilemap dirt and stone path_13: -2035885635
-      Tilemap dirt and stone path_2: -344740559
-      Tilemap dirt and stone path_3: 1255619168
-      Tilemap dirt and stone path_4: 1084944139
-      Tilemap dirt and stone path_5: 206576827
-      Tilemap dirt and stone path_6: 1202968151
-      Tilemap dirt and stone path_7: 861761452
-      Tilemap dirt and stone path_8: 1608923270
-      Tilemap dirt and stone path_9: -1670931567
+      Tile maps_0: 887745498539668929
+      Tile maps_1: 843390101
+      Tile maps_10: 908760655
+      Tile maps_11: -72402224
+      Tile maps_12: -2075491486
+      Tile maps_13: -1574397228
+      Tile maps_14: 188979053
+      Tile maps_15: -317963356
+      Tile maps_16: 1118897680
+      Tile maps_17: -838665417
+      Tile maps_18: -265318471
+      Tile maps_19: -60466213
+      Tile maps_2: -1741714769
+      Tile maps_20: -1274992653
+      Tile maps_21: 2089196261
+      Tile maps_22: -1829394330
+      Tile maps_23: 1718055150
+      Tile maps_24: -1443446345
+      Tile maps_3: -146898049
+      Tile maps_4: 1866077833
+      Tile maps_5: 930433397
+      Tile maps_6: -1502940157
+      Tile maps_7: -764622766
+      Tile maps_8: 1218127453
+      Tile maps_9: 495091609
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
