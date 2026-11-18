@@ -793,7 +793,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Movement
   moveActionReference: {fileID: -1680190386980627800, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   playerTexture: {fileID: 2800000, guid: af3b3368c94950d40b61a4fe601b13ff, type: 3}
-  GameOverScreen: {fileID: 0}
+  GameOverScreen: {fileID: 2850584105115319379, guid: 57e6e473957dcfd46bb14201ba90c504, type: 3}
   maxSpeed: 5
   playerAcc: 25
   attackRange: 3
@@ -810,7 +810,7 @@ MonoBehaviour:
   dashCooldown: 1
   dashSpeed: 2
   inventory: []
-  playerMeleeAttackPrefab: {fileID: 3171536019915728846, guid: e6cf78dd2a422634fb3e1fec4f6c89e7, type: 3}
+  playerMeleeAttackPrefab: {fileID: 7630142083507068408, guid: 4a956b52682e04f42b317562539c0fe8, type: 3}
   playerRangedAttackPrefab: {fileID: 1744228542935970917, guid: a4b68448cfa1d134eac1472e8e149c4d, type: 3}
 --- !u!114 &4348614517689816146
 MonoBehaviour:
