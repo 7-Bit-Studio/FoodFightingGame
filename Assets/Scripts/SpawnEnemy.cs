@@ -44,7 +44,7 @@ public class SpawnEnemy : MonoBehaviour
         }
         else
         {
-            nextSpawnTime = spawnIntervalMax + Time.time;
+            nextSpawnTime = spawnIntervalMin + Time.time;
         }
 
         if (!randomizeSpawnPosition)
