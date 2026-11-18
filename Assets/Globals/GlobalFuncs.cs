@@ -271,12 +271,11 @@ namespace Assets.Globals
             new() {
                 name = "Borgor Shield",
                 id = 0,
-                sprite = Resources.LoadAll<Sprite>("Sprites/Items/Weapons")[16]
             },
             new() {
                 name = "Ketchup Bottle",
                 id = 1,
-                sprite = Resources.LoadAll<Sprite>("Sprites/Items/Weapons")[2]
+                
             },
             new() {
                 name = "Example Item 3",

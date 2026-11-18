@@ -26,6 +26,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject GameOverScreen;
     [SerializeField] private float maxSpeed = 5f;
     [SerializeField] private float playerAcc = 5f;
+    public bool canMove = true;
+
+
     [Header("Attack Settings")]
     [SerializeField] private float attackRange = 2.5f;
     [SerializeField] private GameObject[] MeleeAttacks;
@@ -307,27 +310,25 @@ public class PlayerController : MonoBehaviour
 
         Vector2 MouseInWorldPosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
         float MouseDistanceFromPlayer = Vector2.Distance(MouseInWorldPosition, playerPos);
+        VarTypes.EnemyData[] livingEnemies = GetNearbyLivingEnemies();
         if (MouseDistanceFromPlayer <= baseMult * attackRange)
         {
             if (Mouse.current.leftButton.isPressed || Mouse.current.rightButton.isPressed)
             {
-<<<<<<< Updated upstream
-                //Debug.LogAssertion("Player Attacked!");
                 if(attackIndex == -1)
-=======
+
                 Debug.Log("Left Button Pressed");
-                Vector2 MouseInWorldPosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+                
 
                 float minDistanceFromMouse = float.PositiveInfinity;
                 float[] distFromMouse = new float[livingEnemies.Length];
 
                 for (int i = 0; i < livingEnemies.Length; i++)
->>>>>>> Stashed changes
                 {
                     attackIndex = 0;
                 }
                 //Debug.LogAssertion($"{attackIndex}");
-                float minDistanceFromMouse = float.PositiveInfinity;
+                
                 int indexOfMinDistance = -1;
                 for (int i = 0; i < nearbyLivingEnemies.Length; i++)
                 {
@@ -367,7 +368,6 @@ public class PlayerController : MonoBehaviour
         data.position = playerPos;
         float epsilon = 0.001f;
 
-<<<<<<< Updated upstream
         if (Math.Abs(playerVel.y) < Math.Abs(playerVel.x))
         {
             if (playerVel.x > epsilon)
@@ -398,30 +398,6 @@ public class PlayerController : MonoBehaviour
                 facing = VarTypes.Direction.Down;
             }
         }
-=======
-        //if (Math.Abs(playerVel.y) < Math.Abs(playerVel.x))
-        //{
-        //    if (playerVel.x > 0)
-         //   {
-        //        facing = VarTypes.Direction.Left;
-        //    }
-        //    else
-        //    {
-        //        facing = VarTypes.Direction.Right;
-        //    }
-        //}
-        //if(Math.Abs(playerVel.x) < Math.Abs(playerVel.y))
-        //{
-        //    if (playerVel.y > 0)
-        //    {
-        //        facing = VarTypes.Direction.Up;
-        //    }
-        //    else
-        //    {
-        //        facing = VarTypes.Direction.Down;
-         //   }
-        //}
->>>>>>> Stashed changes
 
         data.direction = facing;
         GameOverScreen.transform.position = playerPos;

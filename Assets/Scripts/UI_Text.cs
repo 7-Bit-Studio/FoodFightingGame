@@ -22,14 +22,10 @@ public class UIText : MonoBehaviour
     [SerializeField] private Text FPSTextElement;
     [SerializeField] private Text SpeedElement;
     [SerializeField] private Text PositionElement;
-<<<<<<< Updated upstream
     [SerializeField] private bool debugLogging = false;
-    //[SerializeField] private TextMeshProUGUI WASDPrompt;
-    //[SerializeField] private GameObject promptBackground;
-=======
     [SerializeField] private TextMeshProUGUI WASDPrompt;
     [SerializeField] private GameObject promptBackground;
->>>>>>> Stashed changes
+
     private Transform TopLeftCorner;
     private Functions funcs = new();
     private FunctionsInstance funcInst = new();

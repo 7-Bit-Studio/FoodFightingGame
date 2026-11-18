@@ -62,7 +62,7 @@ public class EnemyController : MonoBehaviour
     private Transform healthValueTransform;
     private int startHealth;
     public bool isFarAway = false;
-    private bool canMove;
+    [SerializeField] private bool canMove = true;
 
 
     private bool isAlive;
@@ -99,8 +99,6 @@ public class EnemyController : MonoBehaviour
         startHealth = health;
 
         isAlive = true;
-
-        canMove = true;
 
         if (isBoss)
         {
