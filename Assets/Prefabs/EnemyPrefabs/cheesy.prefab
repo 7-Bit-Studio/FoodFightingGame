@@ -204,8 +204,6 @@ MonoBehaviour:
   health: 400
   defense: 0
   acceleration: 15
-  damage: 10
-  attackDelay: 100
   collisionLoops: 1
   theDrop: {fileID: 0}
   animationDuration: 0.25
@@ -214,6 +212,11 @@ MonoBehaviour:
   textureHeight: 128
   enterDetectionRadius: 10
   exitDetectionRadius: 15
+  damage: 10
+  attackDelay: 100
+  enemyAttack: {fileID: 0}
+  doesAttackAffectEnemySprite: 0
+  doesAttackKillEnemy: 0
   dropItemID: 0
   isStunned: 0
   isFarAway: 0
