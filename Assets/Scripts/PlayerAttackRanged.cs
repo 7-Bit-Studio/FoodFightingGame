@@ -5,10 +5,10 @@ using System.Collections;
 
 public class PlayerAttackRanged : MonoBehaviour
 {
-    public int damage = 10;
-    public float speed = 20;
-    public float maxDistance = 10;
-    public bool doesStun = true;
+    [SerializeField] public int damage = 10;
+    [SerializeField] public float speed = 20;
+    [SerializeField] public float maxDistance = 10;
+    [SerializeField] public bool doesStun = true;
     private Vector3 AttackVel;
     private Transform AttackPos;
     private float deltaTime;
@@ -19,7 +19,6 @@ public class PlayerAttackRanged : MonoBehaviour
     private Vector3 PrevPos;
     private Vector2 AttackDir;
     private Vector2 PrevFrameDir;
-    private EnemyController enemy;
     void Awake()
     {
         AttackPos = GetComponent<Transform>();
@@ -38,31 +37,29 @@ public class PlayerAttackRanged : MonoBehaviour
     {
         if(currentTarget == null)
         {
-            Kill();
+            funcInst.Kill(transform.gameObject);
             return;
         }
         AttackPos.position += deltaTime * AttackVel;
         AttackPos.rotation = Quaternion.Euler(new Vector3(0, 0, Mathf.Rad2Deg * Mathf.Atan2(-AttackVel.x, AttackVel.y)));
 
         transform.SetPositionAndRotation(AttackPos.position, AttackPos.rotation);
-        
-        enemy = currentTarget.GetComponent<EnemyController>();
 
         if (funcInst.DotProduct(AttackDir, PrevFrameDir) < 0)
         {
-            enemy.OnHit(damage, doesStun);
-            Kill();
+            currentTarget.GetComponent<EnemyController>().OnHit(damage, doesStun);
+            funcInst.Kill(transform.gameObject);
         }
 
         if (Vector3.Distance(AttackPos.position, startPos) > maxDistance)
         {
-            Kill();
+            funcInst.Kill(transform.gameObject);
         }
 
         if (Vector3.Distance(AttackPos.position, currentTarget.transform.position) < 0.5f)
         {
-            enemy.OnHit(damage, doesStun);
-            Kill();
+            currentTarget.GetComponent<EnemyController>().OnHit(damage, doesStun);
+            funcInst.Kill(transform.gameObject);
         }
 
         PrevPos = AttackPos.position;
@@ -75,7 +72,7 @@ public class PlayerAttackRanged : MonoBehaviour
         // if targeted enemy is not active, return
         if (!enemy.activeSelf)
         {
-            Kill();
+            funcInst.Kill(transform.gameObject);
             return;
         }
 
@@ -86,7 +83,7 @@ public class PlayerAttackRanged : MonoBehaviour
         float distance = Vector3.Distance(enemy.transform.position, start);
         if(distance > maxDistance)
         {
-            Kill();
+            funcInst.Kill(transform.gameObject);
             return;
         }
 
@@ -118,16 +115,12 @@ public class PlayerAttackRanged : MonoBehaviour
         //                                               fixed!!^ VarTypes.Data.position is now a Vector3
         //                                               also this never used VarTypes.Data.position lol
         AttackPos.SetPositionAndRotation(startPos, funcInst.ToQuaternion(AttackVel.normalized));
-        //Debug.Log($"{Time.time}: {AttackVel}");
+        Debug.Log($"{Time.time}: {AttackVel}");
 
         // activate attack so it can move and be seen
         transform.gameObject.SetActive(true);
 
         // call UpdatePosition to update transform
         UpdatePosition();
-    }
-    private void Kill()
-    {
-        funcInst.Kill(transform.gameObject);
     }
 }
