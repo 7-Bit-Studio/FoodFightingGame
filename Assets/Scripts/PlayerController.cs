@@ -472,7 +472,7 @@ public class PlayerController : MonoBehaviour
         data.health = health;
         timeAtLastHit = Time.time;
 
-        //Debug.Log($"Player took {dealtDamage} damage. Health is now {health}. Time since last hit: {Time.time - timeAtLastHit}");
+        Debug.Log($"Player took {dealtDamage} damage. Health is now {health}. Time since last hit: {Time.time - timeAtLastHit}");
 
         if (health <= 0 && canDie && !cheatMode)
         {
