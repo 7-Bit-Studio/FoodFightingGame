@@ -1,37 +1,30 @@
-using Assets.Globals;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class CraftingMenu : MonoBehaviour
 {
     [SerializeField] private GameObject CMenu;
-
-    private PlayerController pController;
     private int screenWidth;
     private int screenHeight;
 
     private bool showCraftingMenu;
-    public bool active;
 
     void ScreenInit()
     {
         screenWidth = Screen.width;
         screenHeight = Screen.height;
-        pController = GetComponent<PlayerController>();
    
     }
 
     void InitializeVars()
     {
         showCraftingMenu = false;
-        active = false;
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         ScreenInit();
         InitializeVars();
-        
     }
 
     // Update is called once per frame
@@ -43,12 +36,10 @@ public class CraftingMenu : MonoBehaviour
         {
             CMenu.gameObject.SetActive(false);
             
-            
         }
         else if ( showCraftingMenu )
         {
             CMenu.gameObject.SetActive(true);
-            
         }
     }
 
@@ -61,10 +52,6 @@ public class CraftingMenu : MonoBehaviour
         if (Keyboard.current.cKey.wasReleasedThisFrame)
         {
             showCraftingMenu = !showCraftingMenu;
-            pController.canMove = !pController.canMove;
-            active = !active;
-            Debug.Log("C Key Pressed");
-            
             
         }
     }

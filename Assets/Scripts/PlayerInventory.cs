@@ -1,14 +1,14 @@
 using Assets.Globals;
 using System;
 using System.Collections.Generic;
+using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
+using UnityEngine.iOS;
 
 public class PlayerInventory : MonoBehaviour
 {
-
-    [Serializable]
+    [Serializable] 
     public struct Inventory
     {
         public VarTypes.Item item;
@@ -24,11 +24,7 @@ public class PlayerInventory : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
-
-        inventory =  new Inventory[GlobalVars.items.Length]; //moved into start as doing it before that sets inventory to size 0
-
-
+        inventory = new Inventory[GlobalVars.items.Length];
         for (int i = 0; i < GlobalVars.items.Length; i++)
         {
             inventory[i].item = GlobalVars.items[i];
@@ -37,13 +33,20 @@ public class PlayerInventory : MonoBehaviour
 
         
     }
+
+    public void AddItemToInventory(VarTypes.Item item)
+    {
+        AddItemToInventory(item.id);
+    }
+
     public void AddItemToInventory(int itemID)
     {
         inventory[itemID].count++;
     }
+
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

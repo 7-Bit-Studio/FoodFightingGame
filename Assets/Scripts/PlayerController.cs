@@ -77,6 +77,8 @@ public class PlayerController : MonoBehaviour
     public VarTypes.Item[] inventory;
     [SerializeField] private GameObject playerMeleeAttackPrefab;
     [SerializeField] private GameObject playerRangedAttackPrefab;
+
+
     void Awake()
     {
         // Preliminary checks
@@ -250,7 +252,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!cheatMode && Time.time - timeAtLastAttack < attackCooldown)
         {
-            Debug.LogAssertion("not enough time, dumbass");
+            Debug.Log("not enough time, dumbass");
             return;
         }
 
@@ -276,7 +278,9 @@ public class PlayerController : MonoBehaviour
     {
         if (!cheatMode && Time.time - timeAtLastAttack < attackCooldown) return;
         timeAtLastAttack = Time.time;
-        GameObject playerAttack = new GameObject("Melee Attack", typeof(PlayerAttackMelee), typeof(SpriteRenderer));
+        GameObject playerAttack;
+        playerAttack = Instantiate(playerMeleeAttackPrefab);
+        //playerAttack = new GameObject("Melee Attack", typeof(PlayerAttackMelee), typeof(SpriteRenderer));
         playerAttack.GetComponent<PlayerAttackMelee>().swingSpeed = MeleeAttacks[attackIndex].GetComponent<PlayerAttackMelee>().swingSpeed;
         playerAttack.GetComponent<PlayerAttackMelee>().swingAngle = MeleeAttacks[attackIndex].GetComponent<PlayerAttackMelee>().swingAngle;
         playerAttack.GetComponent<PlayerAttackMelee>().range = baseMult * attackRange;
@@ -324,6 +328,8 @@ public class PlayerController : MonoBehaviour
                 float[] distFromMouse = new float[livingEnemies.Length];
 
                 for (int i = 0; i < livingEnemies.Length; i++)
+                //Debug.LogAssertion("Player Attacked!");
+                if(attackIndex == -1)
                 {
                     attackIndex = 0;
                 }
@@ -481,7 +487,7 @@ public class PlayerController : MonoBehaviour
         data.health = health;
         timeAtLastHit = Time.time;
 
-        //Debug.Log($"Player took {dealtDamage} damage. Health is now {health}. Time since last hit: {Time.time - timeAtLastHit}");
+        Debug.Log($"Player took {dealtDamage} damage. Health is now {health}. Time since last hit: {Time.time - timeAtLastHit}");
 
         if (health <= 0 && canDie && !cheatMode)
         {

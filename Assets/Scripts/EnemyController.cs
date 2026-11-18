@@ -18,8 +18,6 @@ public class EnemyController : MonoBehaviour
     public int health = 100;
     [SerializeField] private int defense = 0;
     [SerializeField] private float acceleration = 0.2f;
-    [SerializeField] private int damage = 10;
-    [SerializeField] private float attackDelay = 100;
     [SerializeField] private int collisionLoops = 1;
     [SerializeField] private GameObject theDrop;
     [Header("Animation Settings")]
@@ -29,6 +27,14 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private int textureHeight = 76;
     [SerializeField] private float enterDetectionRadius = 10f;
     [SerializeField] private float exitDetectionRadius = 15f;
+    [Header("Enemy Attack Settings")]
+    [SerializeField] private int damage = 10;
+    [SerializeField] private float attackDelay = 0.5f;
+    public Texture2D enemyAttack;
+    [SerializeField] private bool doesAttackAffectEnemySprite = false;
+    [SerializeField] private bool doesAttackKillEnemy = false;
+
+    private Texture2D currentEnemyTexture;
     public int dropItemID = 0;
     private bool hasDetectedPlayer = false;
 
@@ -54,7 +60,6 @@ public class EnemyController : MonoBehaviour
     private Vector3 playerDirection;
     private Vector3 normalizedPlayerDirection;
     private GameObject player;
-    private CraftingMenu cMenu;
     public bool isStunned;
     private bool wasJustHit;
     private float hitTime;
@@ -71,6 +76,7 @@ public class EnemyController : MonoBehaviour
     private readonly SpriteFilter spriteFilter = new();
     private bool hasDrop = false;
     private bool shouldStunPseudoGlobal = false;
+    private bool isAttacking = false;
     public VarTypes.Data GetData() => data;
     private PlayerController playerController;
     void Start()
@@ -79,7 +85,6 @@ public class EnemyController : MonoBehaviour
         isStunned = false;
         player = funcInst.GetSiblingGameObject("Player");
         playerController = player.GetComponent<PlayerController>();
-        cMenu = player.GetComponent<CraftingMenu>();
 
         playerData = playerController.GetData();
 
@@ -90,10 +95,11 @@ public class EnemyController : MonoBehaviour
         data.health = health;
         data.position = enemyPos;
 
-        enemySprites = funcInst.SliceGrid(enemyTexture, textureWidth, textureHeight);
-        enemySprites = spriteFilter.RemoveEmpty(enemyTexture, enemySprites);
+        currentEnemyTexture = enemyTexture;
+        InitializeSprites();
+
         timeAtLastSpriteUpdate = Time.time;
-        timeAtLastAttack = Time.time;
+        timeAtLastAttack = 0f;
         currentSpriteIndex = 0;
 
         startHealth = health;
@@ -112,6 +118,14 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    void InitializeSprites()
+    {
+        enemySprites = funcInst.SliceGrid(currentEnemyTexture, textureWidth, textureHeight);
+        enemySprites = spriteFilter.RemoveEmpty(currentEnemyTexture, enemySprites);
+        currentSpriteIndex = 0;
+        timeAtLastSpriteUpdate = Time.time;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -122,8 +136,6 @@ public class EnemyController : MonoBehaviour
             return;
         }
 
-        canMove = !cMenu.active;
-
         Vector2 ScreenPos = Camera.main.WorldToScreenPoint(enemyPos);
         ScreenPos.x /= Camera.main.pixelWidth;
         ScreenPos.y /= Camera.main.pixelHeight;
@@ -131,7 +143,10 @@ public class EnemyController : MonoBehaviour
         ScreenPos -= Vector2.one;
 
         //Debug.Log($"Screen Position: {ScreenPos}");
-        if (Mathf.Abs(ScreenPos.x) > 3 || Mathf.Abs(ScreenPos.y) > 3) isFarAway = true;
+        if (Mathf.Abs(ScreenPos.x) > 3 || Mathf.Abs(ScreenPos.y) > 3)
+        {
+            isFarAway = true;
+        }
         else isFarAway = false;
 
 
@@ -204,68 +219,77 @@ public class EnemyController : MonoBehaviour
             theDrop.GetComponent<EnemyDrop>().DropTheShit(transform.position, transform.rotation, theDrop.GetComponent<EnemyDrop>().itemID);
         }
         isAlive = false;
-
         enemyTransform.gameObject.SetActive(false);
         Destroy(enemyTransform.gameObject, 0.5f);
     }
     void UpdateMovement()
     {
-
-        if (canMove)
+        if (isAttacking)
         {
-            if (wasJustHit)
+            if (doesAttackKillEnemy)
             {
-                //Debug.Log($"Enemy was just hit. Stunned: {isStunned}, Should Stun: {shouldStunPseudoGlobal}, Time since hit: {Time.time - hitTime}");
-                if (Time.time - hitTime > 0.25f)
+                if (currentSpriteIndex + 1 >= enemySprites.Length)
                 {
-                    wasJustHit = false;
-                    isStunned = shouldStunPseudoGlobal;
+                    DoAttack(damage);
+                    Kill();
                 }
-
-
-                UpdatePosition();
-                return;
             }
+        }
 
-            if (isStunned)
+        if (wasJustHit)
+        {
+            //Debug.Log($"Enemy was just hit. Stunned: {isStunned}, Should Stun: {shouldStunPseudoGlobal}, Time since hit: {Time.time - hitTime}");
+            if (Time.time - hitTime > 0.25f)
             {
-                //Debug.Log($"Enemy is stunned. Stunned: {isStunned}, Should Stun: {shouldStunPseudoGlobal}, Time since hit: {Time.time - hitTime}");
-                if (Time.time - hitTime > 1f)
-                {
-                    isStunned = false;
-                    enemyVel = Vector3.zero;
-                }
-
-                enemyVel *= 0.98f;
-
-                UpdatePosition();
-                return;
+                wasJustHit = false;
+                isStunned = shouldStunPseudoGlobal;
             }
 
-
-            if (maxSpeed == 0)
-            {
-                //Debug.LogWarning($"{transform.name}: Max speed is set to 0. Enemy will not move.");
-                enemyVel = Vector3.zero;
-                return;
-            }
-
-
-            if (hasDetectedPlayer)
-            {
-                enemyVel += ((acceleration * normalizedPlayerDirection) - Functions.Friction(enemyVel, acceleration / maxSpeed)) * deltaTime;
-            }
-            else
-            {
-                enemyVel -= Functions.Friction(enemyVel, acceleration / maxSpeed) * deltaTime;
-            }
-
-            data.velocity = enemyVel;
-            data.position = enemyPos;
-            data.transform = enemyTransform;
 
             UpdatePosition();
+            return;
         }
+
+        if (isStunned)
+        {
+            //Debug.Log($"Enemy is stunned. Stunned: {isStunned}, Should Stun: {shouldStunPseudoGlobal}, Time since hit: {Time.time - hitTime}");
+            if (Time.time - hitTime > 1f)
+            {
+                isStunned = false;
+                enemyVel = Vector3.zero;
+            }
+
+            enemyVel *= 0.98f;
+
+            UpdatePosition();
+            return;
+        }
+
+
+        if(maxSpeed == 0)
+        {
+            //Debug.LogWarning($"{transform.name}: Max speed is set to 0. Enemy will not move.");
+            enemyVel = Vector3.zero;
+            return;
+        }
+
+        
+        if(hasDetectedPlayer)
+        {
+            enemyVel += ((acceleration * normalizedPlayerDirection) - Functions.Friction(enemyVel, acceleration/maxSpeed)) * deltaTime;
+        }
+        else
+        {
+            enemyVel -= Functions.Friction(enemyVel, acceleration / maxSpeed) * deltaTime;
+        }
+
+        data.velocity = enemyVel;
+        data.position = enemyPos;
+        data.transform = enemyTransform;
+
+        //if(isAttacking && doesAttackAffectEnemySprite && )
+
+        UpdatePosition();
     }
 
     void UpdatePosition()
@@ -303,7 +327,7 @@ public class EnemyController : MonoBehaviour
 
         for(int i = 0; i < objects.Length; i++)
         {
-            if (objects[i].name == transform.name)
+            if (objects[i].gameObject == gameObject)
             {
                 arrOffset = 1;
                 continue;
@@ -361,13 +385,9 @@ public class EnemyController : MonoBehaviour
             enemyPos += (colliderCenter - playerColliderCenter) * (minDistance - currentDistance);
             enemyVel += (colliderCenter - playerColliderCenter) * (minDistance - currentDistance);
 
-            //Debug.Log("Player Collision!");
+            StartAttackAnimation();
 
-            if (Time.time - timeAtLastAttack > attackDelay)
-            {
-                timeAtLastAttack = Time.time;
-                playerController.OnHit(damage);
-            }
+            Debug.Log("Player Collision!");
         }
 
         // leaving enemyTransform.position to keep function looking balanced
@@ -381,5 +401,22 @@ public class EnemyController : MonoBehaviour
     {
         EnemyCollision();
         PlayerCollision();
+    }
+
+    void StartAttackAnimation()
+    {
+        if (isAttacking) return;
+        isAttacking = true;
+        if (doesAttackAffectEnemySprite)
+        {
+            currentEnemyTexture = enemyAttack;
+            InitializeSprites();
+        }
+    }
+
+    void DoAttack(int damage)
+    {
+            timeAtLastAttack = Time.time;
+            playerController.OnHit(damage);
     }
 }

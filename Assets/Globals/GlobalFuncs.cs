@@ -274,8 +274,7 @@ namespace Assets.Globals
             },
             new() {
                 name = "Ketchup Bottle",
-                id = 1,
-                
+                id = 1,                
             },
             new() {
                 name = "Example Item 3",

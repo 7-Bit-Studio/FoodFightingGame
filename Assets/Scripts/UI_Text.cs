@@ -23,9 +23,8 @@ public class UIText : MonoBehaviour
     [SerializeField] private Text SpeedElement;
     [SerializeField] private Text PositionElement;
     [SerializeField] private bool debugLogging = false;
-    [SerializeField] private TextMeshProUGUI WASDPrompt;
-    [SerializeField] private GameObject promptBackground;
-
+    //[SerializeField] private TextMeshProUGUI WASDPrompt;
+    //[SerializeField] private GameObject promptBackground;
     private Transform TopLeftCorner;
     private Functions funcs = new();
     private FunctionsInstance funcInst = new();
@@ -45,7 +44,7 @@ public class UIText : MonoBehaviour
     private int screenWidth;
     private int screenHeight;
     private bool showDebugInfo;
-    private bool showWASDPrompt;
+    //private bool showWASDPrompt;
     //private bool wPressed;
     //private bool aPressed;
     //private bool sPressed;
@@ -68,7 +67,7 @@ public class UIText : MonoBehaviour
         prevPlayerVel1 = new Vector3[averageDuration];
         prevPlayerVel2 = new Vector3[averageDuration + 1];
         showDebugInfo = false;
-        showWASDPrompt = true;
+        //showWASDPrompt = true;
     }
 
     void ScreenInit()
@@ -106,11 +105,10 @@ public class UIText : MonoBehaviour
             FPSTextElement.gameObject.SetActive(true);
             SpeedElement.gameObject.SetActive(true);
         }
-        if (showWASDPrompt)
-        {
-            promptBackground.gameObject.SetActive(true);
-            WASDPrompt.gameObject.SetActive(true);
-        }
+        //if (showWASDPrompt)
+        //{
+            
+        //}
 
         data = movement.GetData();
         playerVel = data.velocity;

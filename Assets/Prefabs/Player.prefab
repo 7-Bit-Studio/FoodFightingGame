@@ -57,7 +57,7 @@ Transform:
   m_GameObject: {fileID: 706138572370379614}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -651.6, y: 0, z: 0}
+  m_LocalPosition: {x: -651.6, y: 329.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1026,16 +1026,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Movement
   moveActionReference: {fileID: -1680190386980627800, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   playerTexture: {fileID: 2800000, guid: af3b3368c94950d40b61a4fe601b13ff, type: 3}
-  GameOverScreen: {fileID: 0}
+  GameOverScreen: {fileID: 2850584105115319379, guid: 57e6e473957dcfd46bb14201ba90c504, type: 3}
   maxSpeed: 5
   playerAcc: 25
   canMove: 1
   attackRange: 3
   MeleeAttacks:
-  - {fileID: 0}
+  - {fileID: 7630142083507068408, guid: 4a956b52682e04f42b317562539c0fe8, type: 3}
   RangedAttacks:
-  - {fileID: 0}
-  cheatMode: 1
+  - {fileID: 1744228542935970917, guid: a4b68448cfa1d134eac1472e8e149c4d, type: 3}
+  cheatMode: 0
   attackLenience: 0.5
   attackCooldown: 0.2
   health: 100
@@ -1044,8 +1044,8 @@ MonoBehaviour:
   dashCooldown: 1
   dashSpeed: 2
   inventory: []
-  playerMeleeAttackPrefab: {fileID: 0}
-  playerRangedAttackPrefab: {fileID: 0}
+  playerMeleeAttackPrefab: {fileID: 7630142083507068408, guid: 4a956b52682e04f42b317562539c0fe8, type: 3}
+  playerRangedAttackPrefab: {fileID: 1744228542935970917, guid: a4b68448cfa1d134eac1472e8e149c4d, type: 3}
 --- !u!114 &4348614517689816146
 MonoBehaviour:
   m_ObjectHideFlags: 0
