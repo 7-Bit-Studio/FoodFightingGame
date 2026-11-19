@@ -480,6 +480,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnHit(int damage)
     {
+        Debug.Log("OnHit Entered");
         int dealtDamage = damage - defense;
         dealtDamage = Math.Max(0, dealtDamage);
 

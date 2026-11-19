@@ -226,6 +226,7 @@ public class EnemyController : MonoBehaviour
     {
         if (isAttacking)
         {
+            
             if (doesAttackKillEnemy)
             {
                 if (currentSpriteIndex + 1 >= enemySprites.Length)
@@ -416,6 +417,7 @@ public class EnemyController : MonoBehaviour
 
     void DoAttack(int damage)
     {
+        Debug.Log("DoAttack Entered");
             timeAtLastAttack = Time.time;
             playerController.OnHit(damage);
     }
