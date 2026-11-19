@@ -279,5 +279,7 @@ namespace Assets.Globals
                 sprite = Resources.LoadAll<Sprite>("Sprites/Items/Weapons")[2]
             }
         };
+
+        public static float framesPerSecond;
     }
 }

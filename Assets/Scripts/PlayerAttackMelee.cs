@@ -24,7 +24,7 @@ public class PlayerAttackMelee : MonoBehaviour
         transform.gameObject.SetActive(false);
         startRot = transform.rotation.eulerAngles.z;
         transform.localScale = transform.localScale * range;
-        playerData = player.GetData();
+        playerData = player.data;
     }
 
     // Update is called once per frame
@@ -32,7 +32,7 @@ public class PlayerAttackMelee : MonoBehaviour
     {
         deltaTime = Time.deltaTime;
         player = funcInst.GetSiblingGameObject("Player").GetComponent<PlayerController>();
-        playerData = player.GetData();
+        playerData = player.data;
         UpdatePosition();
     }
     void UpdatePosition()
