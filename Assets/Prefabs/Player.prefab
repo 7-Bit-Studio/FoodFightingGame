@@ -913,12 +913,15 @@ GameObject:
   - component: {fileID: 8831837833102331978}
   - component: {fileID: 8509187014003026785}
   - component: {fileID: 901948850974156201}
+  - component: {fileID: 7852974855076836902}
+  - component: {fileID: 6170537872098683015}
   - component: {fileID: 4653339814167236600}
   - component: {fileID: 7132937257121017732}
   - component: {fileID: 4348614517689816146}
   - component: {fileID: 8615920454434297348}
   - component: {fileID: 7256647148524855906}
   - component: {fileID: 3848776795714312463}
+  - component: {fileID: 7285078900391710971}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1013,6 +1016,35 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
+--- !u!114 &7852974855076836902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8244672825021101286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56aff09ce3b4964ba24e0c27ed812d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerCollider
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 8
+--- !u!114 &6170537872098683015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8244672825021101286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94475640d5b8cef408acdf2ad490f264, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FPS
+  bucketCount: 8
+  targetFPS: 144
 --- !u!114 &4653339814167236600
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1044,6 +1076,9 @@ MonoBehaviour:
   canDie: 1
   dashCooldown: 1
   dashSpeed: 2
+  playerTransform: {fileID: 0}
+  playerPos: {x: 0, y: 0, z: 0}
+  playerVel: {x: 0, y: 0, z: 0}
   inventory: []
   playerMeleeAttackPrefab: {fileID: 7630142083507068408, guid: 4a956b52682e04f42b317562539c0fe8, type: 3}
   playerRangedAttackPrefab: {fileID: 1744228542935970917, guid: a4b68448cfa1d134eac1472e8e149c4d, type: 3}
@@ -1236,6 +1271,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInventory
   inventory: []
+--- !u!50 &7285078900391710971
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8244672825021101286}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 1
+  m_SleepingMode: 0
+  m_CollisionDetection: 1
+  m_Constraints: 0
 --- !u!1 &8250880873921590541
 GameObject:
   m_ObjectHideFlags: 0

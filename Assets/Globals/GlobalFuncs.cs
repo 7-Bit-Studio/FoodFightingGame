@@ -285,5 +285,7 @@ namespace Assets.Globals
                 id = 3
             }
         };
+
+        public static float framesPerSecond;
     }
 }

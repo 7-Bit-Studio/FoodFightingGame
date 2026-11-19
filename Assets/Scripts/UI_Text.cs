@@ -44,6 +44,8 @@ public class UIText : MonoBehaviour
     private int screenWidth;
     private int screenHeight;
     private bool showDebugInfo;
+    private float elapsed;
+    private int frames;
     //private bool showWASDPrompt;
     //private bool wPressed;
     //private bool aPressed;
@@ -61,7 +63,7 @@ public class UIText : MonoBehaviour
         if (debugLogging) Loginit_();
         movement = GetComponent<PlayerController>();
         fpsLow = float.PositiveInfinity;
-        data = movement.GetData();
+        data = movement.data;
         playerVel = data.velocity;
         
         prevPlayerVel1 = new Vector3[averageDuration];
@@ -110,7 +112,7 @@ public class UIText : MonoBehaviour
             
         //}
 
-        data = movement.GetData();
+        data = movement.data;
         playerVel = data.velocity;
         playerPos = data.position;
         deltaTime = Time.deltaTime;
@@ -158,9 +160,7 @@ public class UIText : MonoBehaviour
 
     void FPS()
     {
-        currFPS = 1 / deltaTime;
-
-        fpsLow = Mathf.Min(currFPS, fpsLow);
+        currFPS = GlobalVars.framesPerSecond;
     }
 
     void FPSFileWrite()
