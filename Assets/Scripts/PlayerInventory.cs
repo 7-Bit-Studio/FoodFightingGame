@@ -1,10 +1,8 @@
 using Assets.Globals;
 using System;
 using System.Collections.Generic;
-using UnityEditor.Search;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.iOS;
+using UnityEngine.InputSystem; 
 
 public class PlayerInventory : MonoBehaviour
 {
