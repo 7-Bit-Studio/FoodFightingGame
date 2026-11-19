@@ -85,7 +85,7 @@ public class EnemyController : MonoBehaviour
         player = funcInst.GetSiblingGameObject("Player");
         playerController = player.GetComponent<PlayerController>();
 
-        playerData = playerController.GetData();
+        playerData = playerController.data;
 
         enemyTransform = GetComponent<Transform>();
         enemyPos = enemyTransform.position;
@@ -151,7 +151,7 @@ public class EnemyController : MonoBehaviour
 
         if (isFarAway) return;
 
-        playerData = playerController.GetData();
+        playerData = playerController.data;
 
         deltaTime = Time.deltaTime;
 
@@ -386,7 +386,7 @@ public class EnemyController : MonoBehaviour
 
             StartAttackAnimation();
 
-            Debug.Log("Player Collision!");
+            //Debug.Log("Player Collision!");
         }
 
         // leaving enemyTransform.position to keep function looking balanced
@@ -415,7 +415,7 @@ public class EnemyController : MonoBehaviour
 
     void DoAttack(int damage)
     {
-            timeAtLastAttack = Time.time;
-            playerController.OnHit(damage);
+        timeAtLastAttack = Time.time;
+        playerController.OnHit(damage);
     }
 }
