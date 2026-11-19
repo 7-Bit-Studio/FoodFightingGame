@@ -9,6 +9,8 @@ public class CraftingMenu : MonoBehaviour
 
     public bool showCraftingMenu;
 
+
+
     void ScreenInit()
     {
         screenWidth = Screen.width;
