@@ -7,7 +7,7 @@ public class CraftingMenu : MonoBehaviour
     private int screenWidth;
     private int screenHeight;
 
-    private bool showCraftingMenu;
+    public bool showCraftingMenu;
 
     void ScreenInit()
     {

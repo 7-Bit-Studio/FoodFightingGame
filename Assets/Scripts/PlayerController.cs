@@ -79,6 +79,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject playerRangedAttackPrefab;
 
 
+    //CraftingMenu
+    private CraftingMenu cMenu;
+
+
     void Awake()
     {
         // Preliminary checks
@@ -116,6 +120,8 @@ public class PlayerController : MonoBehaviour
         RangedAttacks[0].GetComponent<PlayerAttackRanged>().maxDistance = attackRange;
         RangedAttacks[0].GetComponent<PlayerAttackRanged>().doesStun = true;
 
+
+
         playerSprites = funcInst.SliceGrid(playerTexture, 64, 76);
 
         // Initializing values
@@ -125,6 +131,8 @@ public class PlayerController : MonoBehaviour
         
         playerTransform = GetComponent<Transform>();
         playerPos = playerTransform.position;
+
+        cMenu = GetComponent<CraftingMenu>();
 
         facing = VarTypes.Direction.Down;
 
@@ -165,6 +173,8 @@ public class PlayerController : MonoBehaviour
                 animationDirectionMultiplier *= -1;
             }
         }
+
+        canMove = !cMenu.showCraftingMenu;
 
         // Setting current-frame constants
         deltaTime = Time.deltaTime;
@@ -297,6 +307,9 @@ public class PlayerController : MonoBehaviour
 
     void HandleInputs()
     {
+
+        if (!canMove) return;
+
         if (Keyboard.current.ctrlKey.isPressed && Keyboard.current.qKey.wasPressedThisFrame)
         {
             string debugImageName = "Hide-the-pain-Harold-large-meme-8_0";
@@ -367,6 +380,9 @@ public class PlayerController : MonoBehaviour
 
     void UpdateMovement()
     {
+
+        if (!canMove) return;
+
         AccelerationMovement();
 
         UpdatePosition();

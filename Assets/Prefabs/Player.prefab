@@ -405,7 +405,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2825336099165148266
 Transform:
   m_ObjectHideFlags: 0
@@ -415,8 +415,8 @@ Transform:
   m_GameObject: {fileID: 2959332173247929219}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 10}
+  m_LocalPosition: {x: 0, y: 1.27, z: 0}
+  m_LocalScale: {x: 5, y: 5, z: 50}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 8831837833102331978}
@@ -914,6 +914,7 @@ GameObject:
   - component: {fileID: 8509187014003026785}
   - component: {fileID: 901948850974156201}
   - component: {fileID: 4653339814167236600}
+  - component: {fileID: 7132937257121017732}
   - component: {fileID: 4348614517689816146}
   - component: {fileID: 8615920454434297348}
   - component: {fileID: 7256647148524855906}
@@ -1026,7 +1027,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Movement
   moveActionReference: {fileID: -1680190386980627800, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   playerTexture: {fileID: 2800000, guid: af3b3368c94950d40b61a4fe601b13ff, type: 3}
-  GameOverScreen: {fileID: 2850584105115319379, guid: 57e6e473957dcfd46bb14201ba90c504, type: 3}
+  GameOverScreen: {fileID: 0}
   maxSpeed: 5
   playerAcc: 25
   canMove: 1
@@ -1040,12 +1041,25 @@ MonoBehaviour:
   attackCooldown: 0.2
   health: 100
   defense: 0
-  canDie: 0
+  canDie: 1
   dashCooldown: 1
   dashSpeed: 2
   inventory: []
   playerMeleeAttackPrefab: {fileID: 7630142083507068408, guid: 4a956b52682e04f42b317562539c0fe8, type: 3}
   playerRangedAttackPrefab: {fileID: 1744228542935970917, guid: a4b68448cfa1d134eac1472e8e149c4d, type: 3}
+--- !u!114 &7132937257121017732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8244672825021101286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff9050500a3df404f9fef8b8f6a6bec1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CraftingMenu
+  CMenu: {fileID: 2959332173247929219}
 --- !u!114 &4348614517689816146
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1063,8 +1077,6 @@ MonoBehaviour:
   SpeedElement: {fileID: 2635619881144078479}
   PositionElement: {fileID: 440741052254302263}
   debugLogging: 0
-  WASDPrompt: {fileID: 2782056700198763241}
-  promptBackground: {fileID: 7628047466218219029}
 --- !u!58 &8615920454434297348
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1099,8 +1111,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.05}
-  m_Radius: 0.25
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 0.36100322
 --- !u!120 &7256647148524855906
 LineRenderer:
   serializedVersion: 3

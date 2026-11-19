@@ -60,6 +60,7 @@ public class EnemyController : MonoBehaviour
     private Vector3 playerDirection;
     private Vector3 normalizedPlayerDirection;
     private GameObject player;
+    private CraftingMenu cMenu;
     public bool isStunned;
     private bool wasJustHit;
     private float hitTime;
@@ -85,6 +86,7 @@ public class EnemyController : MonoBehaviour
         isStunned = false;
         player = funcInst.GetSiblingGameObject("Player");
         playerController = player.GetComponent<PlayerController>();
+        cMenu = player.GetComponent<CraftingMenu>();
 
         playerData = playerController.GetData();
 
@@ -129,6 +131,7 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         if (!transform.gameObject.activeSelf) return;
         if (health <= 0)
         {
@@ -149,6 +152,8 @@ public class EnemyController : MonoBehaviour
         }
         else isFarAway = false;
 
+
+        canMove = !cMenu.showCraftingMenu;
 
         if (isFarAway) return;
 
@@ -224,6 +229,8 @@ public class EnemyController : MonoBehaviour
     }
     void UpdateMovement()
     {
+
+        if (!canMove) return;
         if (isAttacking)
         {
             
