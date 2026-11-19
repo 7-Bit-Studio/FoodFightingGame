@@ -42,17 +42,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float dashCooldown = 1f;
     [SerializeField] private float dashSpeed = 2f;
     private InputAction moveAction;
-    public VarTypes.Data GetData() => data;
     private VarTypes.Direction facing;
-    private VarTypes.Data data;
+    public VarTypes.Data data;
     private Vector2 moveInputVector2;
     private Vector3 moveInput;
     private int baseMult = 1;
 
     // PlayerController values
-    private Transform playerTransform;
-    private Vector3 playerPos;
-    private Vector3 playerVel;
+    public Transform playerTransform;
+    public Vector3 playerPos;
+    public Vector3 playerVel;
 
     // DeltaTime
     private float deltaTime;
@@ -174,6 +173,8 @@ public class PlayerController : MonoBehaviour
         inventory = GlobalVars.items;
 
         UpdateMovement();
+
+        
 
         UpdatePlayerFacingDirection();
         nearbyLivingEnemies = GetNearbyLivingEnemies();
@@ -434,6 +435,11 @@ public class PlayerController : MonoBehaviour
         data.health = health;
 
         transform.SetPositionAndRotation(playerPos, playerTransform.rotation);
+    }
+
+    void CheckForCollisionWithWalls()
+    {
+
     }
 
     public void DrawPolygon(int vertexNumber, float radius, Vector3 centerPos, float startWidth, float endWidth)
