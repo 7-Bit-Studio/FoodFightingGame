@@ -30,6 +30,8 @@ public class EnemyController : MonoBehaviour
     [Header("Enemy Attack Settings")]
     [SerializeField] private int damage = 10;
     [SerializeField] private float attackDelay = 0.5f;
+
+   
     public Texture2D enemyAttack;
     [SerializeField] private bool doesAttackAffectEnemySprite = false;
     [SerializeField] private bool doesAttackKillEnemy = false;
@@ -131,7 +133,8 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+    
+
         if (!transform.gameObject.activeSelf) return;
         if (health <= 0)
         {

@@ -514,7 +514,8 @@ public class PlayerController : MonoBehaviour
 
         if (health <= 0 && canDie && !cheatMode)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            SceneManager.LoadScene(0);
         }
     }
 }
