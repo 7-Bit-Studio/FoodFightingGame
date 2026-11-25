@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainMenu : MonoBehaviour
+public class Menu : MonoBehaviour
 {
 
     //private AudioSource[] aSources;
@@ -22,7 +22,7 @@ public class MainMenu : MonoBehaviour
         audio.Play();
         DontDestroyOnLoad(sound);
 
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(2);
     }
 
 
@@ -36,5 +36,12 @@ public class MainMenu : MonoBehaviour
     public void Options()
     {
         Debug.Log("Opening Options");
+        SceneManager.LoadScene(1);
+
+    }
+
+    public void MainMenu()
+    {
+        SceneManager.LoadScene(0);
     }
 }
