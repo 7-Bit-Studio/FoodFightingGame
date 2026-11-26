@@ -267,6 +267,7 @@ namespace Assets.Globals
 
     public class GlobalVars
     {
+        public static bool gameIsPaused = false;
         public static VarTypes.Item[] items = {
             new() {
                 name = "Borgor Shield",
