@@ -21,12 +21,12 @@ using Unity.VisualScripting;
 public class PlayerController : MonoBehaviour
 {
     [Header("Movement Settings")]
+    public bool canMove = true;
     [SerializeField] private InputActionReference moveActionReference;
     [SerializeField] private Texture2D playerTexture;
     [SerializeField] private GameObject GameOverScreen;
     [SerializeField] private float maxSpeed = 5f;
     [SerializeField] private float playerAcc = 5f;
-    public bool canMove = true;
 
 
     [Header("Attack Settings")]
@@ -52,14 +52,12 @@ public class PlayerController : MonoBehaviour
     private int baseMult = 1;
 
     // PlayerController values
-    public Transform playerTransform;
     public Vector3 playerPos;
     public Vector3 playerVel;
 
     // DeltaTime
     private float deltaTime;
     private VarTypes.EnemyData[] nearbyLivingEnemies;
-    private LineRenderer lineRenderer;
     private float timeAtLastAttack;
     private readonly Functions funcs = new();
     private readonly FunctionsInstance funcInst = new();
@@ -82,20 +80,17 @@ public class PlayerController : MonoBehaviour
     private CraftingMenu cMenu;
 
 
-    void Awake()
+    void Start()
     {
+        Debug.Log(transform.position);
+        Debug.Log(playerPos);
+
+        transform.position = Vector3.zero;
         // Preliminary checks
         if (moveActionReference == null)
         {
             Debug.LogError("no InputActionReference");
             return;
-        }
-
-        lineRenderer = GetComponent<LineRenderer>();
-
-        if(lineRenderer == null)
-        {
-            lineRenderer = new GameObject("linerenderer").AddComponent<LineRenderer>();
         }
 
         if(MeleeAttacks == null || MeleeAttacks.Length == 0)
@@ -120,16 +115,14 @@ public class PlayerController : MonoBehaviour
         RangedAttacks[0].GetComponent<PlayerAttackRanged>().doesStun = true;
 
 
-
         playerSprites = funcInst.SliceGrid(playerTexture, 64, 76);
 
         // Initializing values
         moveInputVector2 = Vector2.zero;
         moveInput = Vector3.zero;
         playerVel = Vector3.zero;
-        
-        playerTransform = GetComponent<Transform>();
-        playerPos = playerTransform.position;
+
+        playerPos = transform.position;
 
         cMenu = GetComponent<CraftingMenu>();
 
@@ -141,20 +134,24 @@ public class PlayerController : MonoBehaviour
         data.direction = facing;
 
         currentSprite = playerSprites[6];
-        lineRenderer.startColor = Color.black;
-        lineRenderer.endColor = Color.black;
 
         GameOverScreen.SetActive(false);
         GameOverScreen.transform.position = playerPos;
 
         transform.Find("Main Camera").position = playerPos + new Vector3(0, 0, -10);
         GetComponent<SpriteRenderer>().sprite = currentSprite;
+        Debug.Log(transform.position);
+        Debug.Log(playerPos);
+        UpdatePosition();
     }
 
     // Update is called once per frame
     public void Update()
     {
-        if(cheatMode)
+        Debug.Log(transform.position);
+        Debug.Log(playerPos);
+        Debug.Log(playerVel);
+        if (cheatMode)
         {
             baseMult = 1000;
         }
@@ -163,13 +160,17 @@ public class PlayerController : MonoBehaviour
             baseMult = 1;
         }
 
-        if (Time.time - timeAtLastSpriteUpdate > 0.33f)
+
+        if (!GlobalVars.gameIsPaused)
         {
-            timeAtLastSpriteUpdate = Time.time;
-            currentSpriteIndexAdd += animationDirectionMultiplier;
-            if (currentSpriteIndexAdd >= 2 || currentSpriteIndexAdd <= 0)
+            if (Time.time - timeAtLastSpriteUpdate > 0.33f)
             {
-                animationDirectionMultiplier *= -1;
+                timeAtLastSpriteUpdate = Time.time;
+                currentSpriteIndexAdd += animationDirectionMultiplier;
+                if (currentSpriteIndexAdd >= 2 || currentSpriteIndexAdd <= 0)
+                {
+                    animationDirectionMultiplier *= -1;
+                }
             }
         }
 
@@ -188,12 +189,10 @@ public class PlayerController : MonoBehaviour
         inventory = GlobalVars.items;
 
         UpdateMovement();
-
         
 
         UpdatePlayerFacingDirection();
         nearbyLivingEnemies = GetNearbyLivingEnemies();
-        DrawCircle(attackRange, transform.position, 0.01f);
     }
 
     VarTypes.EnemyData[] GetNearbyEnemies()
@@ -216,7 +215,7 @@ public class PlayerController : MonoBehaviour
             numOfRealEnemies++;
             //Debug.Log($"{enemy.name} is not far away");
             currentEnemy.gameObject = enemy.gameObject;
-            currentEnemy.distance = Vector3.Distance(this.transform.position, enemy.transform.position);
+            currentEnemy.distance = Vector3.Distance(transform.position, enemy.transform.position);
 
             livingEnemiesList[currentIndex] = currentEnemy;
             currentIndex++;
@@ -290,8 +289,8 @@ public class PlayerController : MonoBehaviour
         if (!cheatMode && Time.time - timeAtLastAttack < attackCooldown) return;
         timeAtLastAttack = Time.time;
         GameObject playerAttack;
-        playerAttack = Instantiate(playerMeleeAttackPrefab);
-        //playerAttack = new GameObject("Melee Attack", typeof(PlayerAttackMelee), typeof(SpriteRenderer));
+        //playerAttack = Instantiate(playerMeleeAttackPrefab);
+        playerAttack = new GameObject("Melee Attack", typeof(PlayerAttackMelee), typeof(SpriteRenderer));
         playerAttack.GetComponent<PlayerAttackMelee>().swingSpeed = MeleeAttacks[attackIndex].GetComponent<PlayerAttackMelee>().swingSpeed;
         playerAttack.GetComponent<PlayerAttackMelee>().swingAngle = MeleeAttacks[attackIndex].GetComponent<PlayerAttackMelee>().swingAngle;
         playerAttack.GetComponent<PlayerAttackMelee>().range = baseMult * attackRange;
@@ -310,6 +309,8 @@ public class PlayerController : MonoBehaviour
     {
 
         if (!canMove) return;
+
+        if (GlobalVars.gameIsPaused) return;
 
         if (Keyboard.current.ctrlKey.isPressed && Keyboard.current.qKey.wasPressedThisFrame)
         {
@@ -333,40 +334,43 @@ public class PlayerController : MonoBehaviour
         {
             if (Mouse.current.leftButton.isPressed || Mouse.current.rightButton.isPressed)
             {
-                if(attackIndex == -1)
-
-                Debug.Log("Left Button Pressed");
+                if (attackIndex == -1)
+                {
+                    Debug.Log("Left Button Pressed");
+                }
                 
 
                 float minDistanceFromMouse = float.PositiveInfinity;
-                float[] distFromMouse = new float[livingEnemies.Length];
 
                 for (int i = 0; i < livingEnemies.Length; i++)
-                //Debug.LogAssertion("Player Attacked!");
-                if(attackIndex == -1)
                 {
-                    attackIndex = 0;
+                    if (attackIndex == -1)
+                    {
+                        attackIndex = 0;
+                    }
                 }
-                //Debug.LogAssertion($"{attackIndex}");
+
                 
                 int indexOfMinDistance = -1;
                 for (int i = 0; i < nearbyLivingEnemies.Length; i++)
                 {
+                    if (nearbyLivingEnemies[i].distance > attackRange) continue;
+
                     float currDistFromMouse = Vector3.Distance(MouseInWorldPosition, nearbyLivingEnemies[i].gameObject.transform.position);
                     if (currDistFromMouse > baseMult * attackLenience) continue;
-                    if (nearbyLivingEnemies[i].distance > attackRange) continue;
+
                     if (minDistanceFromMouse > currDistFromMouse)
                     {
                         minDistanceFromMouse = currDistFromMouse;
                         indexOfMinDistance = i;
                     }
                 }
-                //Debug.LogAssertion($"{indexOfMinDistance}");
-                //Debug.LogAssertion($"{minDistanceFromMouse}");
+
                 if (indexOfMinDistance == -1) return;
 
                 bool isRangedAttack = Mouse.current.leftButton.isPressed && cheatMode || Mouse.current.leftButton.wasPressedThisFrame && !cheatMode;
                 bool isMeleeAttack = Mouse.current.rightButton.isPressed && cheatMode || Mouse.current.rightButton.wasPressedThisFrame && !cheatMode;
+
                 if (isRangedAttack)
                 {
                     RangedAttack(nearbyLivingEnemies[indexOfMinDistance].gameObject, attackIndex);
@@ -381,8 +385,9 @@ public class PlayerController : MonoBehaviour
 
     void UpdateMovement()
     {
-
         if (!canMove) return;
+        if (GlobalVars.gameIsPaused) return;
+
 
         AccelerationMovement();
 
@@ -445,7 +450,7 @@ public class PlayerController : MonoBehaviour
         {
             currentSprite = playerSprites[0 + currentSpriteIndexAdd];
         }
-        playerTransform.GetComponent<SpriteRenderer>().sprite = currentSprite;
+        transform.GetComponent<SpriteRenderer>().sprite = currentSprite;
     }
     
     // Updating the player's acceleration
@@ -457,47 +462,18 @@ public class PlayerController : MonoBehaviour
     }
     void UpdatePosition()
     {
-        playerPos += deltaTime * playerVel;
+        Debug.Log(transform.position);
+        Debug.Log(playerPos);
+        transform.position += deltaTime * playerVel;
+        playerPos = transform.position;
+        Debug.Log(transform.position);
+        Debug.Log(playerPos);
 
         data.position = playerPos;
         data.velocity = playerVel;
         data.transform = transform;
         data.direction = facing;
         data.health = health;
-
-        transform.SetPositionAndRotation(playerPos, playerTransform.rotation);
-    }
-
-    void CheckForCollisionWithWalls()
-    {
-
-    }
-
-    public void DrawPolygon(int vertexNumber, float radius, Vector3 centerPos, float startWidth, float endWidth)
-    {
-        lineRenderer.startWidth = startWidth;
-        lineRenderer.endWidth = endWidth;
-        lineRenderer.loop = true;
-        float angle = 2 * Mathf.PI / vertexNumber;
-        lineRenderer.positionCount = vertexNumber;
-
-        for (int i = 0; i < vertexNumber; i++)
-        {
-            float sinAngle = Mathf.Sin(angle * i);
-            float cosAngle = Mathf.Cos(angle * i);
-            Matrix4x4 rotationMatrix = new Matrix4x4(new Vector4(cosAngle, sinAngle, 0, 0),
-                                                     new Vector4(-sinAngle, cosAngle, 0, 0),
-                                       new Vector4(0, 0, 1, 0),
-                                       new Vector4(0, 0, 0, 1));
-            Vector3 initialRelativePosition = new Vector3(0, radius, 0);
-            lineRenderer.SetPosition(i, centerPos + rotationMatrix.MultiplyPoint(initialRelativePosition));
-
-        }
-    }
-
-    public void DrawCircle(float radius, Vector3 centerPos, float strokeWidth)
-    {
-        DrawPolygon(100, radius, centerPos, strokeWidth, strokeWidth);
     }
 
     public void OnHit(int damage)
