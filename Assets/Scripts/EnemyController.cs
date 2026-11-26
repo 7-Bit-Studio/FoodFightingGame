@@ -71,7 +71,6 @@ public class EnemyController : MonoBehaviour
     private Transform healthValueTransform;
     private int startHealth;
     public bool isFarAway = false;
-    [SerializeField] private bool canMove = true;
 
 
     private bool isAlive;
@@ -135,7 +134,7 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-    
+        if (cMenu.showCraftingMenu || uiMenu.GameOverScreen.activeSelf || uiMenu.showPauseMenu) return;
 
         if (!transform.gameObject.activeSelf) return;
         if (health <= 0)
@@ -158,8 +157,7 @@ public class EnemyController : MonoBehaviour
         else isFarAway = false;
 
 
-        if (cMenu.showCraftingMenu || uiMenu.GameOverScreen.activeSelf) canMove = false;
-        else canMove = true;
+        
 
         if (isFarAway) return;
 
@@ -235,8 +233,6 @@ public class EnemyController : MonoBehaviour
     }
     void UpdateMovement()
     {
-
-        if (!canMove) return;
         if (isAttacking)
         {
             

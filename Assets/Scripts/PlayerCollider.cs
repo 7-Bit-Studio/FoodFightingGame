@@ -1,7 +1,7 @@
 using Assets.Globals;
 using JetBrains.Annotations;
-using JetBrains.Rider.Unity.Editor;
-using UnityEditor.Rendering;
+//using JetBrains.Rider.Unity.Editor;
+//using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;

@@ -25,6 +25,7 @@ public class UIText : MonoBehaviour
     [SerializeField] private bool debugLogging = false;
     [SerializeField] private TextMeshProUGUI WASDPrompt;
     [SerializeField] private GameObject promptBackground;
+    [SerializeField] private GameObject PauseMenu;
     public GameObject GameOverScreen;
     private Transform TopLeftCorner;
     [SerializeField] private Transform abovePlayer;
@@ -49,6 +50,7 @@ public class UIText : MonoBehaviour
     private float elapsed;
     private int frames;
     [SerializeField] private bool showWASDPrompt;
+    public bool showPauseMenu = false;
     private bool wPressed;
     private bool aPressed;
     private bool sPressed;
@@ -98,6 +100,7 @@ public class UIText : MonoBehaviour
             GameOverScreen.SetActive(false);
         }
         GameOverScreen.gameObject.SetActive(false);
+        
     }
 
     // Update is called once per frame
@@ -116,6 +119,13 @@ public class UIText : MonoBehaviour
             PositionElement.gameObject.SetActive(true);
             FPSTextElement.gameObject.SetActive(true);
             SpeedElement.gameObject.SetActive(true);
+        }
+        if (!showPauseMenu)
+        {
+            PauseMenu.gameObject.SetActive(false);
+        } else if (showPauseMenu)
+        {
+            PauseMenu.gameObject.SetActive(true);
         }
         if (showWASDPrompt)
         {
@@ -184,6 +194,10 @@ public class UIText : MonoBehaviour
         if (Keyboard.current.dKey.wasPressedThisFrame)
         {
             dPressed = true;
+        }
+        if (Keyboard.current.escapeKey.wasPressedThisFrame)
+        {
+            showPauseMenu = !showPauseMenu;
         }
     }
 

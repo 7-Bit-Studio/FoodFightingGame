@@ -150,7 +150,8 @@ PlayerSettings:
   visionOSBundleVersion: 1.0
   tvOSBundleVersion: 1.0
   bundleVersion: 1.0
-  preloadedAssets: []
+  preloadedAssets:
+  - {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   xboxOneDisableKinectGpuReservation: 1
@@ -690,11 +691,11 @@ PlayerSettings:
   activeInputHandler: 1
   windowsGamepadBackendHint: 0
   enableDirectStorage: 0
-  cloudProjectId: a3ed8f64-2dca-4a0e-9ea2-f92281c77a72
+  cloudProjectId: 4699bf58-ba49-4dee-9127-69c56494262c
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
   projectName: FoodFightingGame
-  organizationId: rlcbon08-gmail-com
+  organizationId: lupadewolf
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}

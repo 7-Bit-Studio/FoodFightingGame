@@ -37,7 +37,7 @@ public class SpawnEnemy : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-        if (uiMenu.GameOverScreen.activeSelf || cMenu.showCraftingMenu) return;
+        if (uiMenu.GameOverScreen.activeSelf || cMenu.showCraftingMenu || uiMenu.showPauseMenu) return;
         if (Time.time >= nextSpawnTime)
         {
             DoSpawnEnemy();

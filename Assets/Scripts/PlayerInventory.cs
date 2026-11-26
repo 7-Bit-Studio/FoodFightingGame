@@ -27,6 +27,7 @@ public class PlayerInventory : MonoBehaviour
         {
             inventory[i].item = GlobalVars.items[i];
             inventory[i].count = 0;
+
         }
 
         

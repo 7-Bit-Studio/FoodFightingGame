@@ -25,7 +25,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Texture2D playerTexture;
     [SerializeField] private float maxSpeed = 5f;
     [SerializeField] private float playerAcc = 5f;
-    public bool canMove = true;
 
 
     [Header("Attack Settings")]
@@ -147,7 +146,10 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
-        if(cheatMode)
+
+        if (uiMenu.GameOverScreen.activeSelf || cMenu.showCraftingMenu || uiMenu.showPauseMenu) return;
+        
+        if (cheatMode)
         {
             baseMult = 1000;
         }
@@ -165,8 +167,7 @@ public class PlayerController : MonoBehaviour
                 animationDirectionMultiplier *= -1;
             }
         }
-        if (uiMenu.GameOverScreen.activeSelf || cMenu.showCraftingMenu) canMove = false;
-        else canMove = true;
+        
 
 
         // Setting current-frame constants
@@ -303,8 +304,6 @@ public class PlayerController : MonoBehaviour
     void HandleInputs()
     {
 
-        if (!canMove) return;
-
         if (Keyboard.current.ctrlKey.isPressed && Keyboard.current.qKey.wasPressedThisFrame)
         {
             string debugImageName = "Hide-the-pain-Harold-large-meme-8_0";
@@ -375,8 +374,6 @@ public class PlayerController : MonoBehaviour
 
     void UpdateMovement()
     {
-
-        if (!canMove) return;
 
         AccelerationMovement();
 

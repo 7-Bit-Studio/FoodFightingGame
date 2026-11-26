@@ -6,6 +6,9 @@ public class Menu : MonoBehaviour
 
     //private AudioSource[] aSources;
     [SerializeField] private GameObject sound;
+
+    [SerializeField] private PlayerController player;
+    private UIText uiMenu;
     private AudioSource audio;
 
     private AudioSource biteSound;
@@ -14,6 +17,7 @@ public class Menu : MonoBehaviour
     {
         //aSources = GetComponents<AudioSource>();
         audio = sound.GetComponent<AudioSource>();
+        uiMenu = player.GetComponent<UIText>();
 
     }
     public void StartGame()
@@ -23,6 +27,11 @@ public class Menu : MonoBehaviour
         DontDestroyOnLoad(sound);
 
         SceneManager.LoadScene(2);
+    }
+
+    public void ResumeGame()
+    {
+        uiMenu.showPauseMenu = false;
     }
 
 
