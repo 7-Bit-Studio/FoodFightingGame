@@ -44,4 +44,9 @@ public class Menu : MonoBehaviour
     {
         SceneManager.LoadScene(0);
     }
+
+    public void TryAgain()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
 }

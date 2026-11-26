@@ -63,6 +63,7 @@ public class EnemyController : MonoBehaviour
     private Vector3 normalizedPlayerDirection;
     private GameObject player;
     private CraftingMenu cMenu;
+    private UIText uiMenu;
     public bool isStunned;
     private bool wasJustHit;
     private float hitTime;
@@ -89,6 +90,7 @@ public class EnemyController : MonoBehaviour
         player = funcInst.GetSiblingGameObject("Player");
         playerController = player.GetComponent<PlayerController>();
         cMenu = player.GetComponent<CraftingMenu>();
+        uiMenu = player.GetComponent<UIText>();
 
         playerData = playerController.data;
 
@@ -156,7 +158,8 @@ public class EnemyController : MonoBehaviour
         else isFarAway = false;
 
 
-        canMove = !cMenu.showCraftingMenu;
+        if (cMenu.showCraftingMenu || uiMenu.GameOverScreen.activeSelf) canMove = false;
+        else canMove = true;
 
         if (isFarAway) return;
 

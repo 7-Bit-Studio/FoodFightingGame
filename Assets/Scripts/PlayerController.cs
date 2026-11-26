@@ -23,7 +23,6 @@ public class PlayerController : MonoBehaviour
     [Header("Movement Settings")]
     [SerializeField] private InputActionReference moveActionReference;
     [SerializeField] private Texture2D playerTexture;
-    [SerializeField] private GameObject GameOverScreen;
     [SerializeField] private float maxSpeed = 5f;
     [SerializeField] private float playerAcc = 5f;
     public bool canMove = true;
@@ -78,8 +77,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject playerRangedAttackPrefab;
 
 
-    //CraftingMenu
+    //Menus
     private CraftingMenu cMenu;
+    private UIText uiMenu;
 
 
     void Awake()
@@ -107,12 +107,7 @@ public class PlayerController : MonoBehaviour
             RangedAttacks = new GameObject[] { Instantiate(playerRangedAttackPrefab) };
         }
 
-        if (GameOverScreen == null)
-        {
-            Debug.LogWarning("GameOverScreen is not assigned in the inspector.");
-            GameOverScreen = new GameObject("GameOverScreen", typeof(GameOver));
-            GameOverScreen.SetActive(false);
-        }
+        
         MeleeAttacks[0].GetComponent<PlayerAttackMelee>().range = attackRange;
         MeleeAttacks[0].GetComponent<PlayerAttackMelee>().doesStun = false;
 
@@ -132,6 +127,7 @@ public class PlayerController : MonoBehaviour
         playerPos = playerTransform.position;
 
         cMenu = GetComponent<CraftingMenu>();
+        uiMenu = GetComponent<UIText>();
 
         facing = VarTypes.Direction.Down;
 
@@ -143,9 +139,6 @@ public class PlayerController : MonoBehaviour
         currentSprite = playerSprites[6];
         lineRenderer.startColor = Color.black;
         lineRenderer.endColor = Color.black;
-
-        GameOverScreen.SetActive(false);
-        GameOverScreen.transform.position = playerPos;
 
         transform.Find("Main Camera").position = playerPos + new Vector3(0, 0, -10);
         GetComponent<SpriteRenderer>().sprite = currentSprite;
@@ -172,8 +165,9 @@ public class PlayerController : MonoBehaviour
                 animationDirectionMultiplier *= -1;
             }
         }
+        if (uiMenu.GameOverScreen.activeSelf || cMenu.showCraftingMenu) canMove = false;
+        else canMove = true;
 
-        canMove = !cMenu.showCraftingMenu;
 
         // Setting current-frame constants
         deltaTime = Time.deltaTime;
@@ -423,7 +417,7 @@ public class PlayerController : MonoBehaviour
         }
 
         data.direction = facing;
-        GameOverScreen.transform.position = playerPos;
+
     }
 
     void UpdatePlayerFacingDirection()
@@ -515,7 +509,7 @@ public class PlayerController : MonoBehaviour
         if (health <= 0 && canDie && !cheatMode)
         {
             //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            SceneManager.LoadScene(0);
+            uiMenu.GameOver();
         }
     }
 }

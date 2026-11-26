@@ -4,6 +4,8 @@ using UnityEngine.InputSystem;
 public class CraftingMenu : MonoBehaviour
 {
     [SerializeField] private GameObject CMenu;
+
+    private PlayerController player;
     private int screenWidth;
     private int screenHeight;
 
@@ -27,6 +29,7 @@ public class CraftingMenu : MonoBehaviour
     {
         ScreenInit();
         InitializeVars();
+        player = GetComponent<PlayerController>();
     }
 
     // Update is called once per frame

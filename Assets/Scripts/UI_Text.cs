@@ -25,6 +25,7 @@ public class UIText : MonoBehaviour
     [SerializeField] private bool debugLogging = false;
     [SerializeField] private TextMeshProUGUI WASDPrompt;
     [SerializeField] private GameObject promptBackground;
+    public GameObject GameOverScreen;
     private Transform TopLeftCorner;
     [SerializeField] private Transform abovePlayer;
     private Functions funcs = new();
@@ -90,6 +91,13 @@ public class UIText : MonoBehaviour
     {
         ScreenInit();
         InitializeVars();
+        if (GameOverScreen == null)
+        {
+            Debug.LogWarning("GameOverScreen is not assigned in the inspector.");
+            GameOverScreen = new GameObject("GameOverScreen", typeof(GameOver));
+            GameOverScreen.SetActive(false);
+        }
+        GameOverScreen.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -192,5 +200,10 @@ public class UIText : MonoBehaviour
     void FPSFileWrite()
     {
         File.AppendAllText(Path.Combine(docPath, docName), $"{Time.time},\t{currFPS}\n");
+    }
+
+    public void GameOver()
+    {
+        GameOverScreen.SetActive( true );
     }
 }

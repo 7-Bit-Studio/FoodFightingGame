@@ -1,5 +1,8 @@
-using UnityEngine;
 using Assets.Globals;
+using Unity.VisualScripting;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.UIElements;
 
 public class SpawnEnemy : MonoBehaviour
 {
@@ -13,6 +16,10 @@ public class SpawnEnemy : MonoBehaviour
 	private FunctionsInstance funcInst = new();
 	private float nextSpawnTime;
 
+    private GameObject player;
+    private CraftingMenu cMenu;
+    private UIText uiMenu;
+
     // Start is called before the first frame update
     void Start()
 	{
@@ -21,12 +28,17 @@ public class SpawnEnemy : MonoBehaviour
             Debug.LogError("No possible enemies assigned to SpawnEnemy script.");
             return;
         }
+
+        player = funcInst.GetSiblingGameObject("Player");
+        cMenu = player.GetComponent<CraftingMenu>();
+        uiMenu = player.GetComponent<UIText>();
     }
 
 	// Update is called once per frame
 	void Update()
 	{
-        if(Time.time >= nextSpawnTime)
+        if (uiMenu.GameOverScreen.activeSelf || cMenu.showCraftingMenu) return;
+        if (Time.time >= nextSpawnTime)
         {
             DoSpawnEnemy();
         }
